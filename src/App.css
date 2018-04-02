@@ -1,0 +1,83 @@
+body {
+  --panel-bg: #aaa;
+}
+.main {
+  display: grid;
+  grid-template-columns: [left] 1fr [middle] 2fr [right];
+  grid-template-rows: [toolbar] 2em [search] 2em [body] 1fr [bottom];
+  background-color: #000;
+  grid-gap: 1px;
+  border: 0px solid greenyellow;
+  height: 100vh;
+}
+
+.toolbar {
+  background: #222;
+  grid-row: toolbar/search;
+  grid-column: left/right;
+  display: flex;
+  flex-direction: row;
+}
+
+.toolbar button {
+  background: #555;
+  color: white;
+  border: 1px solid gray;
+  font-size: 100%;
+}
+
+.library-search {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--panel-bg);
+  grid-row: search;
+  grid-column: left/middle;
+}
+.library-search input {
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 1.5em;
+  padding: 0.5em;
+  margin: 0.25em;
+}
+
+.library-results {
+  grid-row: body/bottom;
+  grid-column: left/middle;
+  background-color: var(--panel-bg);
+  margin:0;
+  list-style: none;
+  padding:0;
+}
+
+.library-results li {
+  border: 1px solid black;
+  border-width: 0 0 1px 0;
+  padding: 0.5em;
+  background-color: #ddd;
+  display: flex;
+  flex-direction: row;
+}
+
+
+
+.active-list {
+  grid-row: search/bottom;
+  margin:0;
+  background-color: var(--panel-bg);
+  list-style: none;
+  padding:0;
+}
+
+.module-panel {
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: [left]1fr [right]2fr;
+  background-color: #ccc;
+  border-radius: 1em;
+  padding: 1em;
+  margin: 1em;
+}
+.module-panel canvas {
+  border: 1px solid red;
+}
