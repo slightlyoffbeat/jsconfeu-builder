@@ -14,7 +14,9 @@ class App extends Component {
             <div className="main">
                 <div className="toolbar">
                     <button>save</button>
-                    <button>play/pause</button>
+                    <button onClick={()=>{
+                        STORE.start()
+                    }}>play/pause</button>
                 </div>
 
                 <div className="library-search">

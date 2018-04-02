@@ -14,6 +14,10 @@ export  default  class ModulePanel extends Component {
     redraw() {
         console.log("redrawing to the canvas", this.canvas)
     }
+
+    store() {
+        console.log('starting')
+    }
     render() {
         return <div className="module-panel">
             <label>name</label><span>{this.props.module.name}</span>
