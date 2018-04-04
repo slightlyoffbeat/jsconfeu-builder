@@ -13,6 +13,7 @@ export  default  class ModulePanel extends Component {
 
     redraw() {
         console.log("redrawing to the canvas", this.canvas)
+        this.props.store.drawCanvas(this.props.module,this.canvas)
     }
 
     store() {
@@ -20,9 +21,9 @@ export  default  class ModulePanel extends Component {
     }
     render() {
         return <div className="module-panel">
-            <label>name</label><span>{this.props.module.name}</span>
-            <label>author</label><span>{this.props.module.author}</span>
-            <canvas width={200} height={200} ref={(canvas)=>this.canvas = canvas}></canvas>
+            <label>name</label><span>{this.props.module.template.name}</span>
+            <label>author</label><span>{this.props.module.template.author}</span>
+            <canvas width={50*5} height={30*5} ref={(canvas)=>this.canvas = canvas}></canvas>
         </div>
     }
 }
