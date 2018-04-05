@@ -11,7 +11,13 @@ class App extends Component {
             searchText:'',
             searching:false,
             searchResults:[],
+            active:STORE.getActiveModules(),
         }
+
+        STORE.on('active',(active)=>{
+            console.log('active has changed')
+            this.setState({active:active})
+        })
     }
 
     search = (e)=>{
@@ -24,6 +30,10 @@ class App extends Component {
 
     clearSearch = (e) => {
         this.setState({searchText:'', searching:false})
+    }
+
+    addModule = (mod) => {
+        STORE.addActiveModule(mod)
     }
 
     render() {
@@ -54,12 +64,12 @@ class App extends Component {
     renderLibraryResults() {
         const modules = this.state.searching?this.state.searchResults:STORE.getLibraryModules()
         return <ul className="library-results">{modules.map((mod) => {
-            return <li key={mod.name}>{mod.name}<i style={{flex: 1}}/> <i className="fa fa-bars"/></li>
+            return <li key={mod.name}>{mod.name}<i style={{flex: 1}}/> <i className="fa fa-plus" onClick={()=>this.addModule(mod)}/></li>
         })}</ul>
     }
 
     renderActiveModules() {
-        return <ul className="active-list">{STORE.getActiveModules().map((mod,i) => {
+        return <ul className="active-list">{this.state.active.map((mod,i) => {
             return <ModulePanel key={i} module={mod} store={STORE}/>
         })}</ul>
     }

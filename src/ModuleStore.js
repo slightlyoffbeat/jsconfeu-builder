@@ -64,6 +64,18 @@ function performVerticalLines(old,ctx) {
     }
 }
 
+function performHorizontalLines(old_ctx,new_ctx) {
+    for(let f=0; f<new_ctx.getFrameCount(); f++) {
+        for (let y = 0; y < new_ctx.getHeight(); y++) {
+            for (let x = 0; x < new_ctx.getWidth(); x++) {
+                const old_color = old_ctx.getPixelRGBA(x,y,f)
+                const col = y%5===0?RED:old_color //make every 5th line be red
+                new_ctx.setPixelRGBA(x, y, f, col)
+            }
+        }
+    }
+}
+
 function makeContext(frameset) {
     return {
         getHeight: function() { return getHeight(frameset)},
@@ -89,6 +101,12 @@ class ModuleStore {
                 fun: performVerticalLines,
                 tags:['lines']
             },
+            'static-horizontal-lines': {
+                name:'static-horizontal-lines',
+                author:'jmarinacci@mozilla.com',
+                fun: performHorizontalLines,
+                tags:['lines','example']
+            }
         }
 
         this.document = [
@@ -129,6 +147,14 @@ class ModuleStore {
     }
     getActiveModules() {
         return this.document
+    }
+
+    addActiveModule(mod) {
+        this.document.push({
+            template:mod,
+            current:null
+        })
+        this.listeners['active'].forEach(cb=>cb(this.document))
     }
 
     isRunning() {
