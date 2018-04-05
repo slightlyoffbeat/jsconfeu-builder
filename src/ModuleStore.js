@@ -81,11 +81,13 @@ class ModuleStore {
                 name: 'diagonal-lines',
                 author: 'jmarinacci@mozilla.com',
                 fun: performDiagonalLines,
+                tags:['lines','example']
             },
             'vertical-lines': {
                 name: 'vertical-lines',
                 author: 'jmarinacci@mozilla.com',
-                fun: performVerticalLines
+                fun: performVerticalLines,
+                tags:['lines']
             },
         }
 
@@ -119,6 +121,7 @@ class ModuleStore {
             mods =  mods.filter((mod)=>{
                 if(mod.name.indexOf(query)>=0) return true
                 if(mod.author.indexOf(query)>=0) return true
+                if(mod.tags.find(tag=>tag.indexOf(query)>=0)) return true
                 return false
             })
             res(mods)
