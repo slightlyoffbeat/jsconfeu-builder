@@ -3,16 +3,21 @@ const BLACK = 0x000000FF;
 const RED   = 0xFF0000FF;
 
 function makeFrameset() {
-    const f1 = []
+    const frames = []
     const w = 50
     const h = 30
-    for(let x = 0; x<w*h; x++) {
-        f1[x] = BLACK
+    const frameCount = 10;
+    for(let i=0; i<frameCount; i++) {
+        const f1 = []
+        for(let x = 0; x<w*h; x++) {
+            f1[x] = BLACK
+        }
+        frames.push(f1)
     }
     return {
         width:w,
         height:h,
-        frames:[f1]
+        frames:frames
     }
 }
 
@@ -23,33 +28,37 @@ function getColorAt(fs, x,y, t) {
     return fs.frames[t][n]
 }
 
-function getPixelRGBA(fs, x,y,   t) {
+function getPixelRGBA(fs, x,y, f) {
     const n = y * getWidth(fs) + x
-    return fs.frames[t][n]
+    return fs.frames[f][n]
 }
-function setPixelRGBA(fs, x,y,c, t) {
+function setPixelRGBA(fs, x,y, f, c) {
     const n = y * getWidth(fs) + x
-    fs.frames[t][n] = c
+    fs.frames[f][n] = c
     return c
 }
-
+function getFrameCount(fs) { return fs.frames.length }
 
 function performDiagonalLines(old,ctx) {
-    for(let y=0; y<ctx.getHeight(); y++) {
-        for(let x=0;x<ctx.getWidth();x++) {
-            ctx.setPixelRGBA(x,y,Math.floor((x+y)/2)%2 === 0?WHITE:BLACK)
+    for(let f=0; f<ctx.getFrameCount(); f++) {
+        for (let y = 0; y < ctx.getHeight(); y++) {
+            for (let x = 0; x < ctx.getWidth(); x++) {
+                ctx.setPixelRGBA(x, y, f, Math.floor((x + y) / 2) % 2 === 0 ? WHITE : BLACK)
+            }
         }
     }
 }
 
 function performVerticalLines(old,ctx) {
-    const offset = (ctx.getTime() % 10)
-    for(let y=0; y<ctx.getHeight(); y++) {
-        for(let x=-offset;x<ctx.getWidth();x++) {
-            if(x%3===0) {
-                ctx.setPixelRGBA(x, y, RED)
-            } else {
-                ctx.setPixelRGBA(x,y,old.getPixelRGBA(x,y))
+    const w = ctx.getWidth()
+    for(let f=0; f<ctx.getFrameCount(); f++) {
+        for (let y = 0; y < ctx.getHeight(); y++) {
+            for (let x = 0; x < ctx.getWidth(); x++) {
+                if (x % 5 === 0) {
+                    ctx.setPixelRGBA((x + f)%w, y, f, RED)
+                } else {
+                    ctx.setPixelRGBA((x + f)%w, y, f, old.getPixelRGBA((x+f)%w, y, f))
+                }
             }
         }
     }
@@ -59,9 +68,9 @@ function makeContext(frameset) {
     return {
         getHeight: function() { return getHeight(frameset)},
         getWidth: function() { return getWidth(frameset)},
-        setPixelRGBA: function(x,y,c) { return setPixelRGBA(frameset, x,y,c, 0) },
-        getPixelRGBA: function(x,y,c) { return getPixelRGBA(frameset, x,y,   0) },
-        getTime: function() { return 0 }
+        setPixelRGBA: function(x,y,f,c) { return setPixelRGBA(frameset, x,y,f,c) },
+        getPixelRGBA: function(x,y,f  ) { return getPixelRGBA(frameset, x,y,f) },
+        getFrameCount: function() { return getFrameCount(frameset)},
     }
 }
 
@@ -91,6 +100,7 @@ class ModuleStore {
             }
         ]
         this.listeners = {}
+        this.running = false
     }
     on(type,cb) {
         if(!this.listeners[type]) this.listeners[type] = []
@@ -107,30 +117,38 @@ class ModuleStore {
         return this.document
     }
 
+    isRunning() {
+        return this.running
+    }
     start() {
-        console.log("starting the animation")
+        this.running = true
         const frameset = this.executeModules()
-        console.log("the final frameset is",frameset)
-        this.listeners['changed'].forEach(cb => cb(this))
+
+        this.currentFrame = 0
+        this.interval_id = setInterval(()=>{
+            this.listeners['changed'].forEach(cb => cb(this))
+            this.currentFrame++
+        },250)
+    }
+    stop() {
+        this.running = false
+        clearInterval(this.interval_id)
     }
     executeModules() {
         let frameset = makeFrameset()
         this.document.forEach((cur)=>{
-            console.log("cur = ", cur)
             const fs2 = makeFrameset()
             cur.template.fun(makeContext(frameset), makeContext(fs2))
             cur.current = fs2
             frameset = fs2
         })
-        console.log("final frameset = ", frameset)
         return frameset
     }
-
 
     drawCanvas(module,canvas) {
         const frameset = module.current
         const ctx = canvas.getContext('2d')
-        const frame = 0
+        const frame = this.currentFrame % getFrameCount(frameset)
         const w = getWidth(frameset)
         const h = getHeight(frameset)
         const s = 5

@@ -10,9 +10,8 @@ export  default  class ModulePanel extends Component {
     componentWillUnmount() {
         this.props.store.off('changed',this.listener)
     }
-
+    
     redraw() {
-        console.log("redrawing to the canvas", this.canvas)
         this.props.store.drawCanvas(this.props.module,this.canvas)
     }
 

@@ -15,7 +15,11 @@ class App extends Component {
                 <div className="toolbar">
                     <button>save</button>
                     <button onClick={()=>{
-                        STORE.start()
+                        if(STORE.isRunning()) {
+                            STORE.stop()
+                        } else {
+                            STORE.start()
+                        }
                     }}>play/pause</button>
                 </div>
 
