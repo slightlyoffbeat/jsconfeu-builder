@@ -113,6 +113,17 @@ class ModuleStore {
     getLibraryModules() {
         return o2a(this.library)
     }
+    findLibraryModules(query) {
+        return new Promise((res,rej)=>{
+            let mods = o2a(this.library)
+            mods =  mods.filter((mod)=>{
+                if(mod.name.indexOf(query)>=0) return true
+                if(mod.author.indexOf(query)>=0) return true
+                return false
+            })
+            res(mods)
+        })
+    }
     getActiveModules() {
         return this.document
     }

@@ -7,8 +7,25 @@ const STORE = ModuleStore
 class App extends Component {
     constructor(props) {
         super(props)
-
+        this.state = {
+            searchText:'',
+            searching:false,
+            searchResults:[],
+        }
     }
+
+    search = (e)=>{
+        const val = e.target.value
+        this.setState({searchText:e.target.value, searching:val.length > 0})
+        STORE.findLibraryModules(e.target.value).then((res)=>{
+            this.setState({searchResults:res})
+        })
+    }
+
+    clearSearch = (e) => {
+        this.setState({searchText:'', searching:false})
+    }
+
     render() {
         return (
             <div className="main">
@@ -24,7 +41,8 @@ class App extends Component {
                 </div>
 
                 <div className="library-search">
-                    <input type="search" placeholder="search modules"/>
+                    <input type="search" placeholder="search modules" onChange={this.search} value={this.state.searchText}/>
+                    <button className="fa fa-close" onClick={this.clearSearch}/>
                 </div>
                 {this.renderLibraryResults()}
                 {this.renderActiveModules()}
@@ -34,8 +52,9 @@ class App extends Component {
     }
 
     renderLibraryResults() {
-        return <ul className="library-results">{STORE.getLibraryModules().map((mod)=>{
-            return <li key={mod.name}>{mod.name}<i style={{flex:1}}></i> <i className="fa fa-bars"></i></li>
+        const modules = this.state.searching?this.state.searchResults:STORE.getLibraryModules()
+        return <ul className="library-results">{modules.map((mod) => {
+            return <li key={mod.name}>{mod.name}<i style={{flex: 1}}/> <i className="fa fa-bars"/></li>
         })}</ul>
     }
 
