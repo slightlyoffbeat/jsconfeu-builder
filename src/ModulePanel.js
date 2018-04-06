@@ -5,14 +5,18 @@ export  default  class ModulePanel extends Component {
         this.listener = ()=>this.redraw()
     }
     componentDidMount() {
-        this.props.store.on("changed",this.listener)
+        this.props.commonProps.store.on("changed",this.listener)
     }
     componentWillUnmount() {
-        this.props.store.off('changed',this.listener)
+        this.props.commonProps.store.off('changed',this.listener)
     }
     
     redraw() {
-        this.props.store.drawCanvas(this.props.module,this.canvas)
+        this.props.commonProps.store.drawCanvas(this.props.item,this.canvas)
+    }
+
+    delete = () => {
+        this.props.commonProps.store.removeActiveModule(this.props.item)
     }
 
     store() {
@@ -20,8 +24,10 @@ export  default  class ModulePanel extends Component {
     }
     render() {
         return <div className="module-panel">
-            <label>name</label><span>{this.props.module.template.name}</span>
-            <label>author</label><span>{this.props.module.template.author}</span>
+            {this.props.dragHandle(<i className="fa fa-bars handle action"/>)}
+            <i className="fa fa-close action" onClick={this.delete}/>
+            <label>name</label><span>{this.props.item.template.name}</span>
+            <label>author</label><span>{this.props.item.template.author}</span>
             <canvas width={50*5} height={30*5} ref={(canvas)=>this.canvas = canvas}></canvas>
         </div>
     }
