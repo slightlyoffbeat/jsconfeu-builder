@@ -22,7 +22,7 @@ export  default  class ModulePanel extends Component {
         return <div className="module-panel">
             <label>name</label><span>{this.props.module.template.name}</span>
             <label>author</label><span>{this.props.module.template.author}</span>
-            <canvas width={50*5} height={30*5} ref={(canvas)=>this.canvas = canvas}></canvas>
+            <canvas width={44*5} height={36*5} ref={(canvas)=>this.canvas = canvas}></canvas>
         </div>
     }
 }

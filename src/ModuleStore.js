@@ -4,8 +4,8 @@ const RED   = 0xFF0000FF;
 
 function makeFrameset() {
     const frames = []
-    const w = 50
-    const h = 30
+    const w = 44
+    const h = 36
     const frameCount = 10;
     for(let i=0; i<frameCount; i++) {
         const f1 = []
