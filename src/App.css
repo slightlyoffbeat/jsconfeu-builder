@@ -72,12 +72,34 @@ body {
 .module-panel {
   border: 1px solid black;
   display: grid;
-  grid-template-columns: [left]1fr [right]2fr;
+  grid-template-columns: [left]1fr [right]2fr [end]2em;
+  grid-template-rows: [actions]2em [info] 2em [info2] 2em [canvas]10em;
   background-color: #ccc;
   border-radius: 1em;
   padding: 1em;
   margin: 1em;
 }
+.module-panel .action{
+  grid-row: actions;
+}
+.module-panel label {
+  grid-column: left;
+}
+.module-panel span {
+  grid-column: right;
+  font-weight: bold;
+}
 .module-panel canvas {
+  grid-row: canvas;
+  grid-column: left/end;
   border: 1px solid black;
+}
+
+.module-panel .fa-close.action {
+  grid-column: end;
+  text-align: right;
+}
+
+.action:hover {
+  color: white;
 }

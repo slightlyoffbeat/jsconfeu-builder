@@ -111,10 +111,12 @@ class ModuleStore {
 
         this.document = [
             {
+                id:Math.random(),
                 template: this.library['diagonal-lines'],
                 current:null,
             },
             {
+                id:Math.random(),
                 template: this.library['vertical-lines'],
                 current:null,
             }
@@ -127,7 +129,7 @@ class ModuleStore {
         this.listeners[type].push(cb)
         return cb
     }
-    of(type,cb) {
+    off(type,cb) {
         this.listeners[type] = this.listeners[type].filter((c)=> c!==cb)
     }
     getLibraryModules() {
@@ -148,12 +150,22 @@ class ModuleStore {
     getActiveModules() {
         return this.document
     }
+    setActiveModules(list) {
+        this.document = list
+    }
 
     addActiveModule(mod) {
         this.document.push({
+            id:Math.random(),
             template:mod,
             current:null
         })
+        this.listeners['active'].forEach(cb=>cb(this.document))
+    }
+
+    removeActiveModule(mod) {
+        const n = this.document.indexOf(mod)
+        if(n >= 0) this.document.splice(n,1)
         this.listeners['active'].forEach(cb=>cb(this.document))
     }
 
