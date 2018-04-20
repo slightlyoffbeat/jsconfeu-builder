@@ -2,9 +2,43 @@ import React, {Component} from "react";
 import ModulePanel from "./ModulePanel";
 import ModuleStore from "./ModuleStore";
 import DraggableList from "react-draggable-list"
+import * as THREE from 'three'
 
 const STORE = ModuleStore
 
+class PreviewComponent extends Component {
+    componentDidMount() {
+        const w = 600
+        const h = 400
+        this.scene = new THREE.Scene();
+        this.camera = new THREE.PerspectiveCamera( 75, w/h, 0.1, 1000 );
+        this.renderer = new THREE.WebGLRenderer({canvas:this.canvas});
+        this.renderer.setClearColor(0xff0000,1)
+        this.renderer.setSize(w, h)
+
+
+        const geometry = new THREE.BoxGeometry(3, 4, 1)
+        const material = new THREE.MeshBasicMaterial({color: 0x00ff00})
+        this.cube = new THREE.Mesh(geometry, material)
+        this.scene.add( this.cube );
+        this.camera.position.z = 5;
+        this.startRepaint()
+    }
+    startRepaint() {
+        const repaint = ()=> {
+            this.cube.rotation.y += 0.01;
+            requestAnimationFrame(repaint)
+            this.renderer.render(this.scene, this.camera)
+        }
+        repaint()
+    }
+    render() {
+        const w = 600
+        const h = 400
+        return <canvas id="pipeline-preview" width={w} height={h} ref={(canvas) => this.canvas = canvas}/>
+    }
+
+}
 export default class PipelineEditor extends Component {
     constructor(props) {
         super(props)
@@ -70,7 +104,7 @@ export default class PipelineEditor extends Component {
     }
 
     renderPreview() {
-        return <div id={"pipeline-preview"}>pipeline preview</div>
+        return <PreviewComponent/>
     }
 
     renderActiveModules() {
