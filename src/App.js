@@ -93,7 +93,7 @@ const Toolbar = (props) => {
         <a href="#" onClick={()=>props.navTo('pipeline')}>Create an Animation</a>
         <a href="#" onClick={()=>props.navTo('queue')}>What's Coming Next</a>
         <a href="#" onClick={()=>props.navTo('about')}>About</a>
-        <a href="#" onClick={()=>props.navTo('github')}>Connect with GitHub</a>
+        <a href="#" onClick={()=>props.navTo('github')} className="round-button">Connect with GitHub</a>
     </div>
 
 }
@@ -121,17 +121,17 @@ const HomeScreen = (props) => {
             <h2>Ways to get started</h2>
             <div>
                 <div className="panel">
-                    <img src='#' width="64" height="64"/>
+                    <i className="fa fa-square fa-4x icon"/>
                     <span>Code a module in WebAssembly studio</span>
                     <a href='#'>Code a Module</a>
                 </div>
                 <div className="panel">
-                    <img src='#' width="64" height="64"/>
+                    <i className="fa fa-headphones fa-4x icon"/>
                     <span>Use a VR headset or AR setup to paint</span>
                     <a href='#'>Start Painting</a>
                 </div>
                 <div className="panel">
-                    <img src='#' width="64" height="64"/>
+                    <i className="fa fa-paint-brush fa-4x icon"/>
                     <span>Build a pipeline lorem ipsum dolar sit</span>
                     <a href='#'>Start Assembling</a>
                 </div>
@@ -143,7 +143,7 @@ const HomeScreen = (props) => {
                 <h3>See what's up next</h3>
                 <p>Check out what is in the queue and find
                 out when yours will be up.</p>
-                <a href='#'>View the Queue</a>
+                <a href='#' className="round-button">View the Queue</a>
             </div>
             <div className="img"/>
         </section>
