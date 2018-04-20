@@ -1,6 +1,82 @@
 body {
   --panel-bg: #aaa;
+  --bg: #000;
+
+  background-color: var(--bg);
+  color: white;
 }
+
+/* ============= */
+
+
+#toolbar {
+  border: 1px solid red;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+}
+#toolbar .logo {
+  border: 1px solid red;
+  background-color: var(--bg);
+  color: white;
+}
+
+#toolbar a {
+  color: white;
+  font-size: 80%;
+  padding: 0.5em;
+}
+
+
+section {
+  padding: 2em;
+  /*border: 1px solid blue;*/
+}
+section h1 {
+  font-size: 200%;
+}
+
+section.narrow-left {
+  width: 40%;
+  /*border: 1px solid red;*/
+}
+
+
+section.wells {
+  /*border: 1px solid red;*/
+}
+section.wells > div {
+  display: flex;
+  flex-direction: row;
+}
+section.wells .panel {
+  /*border: 1px solid green;*/
+}
+
+section.wells .panel img {
+  float: left;
+}
+
+
+section.queue {
+  display: flex;
+  flex-direction: row;
+}
+section.queue h3 {
+  font-size: 200%;
+}
+
+section.queue div.img {
+  border: 1px solid red;
+  height: 200px;
+  width: 400px;
+}
+
+
+
+
 .main {
   display: grid;
   grid-template-columns: [left] 1fr [middle] 2fr [right];
@@ -103,3 +179,11 @@ body {
 .action:hover {
   color: white;
 }
+
+
+
+
+
+
+
+/* =================== */
