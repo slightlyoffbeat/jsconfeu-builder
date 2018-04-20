@@ -107,7 +107,7 @@ section.queue div.img {
 .main {
   display: grid;
   grid-template-columns: [left] 1fr [middle] 2fr [right];
-  grid-template-rows: [toolbar] 2em [search] 2em [body] 1fr [bottom];
+  grid-template-rows: [toolbar] 2em [search] 2em [body] 1fr [list] 30em [bottom];
   background-color: #000;
   grid-gap: 1px;
   border: 0px solid greenyellow;
@@ -162,45 +162,49 @@ section.queue div.img {
   flex-direction: row;
 }
 
+#pipeline-preview {
+  grid-column: middle/right;
+  grid-row: body/list;
+  border: 1px solid red;
+  background: green;
+  margin: 1em;
+}
 
-
-.active-list {
-  grid-row: search/bottom;
-  margin:0;
+#active-list {
+  margin: 1em;
+  grid-row: list/bottom;
+  grid-column: middle/right;
   background-color: var(--panel-bg);
   list-style: none;
   padding:0;
+  display: flex;
+  flex-direction: row;
 }
 
 .module-panel {
   border: 1px solid black;
   display: grid;
-  grid-template-columns: [left]1fr [right]2fr [end]2em;
-  grid-template-rows: [actions]2em [info] 2em [info2] 2em [canvas]10em;
+  grid-template-columns: [left]8fr [right]2em;
+  grid-template-rows: [canvas] 180px [info] 2em [bottom];
   background-color: #ccc;
   border-radius: 1em;
   padding: 1em;
   margin: 1em;
 }
 .module-panel .action{
-  grid-row: actions;
-}
-.module-panel label {
-  grid-column: left;
-}
-.module-panel span {
   grid-column: right;
-  font-weight: bold;
-}
-.module-panel canvas {
-  grid-row: canvas;
-  grid-column: left/end;
-  border: 1px solid black;
+  text-align: right;
 }
 
-.module-panel .fa-close.action {
-  grid-column: end;
-  text-align: right;
+.module-panel canvas {
+  grid-row: canvas;
+  grid-column: left;
+  border: 1px solid black;
+}
+.module-panel .title {
+  grid-column: left;
+  grid-row: info;
+  padding-top: 1em;
 }
 
 .action:hover {

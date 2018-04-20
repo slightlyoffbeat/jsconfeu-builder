@@ -56,6 +56,7 @@ export default class PipelineEditor extends Component {
                     <button className="fa fa-close" onClick={this.clearSearch}/>
                 </div>
                 {this.renderLibraryResults()}
+                {this.renderPreview()}
                 {this.renderActiveModules()}
             </div>
         );
@@ -66,6 +67,10 @@ export default class PipelineEditor extends Component {
         return <ul className="library-results">{modules.map((mod) => {
             return <li key={mod.name}>{mod.name}<i style={{flex: 1}}/> <i className="fa fa-plus action" onClick={()=>this.addModule(mod)}/></li>
         })}</ul>
+    }
+
+    renderPreview() {
+        return <div id={"pipeline-preview"}>pipeline preview</div>
     }
 
     renderActiveModules() {
