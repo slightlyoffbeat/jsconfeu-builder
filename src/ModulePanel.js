@@ -24,11 +24,10 @@ export  default  class ModulePanel extends Component {
     }
     render() {
         return <div className="module-panel">
+            <span className="title">{this.props.item.template.name}</span>
+            <canvas width={44*5} height={36*5} ref={(canvas)=>this.canvas = canvas}></canvas>
             {this.props.dragHandle(<i className="fa fa-bars handle action"/>)}
             <i className="fa fa-close action" onClick={this.delete}/>
-            <label>name</label><span>{this.props.item.template.name}</span>
-            <label>author</label><span>{this.props.item.template.author}</span>
-            <canvas width={44*5} height={36*5} ref={(canvas)=>this.canvas = canvas}></canvas>
         </div>
     }
 }
