@@ -220,4 +220,29 @@ section.queue div.img {
 
 
 
-/* =================== */
+/* ========== queue screen ========= */
+
+article.queue {
+  border: 1px solid red;
+}
+article.queue .entry {
+  border: 1px solid purple;
+  width: 20em;
+  display: grid;
+  grid-template-columns: [left] 1fr [right] 3fr;
+}
+article.queue .entry > * {
+  grid-column: left;
+}
+article.queue .entry .img {
+  border: 1px solid white;
+  width: 15em;
+  height: 10em;
+  background-color: gray;
+  grid-column: right;
+  grid-row: top/bottom;
+}
+article.queue .entry:first-child {
+  border: 1px solid green;
+  font-size: 200%;
+}

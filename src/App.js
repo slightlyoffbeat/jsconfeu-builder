@@ -4,6 +4,7 @@ import "font-awesome/css/font-awesome.css";
 
 import ModuleStore from "./ModuleStore"
 import PipelineEditor from "./PipelineEditor";
+import QueueScreen from './QueueScreen'
 const STORE = ModuleStore
 
 
@@ -82,41 +83,7 @@ const PaintScreen = (props) => {
         AR Experience Container
         </article>
 }
-const QueueScreen = (props) => {
-    return <article>
-    <section>
-        <h2>Currently On</h2>
-        <h3>Title</h3>
-        <p>This describes the module to people</p>
-        <cite>by Author Name</cite>
-        <div className='img'>
-            currently on the screen
-        </div>
-    </section>
-        <ol>
-            <li>
-                <div className="entry">
-                    <h3>Title</h3>
-                    <p>This describes the module to people</p>
-                    <cite>by Author Name</cite>
-                    <div className='img'>
-                        preview
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div className="entry">
-                    <h3>Title</h3>
-                    <p>This describes the module to people</p>
-                    <cite>by Author Name</cite>
-                    <div className='img'>
-                        preview
-                    </div>
-                </div>
-            </li>
-        </ol>
-    </article>
-}
+
 const AboutScreen = (props) => {
     return <div> about screen</div>
 }
@@ -128,7 +95,7 @@ class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            screen:"animation"
+            screen:"queue"
         }
     }
     navTo = (screen) => {
