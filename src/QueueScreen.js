@@ -20,6 +20,22 @@ function iter(from,to) {
 }
 
 export default class  QueueScreen extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            modules:[]
+        }
+    }
+    componentDidMount() {
+        fetch('http://localhost:39176/api/queue', {mode:'cors'})
+            .then( response => response.json())
+            .then(modules => {
+                console.log("Got a doc",modules)
+                this.setState({modules:modules})
+            }).catch((e)=>{
+                console.log("an error happened",e)
+            })
+    }
     render() {
 
         const modules = iter(0,10).map((i,ii)=> {
@@ -31,7 +47,7 @@ export default class  QueueScreen extends Component {
             }
         })
         return <article className="queue">
-            {modules.map((mod, i) => <QueueModulePanel key={i} module={mod}/>)}
+            {this.state.modules.map((mod, i) => <QueueModulePanel key={i} module={mod}/>)}
         </article>
     }
 }
