@@ -218,6 +218,13 @@ class ModuleStore {
             }
         }
     }
+
+
+    getQueue() {
+        this.queue = []
+        console.log("the queue is", this.queue)
+        return this.queue
+    }
 }
 
 

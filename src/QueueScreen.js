@@ -1,38 +1,8 @@
 import React, { Component } from 'react';
+import ModuleStore from './ModuleStore'
 const QueueScreen = (props) => {
-    return <article>
-        <section>
-            <h2>Currently On</h2>
-            <h3>Title</h3>
-            <p>This describes the module to people</p>
-            <cite>by Author Name</cite>
-            <div className='img'>
-                currently on the screen
-            </div>
-        </section>a
-        <ol>
-            <li>
-                <div className="entry">
-                    <h3>Title</h3>
-                    <p>This describes the module to people</p>
-                    <cite>by Author Name</cite>
-                    <div className='img'>
-                        preview
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div className="entry">
-                    <h3>Title</h3>
-                    <p>This describes the module to people</p>
-                    <cite>by Author Name</cite>
-                    <div className='img'>
-                        preview
-                    </div>
-                </div>
-            </li>
-        </ol>
-    </article>
+    const modules = ModuleStore.getQueue()
+    return <article>{modules.map((mod,i)=><QueueModulePanel key={i} module={mod} scale={i===0?20:5}/>)}</article>
 }
 export default QueueScreen
 
