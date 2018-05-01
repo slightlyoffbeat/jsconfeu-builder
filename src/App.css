@@ -221,3 +221,16 @@ section.queue div.img {
 
 
 /* =================== */
+
+
+article {
+  width: 88vw;
+  min-height: 50vh;
+  margin: 0 5vw;
+  border: 5px solid white;
+}
+
+iframe#wasm-editor {
+  width: 100%;
+  min-height:800px;
+}
