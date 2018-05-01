@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/three/build/three.min.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+    <script src="node_modules/threejs-particle-shader/dist/particles.js"></script>
+</head>
+<body>
+<script>
+    var createGeometryTexture = function(geometry, size){
+        var data = new Float32Array( size * size * 3 );
+        var verticesLength = geometry.vertices.length;
+        for (var i = 0; i < size * size; i ++) {
+            if(verticesLength > i){
+                data[ i * 3 ]     = geometry.vertices[i].x;
+                data[ i * 3 + 1 ] = geometry.vertices[i].y;
+                data[ i * 3 + 2 ] = geometry.vertices[i].z;
+            } else {
+                data[ i * 3 ] = data[ i * 3 + 1 ] = data[ i * 3 + 2 ] = 0.0;
+            }
+        }
+        var dataTexture = new THREE.DataTexture(data, size, size, THREE.RGBFormat, THREE.FloatType);
+        dataTexture.needsUpdate = true;
+        return dataTexture;
+    };
+
+    var camera, scene, renderer, stats, material;
+    var mouseX = 0, mouseY = 0;
+
+    let particles
+
+    init();
+    animate();
+
+
+
+
+    function init() {
+
+        camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 1, 2000 );
+        camera.position.set( 0, 0, 3);
+
+        scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2( 0xffffff, 0.111 );
+
+        renderer = new THREE.WebGLRenderer();
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.setSize( window.innerWidth-100, window.innerHeight-100 );
+        document.body.appendChild( renderer.domElement );
+
+
+        const size = 64
+        const gMain   = createGeometryTexture(new THREE.SphereGeometry(1.5, size-1, size-1), size);
+        const gSphere = createGeometryTexture(new THREE.SphereGeometry(1.5, size-1, size-1), size)
+        const gBox    = createGeometryTexture(new THREE.BoxGeometry(1.7, 1.7, 1.7, 26, 26, 26), size)
+        const gTorus  = createGeometryTexture(new THREE.TorusGeometry(1.0,0.5, size-1, size-1),size)
+
+        let geoindex = 0
+        const geoms = [gSphere, gBox, gTorus]
+
+        particles = new Particles(renderer, scene, {
+            textureSize: 32,
+            // gravityFactor: 0.05,
+            // explodeRate: 0.1,
+            pointSize: 5,
+            // targetPosition: new THREE.Vector3(0,1,0),
+            targetTexture: gMain,
+            velocityFunctionString: 'outVelocity = direction * (dist/140.0);',
+            // colorFunctionString: 'color = vec4(0.0, 1.0, 0.0, 1.0);'
+            colorFunctionString: 'color = vec4(1.0-dist, dist, 1.0, 1.0);'
+            // colorFunctionString: `
+            //  float smoothDist = smoothstep(0.0, 2.0, dist);
+            //  color = vec4(vec3(1.0 - smoothDist), 1.0);
+            //  `
+        });
+
+        function switchGeometry() {
+            geoindex = (geoindex+1) % geoms.length
+            gMain.image = geoms[geoindex].image
+            gMain.needsUpdate = true
+        }
+        setInterval(switchGeometry,10*1000)
+    }
+
+    function animate() {
+        requestAnimationFrame( animate );
+        render();
+    }
+
+    function render() {
+        particles.update()
+        particles.pointCloud.rotation.y += 0.003
+        particles.pointCloud.rotation.z += 0.005
+        renderer.render( scene, camera );
+    }
+
+</script>
+</body>
+</html>
