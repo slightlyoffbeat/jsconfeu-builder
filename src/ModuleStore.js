@@ -88,6 +88,13 @@ function makeContext(frameset) {
 
 class ModuleStore {
     constructor() {
+        this.queue = []
+        fetch("http://localhost:39176/api/queue")
+            .then((res)=>res.json())
+            .then((out)=> {
+            console.log("got the results",out)
+                this.queue = out
+        })
         this.library = {
             'diagonal-lines': {
                 name: 'diagonal-lines',
@@ -221,7 +228,7 @@ class ModuleStore {
 
 
     getQueue() {
-        this.queue = []
+        // this.queue = []
         console.log("the queue is", this.queue)
         return this.queue
     }

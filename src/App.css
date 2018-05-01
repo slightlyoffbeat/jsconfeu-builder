@@ -216,13 +216,6 @@ section.queue div.img {
 
 
 
-
-
-
-
-/* =================== */
-
-
 article {
   width: 88vw;
   min-height: 50vh;
@@ -230,7 +223,25 @@ article {
   border: 5px solid white;
 }
 
+
+
+
+/* ======= WASM Editor ============ */
+
+
+
 iframe#wasm-editor {
   width: 100%;
   min-height:800px;
+}
+
+
+
+/* ========Queue Viewer ========== */
+
+.queue-module {
+  border: 1px solid white;
+}
+.queue-module canvas {
+  border: 1px solid yellow;
 }
