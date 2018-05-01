@@ -89,7 +89,7 @@ function makeContext(frameset) {
 class ModuleStore {
     constructor() {
         this.queue = []
-        fetch("http://localhost:39176/api/queue")
+        fetch("http://vr.josh.earth:39176/api/queue")
             .then((res)=>res.json())
             .then((out)=> {
             console.log("got the results",out)
