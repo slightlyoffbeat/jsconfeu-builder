@@ -9,6 +9,7 @@ import CodeScreen from './CodeScreen'
 import PaintScreen from './PaintScreen'
 import QueueScreen from './QueueScreen'
 import AboutScreen from './AboutScreen'
+import AuthStore from "./AuthStore"
 
 const Toolbar = (props) => {
     return <div id="toolbar">
@@ -18,7 +19,7 @@ const Toolbar = (props) => {
         {/*<a href="#" onClick={()=>props.navTo('pipeline')}>Create an Animation</a>*/}
         <a href="#" onClick={()=>props.navTo('queue')}>What's Coming Next</a>
         <a href="#" onClick={()=>props.navTo('about')}>About</a>
-        <a href="#" onClick={()=>props.navTo('github')} className="round-button">Connect with GitHub</a>
+        <a href="#" onClick={()=>props.startAuth('github')} className="round-button">Connect with GitHub</a>
     </div>
 
 }
@@ -33,15 +34,29 @@ class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            screen:"queue"
+            screen:"queue",
+            user:null
         }
+        AuthStore.listenToLogin(()=>{
+            console.log("the user is logged in")
+            AuthStore.checkAuth().then((user)=>{
+                console.log("the user object is",user)
+                this.setState({user:user})
+            })
+        })
+        AuthStore.checkAuth().then((user)=>{
+            console.log("checking user",user)
+            if(user) {
+                this.setState({user:user})
+            }
+        })
     }
     navTo = (screen) => this.setState({screen:screen})
     render() {
         return <div id="body">
-            <Toolbar navTo={this.navTo}/>
+            <Toolbar navTo={this.navTo} startAuth={()=>AuthStore.start()}/>
             <div id="content">{this.renderContent()}</div>
-            <div id="footer">footer</div>
+            <div id="footer">footer hello user {this.state.user?"logged in " + this.state.user.displayName:"logged out"}</div>
         </div>
     }
 
