@@ -51,7 +51,25 @@ class App extends Component {
             }
         })
     }
-    navTo = (screen) => this.setState({screen:screen})
+    navTo = (screen, data) => this.setState({screen:screen, data:data})
+    onSubmit = (module) => {
+        console.log("submitting the module",module)
+
+        function missing(str) {
+            if(!str) return true
+            if(str.trim().length === 0) return true
+            return false
+        }
+        if(missing(module.title)) throw new Error("module is missing a title")
+        if(missing(module.description)) throw new Error("module is missing a description")
+        console.log("checking missing")
+        ModuleStore.submitModule(module).then(()=>{
+            console.log("done submitting")
+            return this.navTo('code-submit-done')
+        }).catch((e)=>{
+            console.log("error submitting",e)
+        })
+    }
     render() {
         return <div id="body">
             <Toolbar navTo={this.navTo} startAuth={()=>AuthStore.start()}/>
@@ -62,10 +80,10 @@ class App extends Component {
 
     renderContent() {
         if(this.state.screen === 'home') return <HomeScreen navTo={this.navTo}/>
-        if(this.state.screen === 'code') return <CodeScreen navTo={this.navTo}/>
-        if(this.state.screen === 'code-preview') return <CodeScreen.Preview navTo={this.navTo}/>
-        if(this.state.screen === 'code-submit') return <CodeScreen.Submit navTo={this.navTo}/>
-        if(this.state.screen === 'code-submit-done') return <CodeScreen.SubmitDone navTo={this.navTo}/>
+        if(this.state.screen === 'code') return <CodeScreen navTo={this.navTo} data={this.state.data}/>
+        if(this.state.screen === 'code-preview') return <CodeScreen.Preview navTo={this.navTo} data={this.state.data}/>
+        if(this.state.screen === 'code-submit') return <CodeScreen.Submit navTo={this.navTo} data={this.state.data} onSubmit={this.onSubmit}/>
+        if(this.state.screen === 'code-submit-done') return <CodeScreen.SubmitDone navTo={this.navTo} data={this.state.data}/>
         if(this.state.screen === 'paint') return <PaintScreen/>
         if(this.state.screen === 'pipeline') return <PipelineEditor/>
         if(this.state.screen === 'queue') return <QueueScreen navTo={this.navTo}/>

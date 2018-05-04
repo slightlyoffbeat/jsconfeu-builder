@@ -5,28 +5,30 @@ class AuthStore {
     }
 
     start() {
-        const store = this
         console.log('starting the auth flow')
         fetch('http://localhost:39176/api/github/login')
             .then((res)=>res.json())
             .then((res)=>{
-            console.log("starting the login",res)
-                const win = window.open(res.url,'_blank')
-                window.addEventListener('message',function(msg) {
-                    console.log("got an event from the external window",msg)
-                    console.log("origin = ", msg.origin)
-                    if(!msg.origin === 'http://localhost:39176') {
-                        console.log("message is not from the expected origin. what do we do?")
-                    }
-                    console.log("data is",msg.data.payload)
-                    console.log("hello user", msg.data.payload.id)
-                    console.log("your access token is",msg.data.payload.accessToken)
-                    store.setUserData(msg.data.payload)
-                    //close the window
-                    win.close()
-                })
-                win.focus()
-        })
+                console.log("starting the login",res)
+                this.win = window.open(res.url,'_blank')
+                window.addEventListener('message',this.authCallback)
+                this.win.focus()
+            })
+    }
+
+    authCallback = (msg) => {
+        console.log("got an event from the external window",msg)
+        console.log("origin = ", msg.origin)
+        if(!msg.origin === 'http://localhost:39176') {
+            console.log("message is not from the expected origin. what do we do?")
+        }
+        console.log("data is",msg.data.payload)
+        console.log("hello user", msg.data.payload.id)
+        console.log("your access token is",msg.data.payload.accessToken)
+        this.setUserData(msg.data.payload)
+        //close the window
+        this.win.close()
+        window.removeEventListener('message',this.authCallback)
     }
 
     checkAuth() {
@@ -34,7 +36,7 @@ class AuthStore {
         if(localStorage.getItem('access-token')) {
             accesstoken = localStorage.getItem('access-token')
         }
-        console.log("fetching with the access token",accesstoken)
+        // console.log("fetching with the access token",accesstoken)
         return fetch(`http://localhost:39176/api/userinfo?accesstoken=${accesstoken}`)
             .then((res)=>res.json())
             .then((res)=>{
@@ -50,6 +52,7 @@ class AuthStore {
     listenToLogin(cb) {
         this.listeners.push(cb)
     }
+
 }
 
 

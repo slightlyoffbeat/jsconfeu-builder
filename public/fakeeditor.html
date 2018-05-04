@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<textarea id="code" rows="10" cols="60">
+const RED   = 0xFF0000FF;
+function run(ctx) {
+    for(let f=0; f<ctx.getFrameCount(); f++) {
+        for (let y = 0; y < ctx.getHeight(); y++) {
+            for (let x = 0; x < ctx.getWidth(); x++) {
+                ctx.setPixelRGBA(x, y, f, RED)
+            }
+        }
+    }
+}
+</textarea>
+<button id="button">save</button>
+<script>
+    const $ = (sel) => document.querySelector(sel)
+    const on = (elem, type, cb) => elem.addEventListener(type,cb)
+
+    on($('#button'),'click',()=>{
+        console.log("clicked inside the iframe")
+
+        const module = {
+            javascript: $("#code").value
+        }
+        console.log("the module is",module)
+
+
+        window.parent.postMessage(module, '*')
+        console.log("done posting a message")
+    })
+
+</script>
+</body>
+</html>

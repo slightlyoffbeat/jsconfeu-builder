@@ -86,10 +86,11 @@ function makeContext(frameset) {
     }
 }
 
+const BASE_URL = `https://vr.josh.earth/jsconfeu-builder/api`
 class ModuleStore {
     constructor() {
         this.queue = []
-        fetch("https://vr.josh.earth/jsconfeu-builder/api/queue")
+        fetch(`${BASE_URL}/queue`)
             .then((res)=>res.json())
             .then((out)=> {
             console.log("got the results",out)
@@ -231,6 +232,18 @@ class ModuleStore {
         // this.queue = []
         console.log("the queue is", this.queue)
         return this.queue
+    }
+
+    submitModule(module) {
+        console.log('saving a module')
+        return fetch(`${BASE_URL}/publish`,{
+            method:'POST',
+            body: JSON.stringify(module),
+            mode:'cors'
+        }).then((res)=>{
+            console.log('posted with the result',res)
+            return res.json()
+        })
     }
 }
 
