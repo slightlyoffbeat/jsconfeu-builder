@@ -62,10 +62,13 @@ class App extends Component {
 
     renderContent() {
         if(this.state.screen === 'home') return <HomeScreen navTo={this.navTo}/>
-        if(this.state.screen === 'code') return <CodeScreen/>
+        if(this.state.screen === 'code') return <CodeScreen navTo={this.navTo}/>
+        if(this.state.screen === 'code-preview') return <CodeScreen.Preview navTo={this.navTo}/>
+        if(this.state.screen === 'code-submit') return <CodeScreen.Submit navTo={this.navTo}/>
+        if(this.state.screen === 'code-submit-done') return <CodeScreen.SubmitDone navTo={this.navTo}/>
         if(this.state.screen === 'paint') return <PaintScreen/>
         if(this.state.screen === 'pipeline') return <PipelineEditor/>
-        if(this.state.screen === 'queue') return <QueueScreen/>
+        if(this.state.screen === 'queue') return <QueueScreen navTo={this.navTo}/>
         if(this.state.screen === 'about') return <AboutScreen/>
         if(this.state.screen === 'github') return <GithubScreen/>
         return <PipelineEditor/>
