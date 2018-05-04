@@ -88,6 +88,13 @@ function makeContext(frameset) {
 
 class ModuleStore {
     constructor() {
+        this.queue = []
+        fetch("https://vr.josh.earth/jsconfeu-builder/api/queue")
+            .then((res)=>res.json())
+            .then((out)=> {
+            console.log("got the results",out)
+                this.queue = out
+        })
         this.library = {
             'diagonal-lines': {
                 name: 'diagonal-lines',
@@ -217,6 +224,13 @@ class ModuleStore {
                 ctx.fillRect(i*s,j*s,s,s)
             }
         }
+    }
+
+
+    getQueue() {
+        // this.queue = []
+        console.log("the queue is", this.queue)
+        return this.queue
     }
 }
 

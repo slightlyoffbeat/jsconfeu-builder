@@ -22,10 +22,15 @@ class PreviewComponent extends Component {
         this.cube = new THREE.Mesh(geometry, material)
         this.scene.add( this.cube );
         this.camera.position.z = 5;
+        this.mounted = true
         this.startRepaint()
+    }
+    componentWillUnmount() {
+        this.mounted = false
     }
     startRepaint() {
         const repaint = ()=> {
+            if(!this.mounted) return
             this.cube.rotation.y += 0.01;
             requestAnimationFrame(repaint)
             this.renderer.render(this.scene, this.camera)

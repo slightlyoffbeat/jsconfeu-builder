@@ -216,33 +216,32 @@ section.queue div.img {
 
 
 
-
-
-
-
-/* ========== queue screen ========= */
-
-article.queue {
-  border: 1px solid red;
+article {
+  width: 88vw;
+  min-height: 50vh;
+  margin: 0 5vw;
+  border: 5px solid white;
 }
-article.queue .entry {
-  border: 1px solid purple;
-  width: 20em;
-  display: grid;
-  grid-template-columns: [left] 1fr [right] 3fr;
+
+
+
+
+/* ======= WASM Editor ============ */
+
+
+
+iframe#wasm-editor {
+  width: 100%;
+  min-height:800px;
 }
-article.queue .entry > * {
-  grid-column: left;
-}
-article.queue .entry .img {
+
+
+
+/* ========Queue Viewer ========== */
+
+.queue-module {
   border: 1px solid white;
-  width: 15em;
-  height: 10em;
-  background-color: gray;
-  grid-column: right;
-  grid-row: top/bottom;
 }
-article.queue .entry:first-child {
-  border: 1px solid green;
-  font-size: 200%;
+.queue-module canvas {
+  border: 1px solid yellow;
 }
