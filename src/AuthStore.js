@@ -1,3 +1,5 @@
+const BASE_URL = `https://vr.josh.earth/jsconfeu-builder/api`
+
 class AuthStore {
     constructor(){
         console.log('setting up the auth')
@@ -6,7 +8,7 @@ class AuthStore {
 
     start() {
         console.log('starting the auth flow')
-        fetch('http://localhost:39176/api/github/login')
+        fetch(`${BASE_URL}/github/login`)
             .then((res)=>res.json())
             .then((res)=>{
                 console.log("starting the login",res)
@@ -37,7 +39,7 @@ class AuthStore {
             accesstoken = localStorage.getItem('access-token')
         }
         // console.log("fetching with the access token",accesstoken)
-        return fetch(`http://localhost:39176/api/userinfo?accesstoken=${accesstoken}`)
+        return fetch(`${BASE_URL}/userinfo?accesstoken=${accesstoken}`)
             .then((res)=>res.json())
             .then((res)=>{
                 console.log("result of user info is", res)

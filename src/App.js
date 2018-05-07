@@ -35,7 +35,7 @@ class App extends Component {
         super(props)
         this.state = {
             screen:"queue",
-            user:null
+            user:null,
         }
         AuthStore.listenToLogin(()=>{
             console.log("the user is logged in")
@@ -63,12 +63,17 @@ class App extends Component {
         if(missing(module.title)) throw new Error("module is missing a title")
         if(missing(module.description)) throw new Error("module is missing a description")
         console.log("checking missing")
-        ModuleStore.submitModule(module).then(()=>{
-            console.log("done submitting")
-            return this.navTo('code-submit-done')
-        }).catch((e)=>{
-            console.log("error submitting",e)
-        })
+
+        if(!this.state.user) {
+            console.log("not authenitcated. can't submit")
+            AuthStore.start()
+        } else {
+            ModuleStore.submitModule(module).then(() => {
+                return this.navTo('code-submit-done')
+            }).catch((e) => {
+                console.log("error submitting", e)
+            })
+        }
     }
     render() {
         return <div id="body">

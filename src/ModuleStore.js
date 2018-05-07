@@ -87,15 +87,11 @@ function makeContext(frameset) {
 }
 
 const BASE_URL = `https://vr.josh.earth/jsconfeu-builder/api`
+// const BASE_URL = `http://localhost:39176/api`
 class ModuleStore {
     constructor() {
         this.queue = []
-        fetch(`${BASE_URL}/queue`)
-            .then((res)=>res.json())
-            .then((out)=> {
-            console.log("got the results",out)
-                this.queue = out
-        })
+        this.refreshQueue()
         this.library = {
             'diagonal-lines': {
                 name: 'diagonal-lines',
@@ -227,23 +223,35 @@ class ModuleStore {
         }
     }
 
+    refreshQueue() {
+        return fetch(`${BASE_URL}/queue`)
+            .then((res)=>res.json())
+            .then((queue)=> {
+                console.log("got the remote queue",queue)
+                this.queue = queue
+            })
+    }
 
     getQueue() {
-        // this.queue = []
         console.log("the queue is", this.queue)
         return this.queue
     }
 
     submitModule(module) {
-        console.log('saving a module')
+        console.log('saving a module',module)
         return fetch(`${BASE_URL}/publish`,{
             method:'POST',
             body: JSON.stringify(module),
-            mode:'cors'
-        }).then((res)=>{
-            console.log('posted with the result',res)
-            return res.json()
+            mode:'cors',
+            headers: {
+                'content-type':'application/json'
+            }
         })
+            .then(res => res.json())
+            .then((res)=>{
+                console.log('posted with the result',res)
+                this.refreshQueue()
+            })
     }
 }
 
