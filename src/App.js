@@ -2,13 +2,19 @@ import React, { Component } from "react";
 import "./style/style.css";
 import "font-awesome/css/font-awesome.css";
 
+// Components
+import Navbar from "./components/Navbar";
+
+// Pages
+import AboutScreen from "./Pages/AboutScreen";
+import CodeScreen from "./Pages/CodeScreen";
+import PaintScreen from "./Pages/PaintScreen";
+import PipelineEditor from "./Pages/PipelineEditor";
+import QueueScreen from "./Pages/QueueScreen";
+import HomeScreen from "./Pages/HomeScreen";
+
+// Other
 import ModuleStore from "./ModuleStore";
-import PipelineEditor from "./PipelineEditor";
-import HomeScreen from "./HomeScreen";
-import CodeScreen from "./CodeScreen";
-import PaintScreen from "./PaintScreen";
-import QueueScreen from "./QueueScreen";
-import AboutScreen from "./AboutScreen";
 import AuthStore from "./AuthStore";
 
 const Toolbar = props => {
@@ -98,7 +104,7 @@ class App extends Component {
   render() {
     return (
       <div id="body">
-        <Toolbar navTo={this.navTo} startAuth={() => AuthStore.start()} />
+        <Navbar navTo={this.navTo} startAuth={() => AuthStore.start()} />
         <div id="content">{this.renderContent()}</div>
         <div id="footer">
           footer hello user{" "}
