@@ -7,11 +7,9 @@
 
 $white: #ffffff;
 $black: #000000;
-$yellow: #fee734;
-$yellow-dark: #f2dc30;
-$gray: #f4f6fa;
-$blue: #4e4ffb;
-$blue-dark: #3136c8;
+$purple: #8551cd;
+$blue: #53a0fd;
+$cyan: #72e5ed;
 $primary: $blue;
 
 // Breakpoints
@@ -26,13 +24,13 @@ $breakpoints: (
 
 // Type
 // -------------------------
-
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:600,700|Open+Sans:300,400,700");
 $base-font-size: 18px;
 $base-line-height: 1.8;
 $base-font-color: $black;
 $scale: 1.25;
 $leading: $base-line-height * 1rem;
-$sans-serif: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+$sans-serif: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
 $serif: "Cambria", "Georgia", "serif";
 $mono: "Lucida Console", Monaco, monospace !default;
 $base-font-family: $sans-serif;

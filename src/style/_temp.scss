@@ -1,13 +1,12 @@
 body {
-  --panel-bg: #aaa;
-  --bg: #000;
+  // --panel-bg: #aaa;
+  // --bg: #000;
 
   background-color: var(--bg);
   color: white;
 }
 
 /* ============= */
-
 
 #toolbar {
   padding: 1em;
@@ -29,7 +28,6 @@ body {
   text-decoration: none;
 }
 
-
 section {
   padding: 2em;
   /*border: 1px solid blue;*/
@@ -43,8 +41,6 @@ section.narrow-left {
   /*border: 1px solid red;*/
 }
 
-
-
 .round-button {
   border: 1px solid aqua;
   border-radius: 2em;
@@ -53,9 +49,6 @@ section.narrow-left {
   color: white;
   text-decoration: none;
 }
-
-
-
 
 section.wells {
   /*border: 1px solid red;*/
@@ -76,12 +69,6 @@ section.wells .icon {
   padding: 0.25em;
 }
 
-
-
-
-
-
-
 section.queue {
   display: flex;
   flex-direction: row;
@@ -100,9 +87,6 @@ section.queue div.img {
   height: 200px;
   width: 400px;
 }
-
-
-
 
 .main {
   display: grid;
@@ -148,9 +132,9 @@ section.queue div.img {
   grid-row: body/bottom;
   grid-column: left/middle;
   background-color: var(--panel-bg);
-  margin:0;
+  margin: 0;
   list-style: none;
-  padding:0;
+  padding: 0;
 }
 
 .library-results li {
@@ -179,7 +163,7 @@ section.queue div.img {
   grid-column: middle/right;
   background-color: var(--panel-bg);
   list-style: none;
-  padding:0;
+  padding: 0;
   display: flex;
   flex-direction: row;
 }
@@ -194,7 +178,7 @@ section.queue div.img {
   padding: 1em;
   margin: 1em;
 }
-.module-panel .action{
+.module-panel .action {
   grid-column: right;
   text-align: right;
 }
@@ -214,28 +198,19 @@ section.queue div.img {
   color: white;
 }
 
-
-
-article {
-  width: 88vw;
-  min-height: 50vh;
-  margin: 0 5vw;
-  border: 5px solid white;
-}
-
-
-
+// article {
+//   width: 88vw;
+//   min-height: 50vh;
+//   margin: 0 5vw;
+//   border: 5px solid white;
+// }
 
 /* ======= WASM Editor ============ */
 
-
-
 iframe#wasm-editor {
   width: 100%;
-  min-height:800px;
+  min-height: 800px;
 }
-
-
 
 /* ========Queue Viewer ========== */
 
