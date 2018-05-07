@@ -82,7 +82,10 @@ class App extends Component {
         if(this.state.screen === 'home') return <HomeScreen navTo={this.navTo}/>
         if(this.state.screen === 'code') return <CodeScreen navTo={this.navTo} data={this.state.data}/>
         if(this.state.screen === 'code-preview') return <CodeScreen.Preview navTo={this.navTo} data={this.state.data}/>
-        if(this.state.screen === 'code-submit') return <CodeScreen.Submit navTo={this.navTo} data={this.state.data} onSubmit={this.onSubmit}/>
+        if(this.state.screen === 'code-submit') return <CodeScreen.Submit navTo={this.navTo}
+                                                                          data={this.state.data}
+                                                                          onSubmit={this.onSubmit}
+                                                                          editData={(data)=>this.setState({data:data})}/>
         if(this.state.screen === 'code-submit-done') return <CodeScreen.SubmitDone navTo={this.navTo} data={this.state.data}/>
         if(this.state.screen === 'paint') return <PaintScreen/>
         if(this.state.screen === 'pipeline') return <PipelineEditor/>

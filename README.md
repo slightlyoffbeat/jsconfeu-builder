@@ -40,3 +40,11 @@ ex:  a 2x2 animation with 2 frames, one red and one black would look like this:
 
 
 
+
+
+In addition to the animation frames, the module also has the following properties
+
+* `title`, string
+* `description`, string
+* `author`, string
+* `tags`, an array of strings
