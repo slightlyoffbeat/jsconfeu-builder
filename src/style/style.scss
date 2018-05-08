@@ -18,6 +18,7 @@
 @import "util/space-unit";
 @import "util/math";
 @import "util/whitespace";
+@import "util/_util.scss";
 
 // Base
 // -------------------------
@@ -30,6 +31,10 @@
 // -------------------------
 @import "layout/navbar";
 @import "layout/footer";
+
+// Layout
+// -------------------------
+@import "pages/_home.scss";
 
 // Components
 // -------------------------
