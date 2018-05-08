@@ -3,11 +3,20 @@ import ModuleStore from './ModuleStore'
 import QueueModulePanel from './QueueModulePanel'
 
 export default class QueueEditor extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            modules:[]
+        }
+    }
+    addToQueue = (m) => ModuleStore.addModuleToQueue(m)
     componentDidMount() {
         ModuleStore.on('queue',(queue)=>this.setState({queue:queue}))
+        ModuleStore.findAllModules().then(modules => this.setState({modules:modules}))
     }
     render() {
-        const modules = ModuleStore.getQueue()
+        const queueModules = ModuleStore.getQueueModules()
+        const allModules = this.state.modules
         return <article
             style={{
                 height:'80vh',
@@ -23,9 +32,14 @@ export default class QueueEditor extends Component {
                 }}
             ><input type="search"/><button>search</button></div>
 
-            <div style={{
-                gridColumn:'left/right'
-            }}>all modules</div>
+            <ul style={{
+                gridColumn:'left/right',
+                overflow:'scroll',
+                padding:0,
+                gridRow:'body/bottom',
+            }}>
+                {allModules.map((m,i)=><ModuleSummaryPanel key={m._id} module={m}  onAdd={()=>this.addToQueue(m)}/>)}
+            </ul>
 
             <h3 style={{
                 gridColumn:'right/end',
@@ -39,7 +53,7 @@ export default class QueueEditor extends Component {
                 padding:0,
             }}
             >
-                {modules.map((m)=><QueueModulePanel key={m._id} module={m} scale={10}/>)}
+                {queueModules.map((m,i)=><QueueModulePanel key={i} module={m} scale={10}/>)}
             </ul>
         </article>
     }
@@ -47,3 +61,10 @@ export default class QueueEditor extends Component {
 
 
 
+const ModuleSummaryPanel = (props) => {
+    return <div>
+        <b>{props.module.title}</b>
+        <i>{props.module.tags.join(",")}</i>
+        <button onClick={props.onAdd}>+</button>
+        </div>
+}
