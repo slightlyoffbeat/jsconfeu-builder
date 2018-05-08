@@ -10,6 +10,7 @@ import PaintScreen from './PaintScreen'
 import QueueScreen from './QueueScreen'
 import AboutScreen from './AboutScreen'
 import AuthStore from "./AuthStore"
+import QueueEditor from './QueueEditor'
 
 const UserLoginButton = (props) => {
     if(AuthStore.isLoggedIn()) {
@@ -32,6 +33,7 @@ const Toolbar = (props) => {
         <a href="#" onClick={()=>props.navTo('queue')}>What's Coming Next</a>
         <a href="#" onClick={()=>props.navTo('about')}>About</a>
         <UserLoginButton/>
+        <a href="#" onClick={()=>props.navTo('queue-editor')}>QUEUE EDITOR</a>
     </div>
 }
 
@@ -39,7 +41,7 @@ class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            screen:"queue",
+            screen:"queue-editor",
             user:null,
         }
         AuthStore.listenToLogin(()=>{
@@ -100,6 +102,7 @@ class App extends Component {
         if(this.state.screen === 'paint') return <PaintScreen/>
         if(this.state.screen === 'pipeline') return <PipelineEditor/>
         if(this.state.screen === 'queue') return <QueueScreen navTo={this.navTo}/>
+        if(this.state.screen === 'queue-editor') return <QueueEditor navTo={this.navTo}/>
         if(this.state.screen === 'about') return <AboutScreen/>
         return <PipelineEditor/>
     }

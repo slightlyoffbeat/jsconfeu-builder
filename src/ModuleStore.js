@@ -136,6 +136,9 @@ class ModuleStore {
     off(type,cb) {
         this.listeners[type] = this.listeners[type].filter((c)=> c!==cb)
     }
+    fire(type,obj) {
+        this.listeners[type].forEach(cb=>cb(obj))
+    }
     getLibraryModules() {
         return o2a(this.library)
     }
@@ -229,6 +232,7 @@ class ModuleStore {
             .then((queue)=> {
                 console.log("got the remote queue",queue)
                 this.queue = queue
+                this.fire('queue',queue)
             })
     }
 
