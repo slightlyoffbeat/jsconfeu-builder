@@ -2,20 +2,28 @@ const BASE_URL = `https://vr.josh.earth/jsconfeu-builder/api`
 
 class AuthStore {
     constructor(){
-        console.log('setting up the auth')
         this.listeners = []
+        this.currentUser = null
     }
 
     start() {
-        console.log('starting the auth flow')
         fetch(`${BASE_URL}/github/login`)
             .then((res)=>res.json())
             .then((res)=>{
-                console.log("starting the login",res)
                 this.win = window.open(res.url,'_blank')
                 window.addEventListener('message',this.authCallback)
                 this.win.focus()
             })
+    }
+
+    fireChange = () => setTimeout(()=>this.listeners.forEach((cb)=>cb()))
+    listenToLogin = (cb) => this.listeners.push(cb)
+    getCurrentUser = () => this.currentUser
+    isLoggedIn = () => this.currentUser !== null
+    logout = () => {
+        localStorage.clear()
+        this.currentUser = null
+        this.fireChange()
     }
 
     authCallback = (msg) => {
@@ -42,19 +50,15 @@ class AuthStore {
         return fetch(`${BASE_URL}/userinfo?accesstoken=${accesstoken}`)
             .then((res)=>res.json())
             .then((res)=>{
-                console.log("result of user info is", res)
+                this.currentUser = res.user
+                if(!this.currentUser) this.currentUser = null
                 return res.user
             })
     }
     setUserData(data) {
         localStorage.setItem('access-token',data.accessToken)
-        setTimeout(()=>this.listeners.forEach((cb)=>cb()))
+        this.fireChange()
     }
-
-    listenToLogin(cb) {
-        this.listeners.push(cb)
-    }
-
 }
 
 

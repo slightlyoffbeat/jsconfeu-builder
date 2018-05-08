@@ -11,6 +11,18 @@ import QueueScreen from './QueueScreen'
 import AboutScreen from './AboutScreen'
 import AuthStore from "./AuthStore"
 
+const UserLoginButton = (props) => {
+    if(AuthStore.isLoggedIn()) {
+        return <a href="#"
+                  onClick={()=>AuthStore.logout()}
+        >Logout {AuthStore.getCurrentUser().displayName}</a>
+    } else {
+        return <a href="#"
+                  onClick={() => AuthStore.start()}
+                  className="round-button">Connect with GitHub</a>
+    }
+
+}
 const Toolbar = (props) => {
     return <div id="toolbar">
         <a href='#' className="logo" onClick={()=>props.navTo('home')}>Mozilla</a>
@@ -19,15 +31,8 @@ const Toolbar = (props) => {
         {/*<a href="#" onClick={()=>props.navTo('pipeline')}>Create an Animation</a>*/}
         <a href="#" onClick={()=>props.navTo('queue')}>What's Coming Next</a>
         <a href="#" onClick={()=>props.navTo('about')}>About</a>
-        <a href="#" onClick={()=>props.startAuth('github')} className="round-button">Connect with GitHub</a>
+        <UserLoginButton/>
     </div>
-
-}
-
-const GithubScreen = (props) => {
-    return <article>
-        <h1>github stuff</h1>
-    </article>
 }
 
 class App extends Component {
@@ -77,7 +82,7 @@ class App extends Component {
     }
     render() {
         return <div id="body">
-            <Toolbar navTo={this.navTo} startAuth={()=>AuthStore.start()}/>
+            <Toolbar navTo={this.navTo}/>
             <div id="content">{this.renderContent()}</div>
             <div id="footer">footer hello user {this.state.user?"logged in " + this.state.user.displayName:"logged out"}</div>
         </div>
@@ -96,7 +101,6 @@ class App extends Component {
         if(this.state.screen === 'pipeline') return <PipelineEditor/>
         if(this.state.screen === 'queue') return <QueueScreen navTo={this.navTo}/>
         if(this.state.screen === 'about') return <AboutScreen/>
-        if(this.state.screen === 'github') return <GithubScreen/>
         return <PipelineEditor/>
     }
 }
