@@ -51,10 +51,12 @@ class ModuleStore {
             })
     }
     addModuleToQueue = (m) => {
-        console.log("adding module to the queue",m)
         this.queue.expanded.push(m)
-        this.queue.modules = this.queue.expanded.map((m)=>m._id)
-        console.log("the new queue is",this.queue.modules)
+        this.queue.modules = this.queue.expanded.map((m) => m._id)
+        console.log("the new queue is", this.queue.modules.length)
+        return this.updateQueue()
+    }
+    updateQueue = () => {
         return fetch(`${BASE_URL}/updatequeue`,{
             method:'POST',
             body: JSON.stringify(this.queue.modules),
@@ -64,10 +66,14 @@ class ModuleStore {
             }
         })
             .then(res => res.json())
-            .then(res => {
-                console.log("posted with the result",res)
-                this.refreshQueue()
-            })
+            .then(res => this.refreshQueue())
+    }
+    deleteModuleFromQueue = (m,i) => {
+        console.log("deleting the module at index",i)
+        this.queue.expanded.splice(i,1)
+        this.queue.modules.splice(i,1)
+        console.log("the new queue is",this.queue.modules.length)
+        return this.updateQueue()
     }
 }
 

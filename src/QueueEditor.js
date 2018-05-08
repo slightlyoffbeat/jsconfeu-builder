@@ -10,6 +10,7 @@ export default class QueueEditor extends Component {
         }
     }
     addToQueue = (m) => ModuleStore.addModuleToQueue(m)
+    deleteFromQueue = (m,i) => ModuleStore.deleteModuleFromQueue(m,i)
     componentDidMount() {
         ModuleStore.on('queue',(queue)=>this.setState({queue:queue}))
         ModuleStore.findAllModules().then(modules => this.setState({modules:modules}))
@@ -53,12 +54,18 @@ export default class QueueEditor extends Component {
                 padding:0,
             }}
             >
-                {queueModules.map((m,i)=><QueueModulePanel key={i} module={m} scale={10}/>)}
+                {queueModules.map((m,i)=> <EditableModulePanel key={i} module={m} onDelete={()=>this.deleteFromQueue(m,i)}/>)}
             </ul>
         </article>
     }
 }
 
+const EditableModulePanel = (props) => {
+    return <div>
+        <button onClick={props.onDelete}>x</button>
+        <QueueModulePanel module={props.module} scale={10}/>
+    </div>
+}
 
 
 const ModuleSummaryPanel = (props) => {
