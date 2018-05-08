@@ -59,6 +59,9 @@ class AuthStore {
         localStorage.setItem('access-token',data.accessToken)
         this.fireChange()
     }
+    getAccessToken() {
+        return localStorage.getItem('access-token')
+    }
 }
 
 

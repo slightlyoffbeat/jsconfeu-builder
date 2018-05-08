@@ -1,4 +1,5 @@
 import Constants from './Constants'
+import AuthStore from './AuthStore'
 
 class ModuleStore {
     constructor() {
@@ -41,14 +42,13 @@ class ModuleStore {
             body: JSON.stringify(module),
             mode:'cors',
             headers: {
-                'content-type':'application/json'
+                'content-type':'application/json',
+                'access-key':AuthStore.getAccessToken()
             }
         })
             .then(res => res.json())
-            .then((res)=>{
-                console.log('posted with the result',res)
-                this.refreshQueue()
-            })
+            .then(res => console.log(res))
+            .then(res => this.refreshQueue())
     }
     addModuleToQueue = (m) => {
         this.queue.expanded.push(m)
@@ -62,10 +62,12 @@ class ModuleStore {
             body: JSON.stringify(this.queue.modules),
             mode:'cors',
             headers: {
-                'content-type':'application/json'
+                'content-type':'application/json',
+                'access-key':AuthStore.getAccessToken()
             }
         })
             .then(res => res.json())
+            .then(res => console.log(res))
             .then(res => this.refreshQueue())
     }
     deleteModuleFromQueue = (m,i) => {
