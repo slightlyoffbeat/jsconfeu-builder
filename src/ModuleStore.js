@@ -1,5 +1,5 @@
-const BASE_URL = `https://vr.josh.earth/jsconfeu-builder/api`
-// const BASE_URL = `http://localhost:39176/api`
+import Constants from './Constants'
+
 class ModuleStore {
     constructor() {
         this.queue = {
@@ -21,10 +21,10 @@ class ModuleStore {
     fire(type,obj) {
         this.listeners[type].forEach(cb=>cb(obj))
     }
-    findAllModules = () => fetch(`${BASE_URL}/modules`).then(res => res.json())
+    findAllModules = () => fetch(`${Constants.BASE_URL}/modules`).then(res => res.json())
 
     refreshQueue() {
-        return fetch(`${BASE_URL}/queue`)
+        return fetch(`${Constants.BASE_URL}/queue`)
             .then((res)=>res.json())
             .then((queue)=> {
                 console.log("got the remote queue",queue)
@@ -36,7 +36,7 @@ class ModuleStore {
     getQueueModules = ()  => this.queue.expanded
 
     submitModule(module) {
-        return fetch(`${BASE_URL}/publish`,{
+        return fetch(`${Constants.BASE_URL}/publish`,{
             method:'POST',
             body: JSON.stringify(module),
             mode:'cors',
@@ -57,7 +57,7 @@ class ModuleStore {
         return this.updateQueue()
     }
     updateQueue = () => {
-        return fetch(`${BASE_URL}/updatequeue`,{
+        return fetch(`${Constants.BASE_URL}/updatequeue`,{
             method:'POST',
             body: JSON.stringify(this.queue.modules),
             mode:'cors',

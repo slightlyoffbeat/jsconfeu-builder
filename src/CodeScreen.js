@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import RenderUtils from './RenderUtils'
 import QueueModulePanel from './QueueModulePanel'
+import Constants from './Constants'
 
 function renderFrames(module) {
     console.log("rendering frames for the module",module)
@@ -42,8 +43,7 @@ class CodeScreen extends Component {
     render() {
         return <article>
             <h1>Web Assembly Container</h1>
-            <iframe title='wasm editor' id="wasm-editor"
-                    src="http://localhost/moz/jsconfeu-builder/public/fakeeditor.html"/>
+            <iframe title='wasm editor' id="wasm-editor" src={Constants.EDITOR_URL}/>
             <button disabled={this.state.module?false:true} onClick={this.gotoPreview}>Preview</button>
         </article>
     }

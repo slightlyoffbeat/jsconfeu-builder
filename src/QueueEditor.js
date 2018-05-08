@@ -8,12 +8,16 @@ export default class QueueEditor extends Component {
         this.state = {
             modules:[]
         }
+        ModuleStore.findAllModules().then(modules => this.setState({modules:modules}))
     }
     addToQueue = (m) => ModuleStore.addModuleToQueue(m)
     deleteFromQueue = (m,i) => ModuleStore.deleteModuleFromQueue(m,i)
+    queueUpdated = (queue) => this.setState({queue:queue})
     componentDidMount() {
-        ModuleStore.on('queue',(queue)=>this.setState({queue:queue}))
-        ModuleStore.findAllModules().then(modules => this.setState({modules:modules}))
+        ModuleStore.on('queue',this.queueUpdated)
+    }
+    componentWillUnmount() {
+        ModuleStore.off('queue',this.queueUpdated)
     }
     render() {
         const queueModules = ModuleStore.getQueueModules()
