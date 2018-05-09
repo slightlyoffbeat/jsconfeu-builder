@@ -67,7 +67,7 @@ export default class QueueEditor extends Component {
 const EditableModulePanel = (props) => {
     return <div>
         <button onClick={props.onDelete}>x</button>
-        <QueueModulePanel module={props.module} scale={10}/>
+        <QueueModulePanel module={props.module} scale={5}/>
     </div>
 }
 
