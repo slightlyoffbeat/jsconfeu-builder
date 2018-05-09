@@ -36,6 +36,7 @@ export default class ArchwayPanel extends Component {
             console.error('Could not load the archway', err);
         });
         this.startRepaint();
+        console.log("running with the frames",this.props.frames)
     }
     cycleFrames() {
         if(!this.loaded) return

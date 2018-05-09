@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ArchwayPanel from './ArchwayPanel'
 
 
 function intToHex(int) {
@@ -41,14 +42,22 @@ export default class QueueModulePanel extends Component {
         }
     }
     render() {
-        const w = this.props.module.json.width || 0
-        const h = this.props.module.json.height || 0
         return <div className="queue-module">
             <h3>{this.props.module.title}</h3>
             <p>{this.props.module.description}</p>
             <cite>{this.props.module.author}</cite>
             <p>{this.props.module.tags.map(t => <i key={t}>{t}, </i>)}</p>
-            <canvas ref={can=>this.canvas=can} width={w * this.props.scale} height={h * this.props.scale}>animation</canvas>
+            {this.renderCanvas()}
         </div>
+    }
+
+    renderCanvas() {
+        if(this.props.threedee) {
+            return <ArchwayPanel frames={this.props.module.json}/>
+        } else {
+            const w = this.props.module.json.width || 0
+            const h = this.props.module.json.height || 0
+            return <canvas ref={can=>this.canvas=can} width={w * this.props.scale} height={h * this.props.scale}>animation</canvas>
+        }
     }
 }

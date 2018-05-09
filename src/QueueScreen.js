@@ -3,7 +3,7 @@ import ModuleStore from './ModuleStore'
 import QueueModulePanel from './QueueModulePanel'
 const QueueScreen = (props) => {
     const modules = ModuleStore.getQueueModules()
-    return <article>{modules.map((mod,i)=><QueueModulePanel key={i} module={mod} scale={i===0?50:15}/>)}</article>
+    return <article>{modules.map((mod,i)=><QueueModulePanel key={i} module={mod} scale={i===0?50:15} threedee={i===0}/>)}</article>
 }
 export default QueueScreen
 
