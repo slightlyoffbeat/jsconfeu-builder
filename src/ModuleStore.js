@@ -27,7 +27,11 @@ class ModuleStore {
         .then((res)=>{
         console.log("got the modules",res)
         return res
-    })
+        })
+        .catch((e)=>{
+            console.log("error fetching all the modules:",e)
+            return []
+        })
 
     refreshQueue() {
         return fetch(`${Constants.BASE_URL}/queue`)
@@ -36,6 +40,8 @@ class ModuleStore {
                 console.log("got the remote queue",queue)
                 this.queue = queue
                 this.fire('queue',queue)
+            }).catch((e)=>{
+                console.log("error fetching the queue:",e)
             })
     }
 
@@ -54,6 +60,9 @@ class ModuleStore {
             .then(res => res.json())
             .then(res => console.log(res))
             .then(res => this.refreshQueue())
+            .catch((e)=>{
+                console.log("error submitting a module:",e)
+            })
     }
     addModuleToQueue = (m) => {
         this.queue.expanded.push(m)
