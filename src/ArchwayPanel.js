@@ -1,12 +1,13 @@
 import React, {Component} from "react";
 import * as OBJLoader from './OBJLoader.js'
+import Constants from './Constants'
 const THREE = require('three');
 
 export default class ArchwayPanel extends Component {
     componentDidMount() {
         this.mounted = true;
-        this.rows = 44;
-        this.columns = 36;
+        this.rows = Constants.ROWS
+        this.columns = Constants.COlS
 
         this.scene = new THREE.Scene();
         this.scene.add(new THREE.AmbientLight(0xFFFFFF, 0.6))
@@ -29,7 +30,7 @@ export default class ArchwayPanel extends Component {
                 this.materials.set(material.name, material);
             }
             this.clearToColor(0xFF00FF);
-            this.loadFrame(TestFrames.frames[0], TestFrames.height, TestFrames.width);
+            // this.loadFrame(TestFrames.frames[0], TestFrames.height, TestFrames.width);
             window.obj = object
             this.loaded = true
         }, null, err => {
@@ -41,7 +42,9 @@ export default class ArchwayPanel extends Component {
     cycleFrames() {
         if(!this.loaded) return
         this.currentFrame++
-        this.loadFrame(TestFrames.frames[this.currentFrame%TestFrames.frames.length], TestFrames.height, TestFrames.width)
+        if(!this.props.frames) return
+        const frame = this.props.frames.frames[this.currentFrame%this.props.frames.frames.length]
+        this.loadFrame(frame, this.props.frames.height, this.props.frames.width)
     }
     componentWillUnmount() {
         this.mounted = false
@@ -67,10 +70,11 @@ export default class ArchwayPanel extends Component {
             for(let c=0; c < columns; c++){
                 let material = this.materials.get(`${r}x${c}`)
                 if(!material) {
-                    console.log('miss', `${r}x${c}`);
+                    // console.log('miss', `${r}x${c}`);
                     continue;
                 }
-                material.color.setHex(frame[(r * columns) + c] >> 8); // The shift drops the alpha bits
+                const color = frame[(r*columns)+c]
+                material.color.setHex(color>>8) // The shift drops the alpha bits
             }
         }
         window.mats = this.materials;

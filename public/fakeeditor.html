@@ -8,11 +8,13 @@
 
 <textarea id="code" rows="10" cols="60">
 const RED   = 0xFF0000FF;
+const BLUE = 0x0000FFFF;
 function run(ctx) {
     for(let f=0; f<ctx.getFrameCount(); f++) {
         for (let y = 0; y < ctx.getHeight(); y++) {
             for (let x = 0; x < ctx.getWidth(); x++) {
-                ctx.setPixelRGBA(x, y, f, RED)
+                const even = (x+y+f)%2==0
+                ctx.setPixelRGBA(x, y, f, even?RED:BLUE)
             }
         }
     }

@@ -22,7 +22,12 @@ class ModuleStore {
     fire(type,obj) {
         this.listeners[type].forEach(cb=>cb(obj))
     }
-    findAllModules = () => fetch(`${Constants.BASE_URL}/modules`).then(res => res.json())
+    findAllModules = () => fetch(`${Constants.BASE_URL}/modules`)
+        .then(res => res.json())
+        .then((res)=>{
+        console.log("got the modules",res)
+        return res
+    })
 
     refreshQueue() {
         return fetch(`${Constants.BASE_URL}/queue`)

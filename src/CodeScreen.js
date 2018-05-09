@@ -5,7 +5,7 @@ import Constants from './Constants'
 
 function renderFrames(module) {
     console.log("rendering frames for the module",module)
-    const frameset = RenderUtils.makeFrameset(2,2,2)
+    const frameset = RenderUtils.makeFrameset(Constants.ROWS,Constants.COlS,10)
     const ctx = RenderUtils.makeContext(frameset)
     window.eval(module.javascript)
     window.run(ctx)
@@ -53,7 +53,7 @@ class CodeScreen extends Component {
 const Preview = (props) => {
     return <article>
         <h1>preview screen</h1>
-        <QueueModulePanel module={props.data} scale={20}/>
+        <QueueModulePanel module={props.data} scale={50} threedee={true}/>
         <div className="row">
             <button onClick={()=>props.navTo("code", props.data)}>back</button>
             <button onClick={()=>props.navTo("code-submit", props.data)}>submit</button>

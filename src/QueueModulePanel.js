@@ -52,7 +52,7 @@ export default class QueueModulePanel extends Component {
     }
 
     renderCanvas() {
-        if(this.props.threedee) {
+        if(this.props.threedee === true) {
             return <ArchwayPanel frames={this.props.module.json}/>
         } else {
             const w = this.props.module.json.width || 0
