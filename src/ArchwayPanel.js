@@ -19,6 +19,8 @@ export default class ArchwayPanel extends Component {
         this.renderer.setClearColor(0xFFFFFF, 1);
         this.renderer.setSize(w, h);
 
+        this.currentFrame = 0
+        this.loaded = false
         const loader = new THREE.OBJLoader();
         loader.load('models/PreppedInstallation.obj', (object) => {
             object.position.set(0, -1.5, -8.5);
@@ -29,10 +31,16 @@ export default class ArchwayPanel extends Component {
             this.clearToColor(0xFF00FF);
             this.loadFrame(TestFrames.frames[0], TestFrames.height, TestFrames.width);
             window.obj = object
+            this.loaded = true
         }, null, err => {
             console.error('Could not load the archway', err);
         });
         this.startRepaint();
+    }
+    cycleFrames() {
+        if(!this.loaded) return
+        this.currentFrame++
+        this.loadFrame(TestFrames.frames[this.currentFrame%TestFrames.frames.length], TestFrames.height, TestFrames.width)
     }
     componentWillUnmount() {
         this.mounted = false
@@ -68,9 +76,14 @@ export default class ArchwayPanel extends Component {
     }
 
     startRepaint() {
-        const repaint = ()=> {
+        let lastFrame = performance.now()
+        const repaint = (time)=> {
             if(!this.mounted) return;
             requestAnimationFrame(repaint);
+            if(time - lastFrame > 200) {
+                lastFrame = time
+                this.cycleFrames()
+            }
             this.renderer.render(this.scene, this.camera);
         }
         repaint();
