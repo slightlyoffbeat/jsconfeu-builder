@@ -24,6 +24,12 @@ export default class QueueModulePanel extends Component {
             this.drawFrame(this.canvas,this.props.module.json, this.props.scale)
         }
     }
+    componentWillReceiveProps(newProps) {
+        //force refresh if the module changes
+        if(this.props.module._id !== newProps.module._id) {
+            this.drawFrame(this.canvas,newProps.module.json, newProps.scale)
+        }
+    }
     drawFrame(can, anim,sc) {
         const ctx = can.getContext('2d')
         const frame = anim.frames[0]
