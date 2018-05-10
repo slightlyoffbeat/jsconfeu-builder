@@ -32,6 +32,7 @@ export default class ArchwayPanel extends Component {
             this.clearToColor(0xFF00FF);
             // this.loadFrame(TestFrames.frames[0], TestFrames.height, TestFrames.width);
             window.obj = object
+            this.arch = object
             this.loaded = true
         }, null, err => {
             console.error('Could not load the archway', err);
@@ -96,7 +97,25 @@ export default class ArchwayPanel extends Component {
     render() {
         const w = 600;
         const h = 400;
-        return <canvas id="pipeline-preview" width={w} height={h} ref={(canvas) => this.canvas = canvas}/>
+        return <canvas id="pipeline-preview" width={w} height={h} ref={(canvas) => this.canvas = canvas} onMouseMove={this.mouseMove} onMouseDown={this.mouseDown} onMouseUp={this.mouseUp}/>
+    }
+
+    mouseDown = (e) => {
+        this.startX = e.clientX
+        this.startRY = this.arch.rotation.y
+    }
+    mouseMove = (e) => {
+        if(e.buttons === 1) {
+            const dx = e.clientX - this.startX
+            const dry = dx*Math.PI/180
+            console.log(dry)
+            this.arch.rotation.y = this.startRY + dry
+            // console.log(this.arch.rotation.y)
+        }
+        // console.log("mouse",e.clientX, e.buttons, e.button)
+    }
+    mouseUp = (e) => {
+
     }
 }
 

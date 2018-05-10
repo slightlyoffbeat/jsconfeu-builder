@@ -41,7 +41,7 @@ class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            screen:"queue-editor",
+            screen:"home",
             user:null,
         }
         AuthStore.listenToLogin(()=>{

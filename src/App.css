@@ -165,12 +165,10 @@ section.queue div.img {
 #pipeline-preview {
   grid-column: middle/right;
   grid-row: body/list;
-  border: 1px solid red;
   background: green;
   margin: 1em;
   width: 600px;
   height: 400px;
-  border: 5px solid yellow;
 }
 
 #active-list {
@@ -248,5 +246,5 @@ iframe#wasm-editor {
   flex:1;
 }
 .queue-module canvas {
-  border: 1px solid yellow;
+  border: 1px solid black;
 }
