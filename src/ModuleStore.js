@@ -37,8 +37,8 @@ class ModuleStore {
         return fetch(`${Constants.BASE_URL}/queue`)
             .then((res)=>res.json())
             .then((queue)=> {
-                console.log("got the remote queue",queue)
                 this.queue = queue
+                this.queue.expanded.forEach((m,i)=>m.index=i)
                 this.fire('queue',queue)
             }).catch((e)=>{
                 console.log("error fetching the queue:",e)
@@ -46,6 +46,12 @@ class ModuleStore {
     }
 
     getQueueModules = ()  => this.queue.expanded
+
+    setQueueModules = (nq) => {
+        this.queue.expanded = nq
+        this.queue.modules = this.queue.expanded.map((m) => m._id)
+        return this.updateQueue()
+    }
 
     submitModule(module) {
         return fetch(`${Constants.BASE_URL}/publish`,{
@@ -67,7 +73,6 @@ class ModuleStore {
     addModuleToQueue = (m) => {
         this.queue.expanded.push(m)
         this.queue.modules = this.queue.expanded.map((m) => m._id)
-        console.log("the new queue is", this.queue.modules.length)
         return this.updateQueue()
     }
     updateQueue = () => {
@@ -84,8 +89,8 @@ class ModuleStore {
             .then(res => console.log(res))
             .then(res => this.refreshQueue())
     }
-    deleteModuleFromQueue = (m,i) => {
-        console.log("deleting the module at index",i)
+    deleteModuleFromQueue = (m) => {
+        const i = m.index
         this.queue.expanded.splice(i,1)
         this.queue.modules.splice(i,1)
         console.log("the new queue is",this.queue.modules.length)

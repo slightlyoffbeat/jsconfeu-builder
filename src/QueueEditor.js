@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ModuleStore from './ModuleStore'
 import QueueModulePanel from './QueueModulePanel'
+import DraggableList from "react-draggable-list"
 
 
 function makeIdentityFilter() {
@@ -77,30 +78,53 @@ export default class QueueEditor extends Component {
                 gridRow:'toolbar/body',
             }}>the queue</h3>
 
-            <ul style={{
+            <div style={{
                 gridColumn:'right/end',
                 gridRow:'body/bottom',
                 overflow:'auto',
                 padding:0,
             }}
+                 ref={(ref)=>this.queue_modules_container = ref}
             >
-                {queueModules.map((m,i)=> <EditableModulePanel key={i} module={m} onDelete={()=>this.deleteFromQueue(m,i)}/>)}
-            </ul>
+                <DraggableList
+                    list={queueModules}
+                    itemKey={'index'}
+                    template={EditableModulePanel}
+                    container={()=>this.queue_modules_container}
+                    padding={10}
+                    onMoveEnd={this.moveEnded}
+                    commonProps={{
+                        onDelete:this.deleteFromQueue
+                    }}
+                />
+                {/*{queueModules.map((m,i)=> <EditableModulePanel key={i} module={m} onDelete={()=>this.deleteFromQueue(m,i)}/>)}*/}
+            </div>
         </article>
+    }
+
+    moveEnded = (data) => {
+        ModuleStore.setQueueModules(data)
     }
 }
 
-const EditableModulePanel = (props) => {
-    return <div style={{
-        display:'flex',
-        flexDirection:'row',
-        margin:'1em'
-    }}>
-        <div>
-            <button onClick={props.onDelete}>x</button>
+
+class EditableModulePanel extends Component {
+    render() {
+        return <div style={{
+            display: 'flex',
+            flexDirection: 'row',
+            margin: '1em',
+            backgroundColor:'#333'
+        }}>
+            <div>
+                {this.props.dragHandle(<i className="fa fa-bars handle action"/>)}
+            </div>
+            <QueueModulePanel module={this.props.item} scale={4}/>
+            <div>
+                <button className="fa fa-close" onClick={()=>this.props.commonProps.onDelete(this.props.item)}/>
+            </div>
         </div>
-        <QueueModulePanel module={props.module} scale={4}/>
-    </div>
+    }
 }
 
 
