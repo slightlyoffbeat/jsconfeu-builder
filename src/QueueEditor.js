@@ -2,17 +2,37 @@ import React, { Component } from 'react';
 import ModuleStore from './ModuleStore'
 import QueueModulePanel from './QueueModulePanel'
 
+
+function makeIdentityFilter() {
+    return function() {
+        return true
+    }
+}
+function makeNameFilter(fullString) {
+    const str = fullString.toLowerCase()
+    return function(item) {
+        if(item.title.toLowerCase().indexOf(str) >= 0) return true
+        const match = item.tags.find((tag)=> tag.toLowerCase().indexOf(str)>=0)
+        if(match) return true
+        return false
+    }
+}
+
 export default class QueueEditor extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            modules:[]
+            modules:[],
+            filter:makeIdentityFilter(),
+            filterString:""
         }
         ModuleStore.findAllModules().then(modules => this.setState({modules:modules}))
     }
     addToQueue = (m) => ModuleStore.addModuleToQueue(m)
     deleteFromQueue = (m,i) => ModuleStore.deleteModuleFromQueue(m,i)
     queueUpdated = (queue) => this.setState({queue:queue})
+    updateSearch = (e) => this.setState({filter:makeNameFilter(e.target.value), filterString:e.target.value})
+    clearSearch = () => this.setState({filter:makeIdentityFilter()})
     componentDidMount() {
         ModuleStore.on('queue',this.queueUpdated)
     }
@@ -21,40 +41,46 @@ export default class QueueEditor extends Component {
     }
     render() {
         const queueModules = ModuleStore.getQueueModules()
-        const allModules = this.state.modules
+        const allModules = this.state.modules.filter(this.state.filter)
         return <article
             style={{
                 height:'80vh',
                 display:'grid',
                 gridTemplateColumns:'[left]1fr [right]1fr [end]',
-                gridTemplateRows:'[toolbar] 4em [body] 1fr [bottom]'
+                gridTemplateRows:'[toolbar] 2em [body] 1fr [bottom]'
             }}
         >
 
             <div style={{
                 gridColumn:'left/right',
-                gridRow:'toolbar/body'
+                gridRow:'toolbar/body',
+                display:'flex',
+                flexDirection:'row'
                 }}
-            ><input type="search"/><button>search</button></div>
+            >
+                <input style={{flex:1}} type="search" value={this.state.filterString} onChange={this.updateSearch}/>
+                <button onClick={this.clearSearch}>clear</button>
+            </div>
 
             <ul style={{
                 gridColumn:'left/right',
-                overflow:'scroll',
-                padding:0,
+                overflow:'auto',
+                padding:'0.25em',
                 gridRow:'body/bottom',
+                borderRight:'1px solid white',
             }}>
                 {allModules.map((m,i)=><ModuleSummaryPanel key={m._id} module={m}  onAdd={()=>this.addToQueue(m)}/>)}
             </ul>
 
             <h3 style={{
                 gridColumn:'right/end',
-                gridRow:'toolbar/body'
+                gridRow:'toolbar/body',
             }}>the queue</h3>
 
             <ul style={{
                 gridColumn:'right/end',
                 gridRow:'body/bottom',
-                overflow:'scroll',
+                overflow:'auto',
                 padding:0,
             }}
             >
@@ -65,17 +91,31 @@ export default class QueueEditor extends Component {
 }
 
 const EditableModulePanel = (props) => {
-    return <div>
-        <button onClick={props.onDelete}>x</button>
-        <QueueModulePanel module={props.module} scale={5}/>
+    return <div style={{
+        display:'flex',
+        flexDirection:'row',
+        margin:'1em'
+    }}>
+        <div>
+            <button onClick={props.onDelete}>x</button>
+        </div>
+        <QueueModulePanel module={props.module} scale={4}/>
     </div>
 }
 
 
 const ModuleSummaryPanel = (props) => {
-    return <div>
+    return <div style={{
+        padding:'1em',
+        backgroundColor:'#333',
+        display:'flex',
+        flexDirection:'row',
+        margin:'1em'
+    }}>
         <b>{props.module.title}</b>
+        <i>&nbsp;</i>
         <i>{props.module.tags.join(",")}</i>
+        <i style={{flex:1}}>&nbsp;</i>
         <button onClick={props.onAdd}>+</button>
         </div>
 }

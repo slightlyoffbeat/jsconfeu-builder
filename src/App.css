@@ -241,6 +241,10 @@ iframe#wasm-editor {
 
 .queue-module {
   border: 1px solid white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 .queue-module canvas {
   border: 1px solid yellow;
