@@ -7,9 +7,9 @@ class ModuleStore {
       expanded: [],
       modules: []
     };
-    this.refreshQueue();
     this.listeners = {};
     this.running = false;
+    this.refreshQueue();
   }
   on(type, cb) {
     if (!this.listeners[type]) this.listeners[type] = [];
@@ -20,7 +20,7 @@ class ModuleStore {
     this.listeners[type] = this.listeners[type].filter(c => c !== cb);
   }
   fire(type, obj) {
-    this.listeners[type].forEach(cb => cb(obj));
+      if(this.listeners[type]) this.listeners[type].forEach(cb => cb(obj));
   }
   findAllModules = () =>
     fetch(`${Constants.BASE_URL}/modules`)
@@ -98,10 +98,6 @@ class ModuleStore {
     console.log("the new queue is", this.queue.modules.length);
     return this.updateQueue();
   };
-}
-
-function o2a(obj) {
-  return Object.keys(obj).map(key => obj[key]);
 }
 
 export default new ModuleStore();
