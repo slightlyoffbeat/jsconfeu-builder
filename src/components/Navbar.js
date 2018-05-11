@@ -1,52 +1,45 @@
 import React, { Component } from "react";
+import { NavLink, Link } from "react-router-dom";
 
 // Images
 import logo from "../img/logo.svg";
+
+const NavbarLink = props => (
+  <li className="navbar__item">
+    <Link className="navbar__link" to={props.link}>
+      {props.title}
+    </Link>
+  </li>
+);
 
 const Navbar = props => {
   return (
     <div className="navbar">
       <div className="navbar__wrap">
-        <a href="#" onClick={() => props.navTo("home")}>
+        <NavLink to="/">
           <img className="navbar__logo" src={logo} alt="Mozilla" />
-        </a>
+        </NavLink>
 
         <ul className="navbar__list">
           <li className="navbar__item">
-            <a
-              className="navbar__link"
-              href="#"
-              onClick={() => props.navTo("code")}
-            >
+            <NavLink className="navbar__link" to="/code">
               Code a Module
-            </a>
+            </NavLink>
           </li>
           <li className="navbar__item">
-            <a
-              className="navbar__link"
-              href="#"
-              onClick={() => props.navTo("queue")}
-            >
+            <NavLink className="navbar__link" to="queue">
               What's Coming Next
-            </a>
+            </NavLink>
           </li>
           <li className="navbar__item">
-            <a
-              className="navbar__link"
-              href="#"
-              onClick={() => props.navTo("about")}
-            >
+            <NavLink className="navbar__link" to="about">
               About
-            </a>
+            </NavLink>
           </li>
           <li className="navbar__item">
-            <a
-              className="navbar__link"
-              href="#"
-              onClick={() => props.navTo("queu-editor")}
-            >
+            <NavLink className="navbar__link" to="queue-editor">
               Queue Editor
-            </a>
+            </NavLink>
           </li>
           <li className="navbar__item navbar__item--github">
             <a

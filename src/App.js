@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+// Styles & Icons
 import "./style/style.css";
 import "font-awesome/css/font-awesome.css";
 
@@ -86,40 +89,52 @@ class App extends Component {
   render() {
     return (
       <div id="body">
-        <Navbar navTo={this.navTo} startAuth={() => AuthStore.start()} />
-        <div id="content">{this.renderContent()}</div>
+        <Router>
+          <div>
+            <Navbar navTo={this.navTo} startAuth={() => AuthStore.start()} />
+            <Switch>
+              <Route exact path="/" render={() => <HomeScreen />} />
+              <Route
+                exact
+                path="/code"
+                render={() => <CodeScreen data={this.state.data} />}
+              />
+              <Route
+                exact
+                path="/code-preview"
+                render={() => <CodeScreen.Preview data={this.state.data} />}
+              />
+              <Route
+                exact
+                path="/code-submit"
+                render={() => <CodeScreen.Preview data={this.state.data} />}
+              />
+              <Route
+                exact
+                path="/code-submit-done"
+                render={() => (
+                  <CodeScreen.Submit
+                    data={this.state.data}
+                    onSubmit={this.onSubmit}
+                    editData={data => this.setState({ data: data })}
+                  />
+                )}
+              />
+              <Route exact path="/paint" render={() => <PaintScreen />} />
+              <Route exact path="/pipeline" render={() => <PipelineEditor />} />
+              <Route exact path="/queue" render={() => <QueueScreen />} />
+              <Route
+                exact
+                path="/queue-editor"
+                render={() => <QueueEditor />}
+              />
+              <Route exact path="/about" render={() => <AboutScreen />} />
+            </Switch>
+          </div>
+        </Router>
         <Footer user={this.state.user} />
       </div>
     );
-  }
-
-  renderContent() {
-    if (this.state.screen === "home") return <HomeScreen navTo={this.navTo} />;
-    if (this.state.screen === "code")
-      return <CodeScreen navTo={this.navTo} data={this.state.data} />;
-    if (this.state.screen === "code-preview")
-      return <CodeScreen.Preview navTo={this.navTo} data={this.state.data} />;
-    if (this.state.screen === "code-submit")
-      return (
-        <CodeScreen.Submit
-          navTo={this.navTo}
-          data={this.state.data}
-          onSubmit={this.onSubmit}
-          editData={data => this.setState({ data: data })}
-        />
-      );
-    if (this.state.screen === "code-submit-done")
-      return (
-        <CodeScreen.SubmitDone navTo={this.navTo} data={this.state.data} />
-      );
-    if (this.state.screen === "paint") return <PaintScreen />;
-    if (this.state.screen === "pipeline") return <PipelineEditor />;
-    if (this.state.screen === "queue")
-      return <QueueScreen navTo={this.navTo} />;
-    if (this.state.screen === "queue-editor")
-      return <QueueEditor navTo={this.navTo} />;
-    if (this.state.screen === "about") return <AboutScreen />;
-    return <PipelineEditor />;
   }
 }
 
