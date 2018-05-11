@@ -41,6 +41,10 @@ export default class ArchwayPanel extends Component {
             this.scene.add(object);
             for(let material of object.children[0].material){
                 this.materials.set(material.name, material);
+                if(material.name === 'edge_material') {
+                    material.color = new THREE.Color(0xAAAAAA)
+                    // material.emissive = new THREE.Color(0xFFFFFF)
+                }
             }
             this.clearToColor(0xFF00FF);
             // this.loadFrame(TestFrames.frames[0], TestFrames.height, TestFrames.width);
