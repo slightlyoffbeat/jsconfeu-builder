@@ -50,6 +50,7 @@ export default class QueueEditor extends Component {
     const allModules = this.state.modules.filter(this.state.filter);
     return (
       <article
+          className="content"
         style={{
           height: "80vh",
           display: "grid",

@@ -42,7 +42,7 @@ class CodeScreen extends Component {
   };
   render() {
     return (
-      <article>
+      <article className="content">
         <h1>Web Assembly Container</h1>
         <iframe
           title="wasm editor"

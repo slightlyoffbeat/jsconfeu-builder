@@ -43,7 +43,7 @@ const Navbar = props => {
             <a
               className="navbar__link"
               href="#"
-              onClick={() => props.navTo("queu-editor")}
+              onClick={() => props.navTo("queue-editor")}
             >
               Queue Editor
             </a>

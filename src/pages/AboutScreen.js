@@ -3,7 +3,7 @@ import ArchwayPanel from "../components/ArchwayPanel.js";
 
 const AboutScreen = props => {
   return (
-    <article>
+    <article className="content">
       <h1>about screen</h1>
     </article>
   );

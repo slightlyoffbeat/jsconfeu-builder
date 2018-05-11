@@ -119,7 +119,7 @@ class App extends Component {
     if (this.state.screen === "queue-editor")
       return <QueueEditor navTo={this.navTo} />;
     if (this.state.screen === "about") return <AboutScreen />;
-    return <PipelineEditor />;
+      return <div className="content">invalid screen ${this.state.screen}</div>;
   }
 }
 
