@@ -10,17 +10,30 @@ export default class ArchwayPanel extends Component {
         this.columns = Constants.COlS
 
         this.scene = new THREE.Scene();
-        this.scene.add(new THREE.AmbientLight(0xFFFFFF, 0.6))
+        this.scene.add(new THREE.AmbientLight(0xFFFFFF, 0.5))
+        const directionalLight = new THREE.DirectionalLight(0xFFFFFF,0.5)
+        directionalLight.position.set( 0, -70, 100 ).normalize();
+        this.scene.add(directionalLight)
         this.materials = new Map(); // name (string like 1x10 for RxC) => THREE.Material
         const w = 600;
         const h = 400;
         this.camera = new THREE.PerspectiveCamera(75, w/h, 0.1, 1000);
 
         this.renderer = new THREE.WebGLRenderer({ canvas:this.canvas });
-        this.renderer.setClearColor(0xFFFFFF, 1);
+        this.renderer.setClearColor(0x000000, 1);
         this.renderer.setSize(w, h);
 
         this.currentFrame = 0
+
+        const plane_geometry = new THREE.PlaneGeometry( 100, 100, 8 );
+        const plane_material = new THREE.MeshLambertMaterial( {
+            color: 0x666666, side: THREE.DoubleSide} );
+        const plane = new THREE.Mesh( plane_geometry,plane_material );
+        plane.rotation.x = -90*Math.PI/180
+        plane.position.y = -2.0
+        plane.position.z = -10
+        this.scene.add(plane);
+
         this.loaded = false
         const loader = new THREE.OBJLoader();
         loader.load('models/PreppedInstallation.obj', (object) => {
