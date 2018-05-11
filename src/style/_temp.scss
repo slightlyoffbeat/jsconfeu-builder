@@ -1,0 +1,205 @@
+body {
+  // --panel-bg: #aaa;
+  // --bg: #000;
+
+  background-color: var(--bg);
+  color: white;
+}
+
+/* ============= */
+
+section {
+  padding: 2em;
+  /*border: 1px solid blue;*/
+}
+section h1 {
+  font-size: 200%;
+}
+
+section.narrow-left {
+  width: 40%;
+  /*border: 1px solid red;*/
+}
+
+.round-button {
+  border: 1px solid aqua;
+  border-radius: 2em;
+  padding: 1em;
+  margin: 1em;
+  color: white;
+  text-decoration: none;
+}
+
+section.wells {
+  /*border: 1px solid red;*/
+}
+section.wells > div {
+  display: flex;
+  flex-direction: row;
+}
+section.wells .panel {
+  /*border: 1px solid green;*/
+}
+
+section.wells .panel img {
+  float: left;
+}
+section.wells .icon {
+  color: aqua;
+  padding: 0.25em;
+}
+
+section.queue {
+  display: flex;
+  flex-direction: row;
+}
+section.queue h3 {
+  font-size: 200%;
+}
+
+section.queue .panel {
+  display: flex;
+  flex-direction: column;
+}
+
+section.queue div.img {
+  border: 1px solid red;
+  height: 200px;
+  width: 400px;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: [left] 1fr [middle] 2fr [right];
+  grid-template-rows: [toolbar] 2em [search] 2em [body] 0.5fr [list] 30em [bottom];
+  background-color: #000;
+  grid-gap: 1px;
+  border: 0px solid greenyellow;
+  height: 100vh;
+}
+
+.toolbar {
+  background: #222;
+  grid-row: toolbar/search;
+  grid-column: left/right;
+  display: flex;
+  flex-direction: row;
+}
+
+.toolbar button {
+  background: #555;
+  color: white;
+  border: 1px solid gray;
+  font-size: 100%;
+}
+
+.library-search {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--panel-bg);
+  grid-row: search;
+  grid-column: left/middle;
+}
+.library-search input {
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 1.5em;
+  padding: 0.5em;
+  margin: 0.25em;
+}
+
+.library-results {
+  grid-row: body/bottom;
+  grid-column: left/middle;
+  background-color: var(--panel-bg);
+  margin: 0;
+  list-style: none;
+  padding: 0;
+}
+
+.library-results li {
+  border: 1px solid black;
+  border-width: 0 0 1px 0;
+  padding: 0.5em;
+  background-color: #ddd;
+  display: flex;
+  flex-direction: row;
+}
+
+#pipeline-preview {
+  grid-column: middle/right;
+  grid-row: body/list;
+  background: green;
+  margin: 1em;
+  width: 600px;
+  height: 400px;
+}
+
+#active-list {
+  margin: 1em;
+  grid-row: list/bottom;
+  grid-column: middle/right;
+  background-color: var(--panel-bg);
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.module-panel {
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: [left]8fr [right]2em;
+  grid-template-rows: [canvas] 180px [info] 2em [bottom];
+  background-color: #ccc;
+  border-radius: 1em;
+  padding: 1em;
+  margin: 1em;
+}
+.module-panel .action {
+  grid-column: right;
+  text-align: right;
+}
+
+.module-panel canvas {
+  grid-row: canvas;
+  grid-column: left;
+  border: 1px solid black;
+}
+.module-panel .title {
+  grid-column: left;
+  grid-row: info;
+  padding-top: 1em;
+}
+
+.action:hover {
+  color: white;
+}
+
+article {
+  width: 88vw;
+  min-height: 50vh;
+  margin: 0 5vw;
+  border: 5px solid white;
+}
+
+/* ======= WASM Editor ============ */
+
+iframe#wasm-editor {
+  width: 100%;
+  min-height: 800px;
+}
+
+/* ========Queue Viewer ========== */
+
+.queue-module {
+  border: 1px solid white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex: 1;
+}
+.queue-module canvas {
+  border: 1px solid black;
+}

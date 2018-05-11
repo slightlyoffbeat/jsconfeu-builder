@@ -1,0 +1,98 @@
+// ----------------------------------------------------------------------------
+// Navbar
+// ----------------------------------------------------------------------------
+
+.navbar {
+  background-color: $white;
+  padding: 24px 0;
+  font-family: "Fire Sans", $sans-serif;
+}
+
+.navbar__wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar__logo {
+  height: 40px;
+}
+
+.navbar__list {
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar__item {
+  line-height: 0;
+  margin-left: 40px;
+
+  &:hover {
+    .navbar__link::after {
+      content: "";
+      height: 2px;
+      background: linear-gradient(left, $purple 0%, $cyan 100%);
+      width: 100%;
+      display: block;
+      margin-top: -2px;
+    }
+  }
+}
+
+.navbar__link {
+  line-height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  color: $black;
+
+  &:after {
+    content: "";
+    height: 0px;
+    background: linear-gradient(left, $purple 0%, $cyan 100%);
+    width: 100%;
+    display: block;
+    margin-top: -2px;
+    transition: height $base-time $base-ease;
+  }
+
+  &:hover {
+    color: $black;
+  }
+}
+
+.navbar__button {
+  background-image: linear-gradient(to right, $purple 0%, $cyan 100%);
+  font-weight: bold;
+  border-radius: 40px;
+  box-sizing: border-box;
+  color: $black;
+  display: block;
+  height: 40px;
+  margin: 0 auto;
+  padding: 2px;
+  position: relative;
+  text-decoration: none;
+  z-index: 2;
+  width: 150px;
+}
+
+.navbar__button:hover {
+  color: #fff;
+}
+
+.navbar__button span {
+  align-items: center;
+  background: $white;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  transition: background 0.5s ease;
+  width: 100%;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.navbar__button:hover span {
+  background: transparent;
+}
