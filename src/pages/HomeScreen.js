@@ -1,5 +1,11 @@
 import React, { Component } from "react";
 
+// images
+import wasm from "../img/icon-wasm.svg";
+import vr from "../img/icon-vr.svg";
+import create from "../img/icon-create.svg";
+import queue from "../img/icon-queue.svg";
+
 const HomeScreen = props => {
   return (
     <div className="content">
@@ -18,42 +24,68 @@ const HomeScreen = props => {
         </div>
       </section>
 
-      <section className="wells">
-        <h2>Ways to get started</h2>
-        <div>
-          <div className="panel">
-            <i className="fa fa-square fa-4x icon" />
-            <span>Code a module in WebAssembly studio</span>
-            <a href="#">Code a Module</a>
-          </div>
-          <div className="panel">
-            <i className="fa fa-headphones fa-4x icon" />
-            <span>Use a VR headset or AR setup to paint</span>
-            <a href="#">Start Painting</a>
-          </div>
-          <div className="panel">
-            <i className="fa fa-paint-brush fa-4x icon" />
-            <span>Build a pipeline lorem ipsum dolar sit</span>
-            <a href="#">Start Assembling</a>
+      <section className="started">
+        <div className="container">
+          <h2>Ways to get started</h2>
+          <div className="started__row">
+            <div className="started__section">
+              <img
+                className="started__img"
+                className="started__icon"
+                src={wasm}
+                alt="webassembly"
+              />
+              <span className="started__text">
+                Code a module in WebAssembly studio
+              </span>
+              <a className="started__button button button--primary" href="#">
+                Code a Module
+              </a>
+            </div>
+            <div className="started__section">
+              <img className="started__icon" src={vr} alt="webassembly" />
+              <span className="started__text">
+                Use a VR headset or AR setup to paint
+              </span>
+              <a
+                className="started__button started__button button button--primary"
+                href="#"
+              >
+                Start Painting
+              </a>
+            </div>
+            <div className="started__section">
+              <img className="started__icon" src={create} alt="webassembly" />
+              <span className="started__text">
+                Create an animation lorem ipsum dolar
+              </span>
+              <a className="started__button button button--primary" href="#">
+                Start Something
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="queue">
-        <div className="panel">
-          <h3>See what's up next</h3>
-          <p>
-            Check out what is in the queue and find out when yours will be up.
-          </p>
-          <a
-            href="#"
-            className="round-button"
-            onClick={() => props.navTo("queue")}
-          >
-            View the Queue
-          </a>
+      <section className="next">
+        <div className="container">
+          <h2>See what's up next</h2>
+          <div className="next__grid">
+            <div className="next__img">
+              <div className="next__imagetemp" />
+            </div>
+            <div className="next__info">
+              <img className="mb3" src={queue} alt="queue icon" />
+              <p className="mb3">
+                Check out what is in the queue and find out when yours will be
+                up.
+              </p>
+              <a href="#" className="button button--primary">
+                View the Queue
+              </a>
+            </div>
+          </div>
         </div>
-        <div className="img" />
       </section>
     </div>
   );

@@ -697,7 +697,7 @@ textarea {
 
 html {
   color: #000000;
-  line-height: 1.8;
+  line-height: 1.5;
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
   font-size: 18px;
   -webkit-font-smoothing: antialiased;
@@ -707,8 +707,8 @@ p {
   margin-bottom: 1rem; }
 
 p.lead {
-  font-size: 22.5px;
-  font-size: 1.25rem;
+  font-size: 23.4px;
+  font-size: 1.3rem;
   font-weight: 300; }
 
 em,
@@ -722,8 +722,8 @@ b {
 
 small,
 .small {
-  font-size: 14.4px;
-  font-size: 0.8rem; }
+  font-size: 13.84615px;
+  font-size: 0.76923rem; }
 
 h1,
 h2,
@@ -737,39 +737,45 @@ h5,
 .h5 {
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
   font-weight: 600;
-  line-height: 1.8; }
+  line-height: 1.5; }
 
 h1,
 .h1 {
-  font-size: 92px;
+  font-size: 39.546px;
+  font-size: 2.197rem;
   margin-bottom: 1rem;
-  line-height: 1; }
+  line-height: 3rem; }
 
 h2,
 .h2 {
-  font-size: 42px;
+  font-size: 30.42px;
+  font-size: 1.69rem;
   margin-bottom: 1rem;
-  line-height: 2.7rem; }
+  line-height: 2.25rem;
+  border-bottom: 3px solid #ffffff;
+  display: inline-block;
+  padding-bottom: 0.5rem; }
 
 h3,
 .h3 {
-  font-size: 18px;
+  font-size: 23.4px;
+  font-size: 1.3rem;
   margin-bottom: 0.5rem;
-  line-height: 1.8rem; }
+  line-height: 1.5rem; }
 
 h4,
 .h4 {
   font-size: 18px;
   font-size: 1rem;
   margin-bottom: 0.5rem;
-  line-height: 1.8rem; }
+  line-height: 1.5rem; }
 
 h5,
 .h5 {
-  font-size: 14.4px;
-  font-size: 0.8rem;
+  font-size: 13.84615px;
+  font-size: 0.76923rem;
   margin-bottom: 0.5rem;
-  line-height: 1.8rem; }
+  line-height: 1.5rem; }
 
 a {
   color: #53a0fd;
@@ -800,9 +806,9 @@ ol {
   margin-left: 1.25rem; }
 
 blockquote {
-  font-size: 22.5px;
-  font-size: 1.25rem;
-  line-height: 1.8;
+  font-size: 23.4px;
+  font-size: 1.3rem;
+  line-height: 1.5;
   margin: 0 0 0.5rem;
   padding: 0.5rem 1rem;
   font-weight: 300;
@@ -834,9 +840,11 @@ h5 {
   text-decoration: underline; }
 
 body {
-  background-color: #fff;
-  border-left: 40px solid white;
-  border-right: 40px solid white; }
+  background-color: #fff; }
+  @media all and (min-width: 53.125em) {
+    body {
+      border-left: 1rem solid #ffffff;
+      border-right: 1rem solid #ffffff; } }
 
 img {
   max-width: 100%;
@@ -875,14 +883,27 @@ select {
 .navbar {
   background-color: #ffffff;
   padding: 24px 0;
-  font-family: "Fire Sans", "Open Sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif"; }
+  font-family: "Fire Sans", "Open Sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+  margin-left: 1rem;
+  margin-right: 1rem; }
+  @media all and (min-width: 53.125em) {
+    .navbar {
+      margin: 0; } }
 
 .navbar__wrap {
   display: flex;
   justify-content: space-between; }
 
 .navbar__logo {
-  height: 40px; }
+  height: 40px;
+  display: none; }
+  @media all and (min-width: 53.125em) {
+    .navbar__logo {
+      display: inline-block; } }
+
+@media all and (min-width: 53.125em) {
+  .navbar__logo--mobile {
+    display: none; } }
 
 .navbar__list {
   display: flex;
@@ -950,13 +971,76 @@ select {
   background: transparent; }
 
 .footer {
+  padding: 4rem 1rem;
   background-color: #ffffff;
   color: #000000; }
+  @media all and (min-width: 53.125em) {
+    .footer {
+      padding: 4rem 0; } }
+
+@media all and (min-width: 46.875em) {
+  .footer__grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-column-gap: 2rem; } }
+
+@media all and (min-width: 46.875em) {
+  .footer__logo {
+    grid-column: 1 / 4; } }
+
+.footer__list {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style-type: none; }
+  @media all and (min-width: 46.875em) {
+    .footer__list {
+      margin: 0;
+      grid-column: span 3; } }
+
+.footer__title {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0rem; }
+
+.footer__item {
+  margin-bottom: 0rem;
+  display: block; }
+  .footer__item a {
+    color: #000000;
+    transition: all 0.5s ease; }
+  .footer__item a:hover,
+  .footer__item a:focus {
+    color: #0d0d0d;
+    text-decoration: underline; }
+
+.legal {
+  font-size: 12px;
+  margin-top: 3rem; }
+  .legal a {
+    color: #ffffff;
+    text-decoration: underline; }
+
+.legal__list {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+  .legal__list li {
+    display: inline;
+    margin-right: 1rem; }
+  .legal__list a {
+    color: #000000;
+    text-decoration: none; }
 
 .hero {
   padding: 6rem 0; }
   .hero h1 {
-    font-size: 70px; }
+    font-size: 39.546px;
+    font-size: 2.197rem;
+    line-height: 3rem; }
+  @media all and (min-width: 62.5em) {
+    .hero h1 {
+      font-size: 70px;
+      line-height: 3.6rem; } }
 
 @media all and (min-width: 53.125em) {
   .hero__grid {
@@ -970,9 +1054,78 @@ select {
   text-align: center; }
   @media all and (min-width: 53.125em) {
     .hero__text {
-      grid-column: 2 / 11;
+      grid-column: 3 / 11;
       grid-row: 1;
       margin-top: 0; } }
+
+.started {
+  text-align: center;
+  padding: 3rem 0; }
+  .started h2 {
+    text-align: center;
+    margin-bottom: 4rem; }
+
+.started__section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3rem; }
+  @media all and (min-width: 53.125em) {
+    .started__section {
+      margin-bottom: 3rem; } }
+
+@media all and (min-width: 53.125em) {
+  .started__row {
+    display: grid;
+    grid-column-gap: 5rem;
+    text-align: center;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr; } }
+
+.started__text {
+  margin-top: 1rem; }
+
+.started__button {
+  margin-top: 1rem;
+  display: block;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto; }
+
+.next {
+  padding: 6rem 0;
+  text-align: center; }
+  .next h2 {
+    margin-bottom: 4rem; }
+
+.next__grid {
+  text-align: left;
+  align-items: center; }
+  @media all and (min-width: 53.125em) {
+    .next__grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-column-gap: 3rem; } }
+
+.next__img {
+  margin-bottom: 2rem; }
+  @media all and (min-width: 53.125em) {
+    .next__img {
+      grid-column: 1 / 9;
+      grid-row: 1;
+      margin-bottom: 0; } }
+
+.next__info {
+  text-align: center; }
+  @media all and (min-width: 53.125em) {
+    .next__info {
+      text-align: left;
+      grid-column: 9 / 12;
+      grid-row: 1; } }
+
+.next__imagetemp {
+  border: 1px solid red;
+  height: 300px;
+  width: 100%; }
 
 /**
 This is a system for easiliy creating buttons, and spinning up new button
@@ -984,7 +1137,8 @@ button,
   color: #53a0fd;
   display: inline-block;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 13.84615px;
+  font-size: 0.76923rem;
   border-radius: 30px;
   line-height: inherit;
   text-align: center;
@@ -992,8 +1146,8 @@ button,
   vertical-align: middle;
   cursor: pointer;
   user-select: none;
-  padding: 0.5rem 2.5rem;
-  border: 3px solid #ffffff;
+  padding: 0.75rem 2.5rem;
+  border: 2px solid #ffffff;
   background: #ffffff;
   transition: all 0.3s ease;
   text-decoration: none; }
@@ -1048,20 +1202,20 @@ Takes a few variables and creates a new button style
 */
 .button--primary {
   color: #ffffff;
-  background-color: #53a0fd;
-  border-color: #53a0fd; }
+  background-color: transparent;
+  border-color: #ffffff; }
   .button--primary:hover {
-    color: #ffffff;
-    background-color: #2184fc;
-    border-color: #2184fc; }
+    color: #000000;
+    background-color: #ffffff;
+    border-color: #ffffff; }
   .button--primary:focus {
-    color: #ffffff;
-    background-color: #2184fc;
-    border-color: #2184fc; }
+    color: #000000;
+    background-color: #ffffff;
+    border-color: #ffffff; }
   .button--primary:active {
-    color: #ffffff;
-    background-color: #2184fc;
-    border-color: #2184fc; }
+    color: #000000;
+    background-color: #ffffff;
+    border-color: #ffffff; }
 
 .button--secondary {
   color: #ffffff;
@@ -1095,22 +1249,22 @@ only first param is required
 @param {border-hover} color of border on hover (default: $background-hover)
 */
 .button-outline--primary {
-  color: #53a0fd;
+  color: transparent;
   background-image: none;
   background-color: transparent;
-  border-color: #53a0fd; }
+  border-color: transparent; }
   .button-outline--primary:hover {
     color: #ffffff;
-    background-color: #53a0fd;
-    border-color: #53a0fd; }
+    background-color: transparent;
+    border-color: transparent; }
   .button-outline--primary:focus {
     color: #ffffff;
-    background-color: #53a0fd;
-    border-color: #53a0fd; }
+    background-color: transparent;
+    border-color: transparent; }
   .button-outline--primary:active {
     color: #ffffff;
-    background-color: #53a0fd;
-    border-color: #53a0fd; }
+    background-color: transparent;
+    border-color: transparent; }
 
 .button-outline--secondary {
   color: #1a1a1a;
@@ -1131,13 +1285,13 @@ only first param is required
     border-color: #1a1a1a; }
 
 .button--large {
-  font-size: 22.5px;
-  font-size: 1.25rem;
+  font-size: 23.4px;
+  font-size: 1.3rem;
   padding: 0.75rem 1.25rem; }
 
 .button--small {
-  font-size: 14.4px;
-  font-size: 0.8rem;
+  font-size: 13.84615px;
+  font-size: 0.76923rem;
   padding: 0.25rem 0.75rem; }
 
 .button--block {

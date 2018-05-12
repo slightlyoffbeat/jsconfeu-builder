@@ -6,6 +6,12 @@
   background-color: $white;
   padding: 24px 0;
   font-family: "Fire Sans", $sans-serif;
+  margin-left: 1rem;
+  margin-right: 1rem;
+
+  @include bp(medium) {
+    margin: 0;
+  }
 }
 
 .navbar__wrap {
@@ -15,6 +21,17 @@
 
 .navbar__logo {
   height: 40px;
+  display: none;
+
+  @include bp(medium) {
+    display: inline-block;
+  }
+}
+
+.navbar__logo--mobile {
+  @include bp(medium) {
+    display: none;
+  }
 }
 
 .navbar__list {

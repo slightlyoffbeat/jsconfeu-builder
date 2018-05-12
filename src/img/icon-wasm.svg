@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="65px" height="65px" viewBox="0 0 65 65" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#8551CD" offset="0%"></stop>
+            <stop stop-color="#53A0FD" offset="47.3582009%"></stop>
+            <stop stop-color="#72E5ED" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Design---Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Landing-Screen" transform="translate(-328.000000, -830.000000)">
+            <g id="Get-Started" transform="translate(242.000000, 703.000000)">
+                <g id="WA" transform="translate(0.000000, 127.000000)">
+                    <g id="Icon" transform="translate(86.000000, 0.000000)">
+                        <polygon id="Fill-1" fill="#5CB5F9" points="48.5510104 41.2195122 46.7682927 50.7317073 52.3170732 50.7317073 50.2706738 41.2195122"></polygon>
+                        <g id="Group-4" fill="url(#linearGradient-1)">
+                            <path d="M55.0072507,57.8658537 L53.5479474,52.7494078 L45.8556776,52.7494078 L44.7326747,57.8658537 L40.4268293,57.8658537 L45.9631736,34.8780488 L52.7192073,34.8780488 L59.4512195,57.8658537 L55.0072507,57.8658537 Z M30.7962621,57.8658537 L27.6694546,42.2208725 L27.6158522,42.2208725 L24.2508118,57.8658537 L19.950707,57.8658537 L15.0609756,34.8780488 L19.307478,34.8780488 L22.21392,50.5290634 L22.268118,50.5290634 L25.7701424,34.8780488 L29.7426769,34.8780488 L32.8867563,50.7221369 L32.9469101,50.7221369 L36.2577526,34.8780488 L40.4268293,34.8780488 L35.0189412,57.8658537 L30.7962621,57.8658537 Z M39.9409961,0 C39.9470359,0.116567552 39.9470359,0.233739082 39.9409961,0.350306634 C39.9409961,4.46640959 36.6046274,7.80338227 32.4879205,7.80338227 C28.3754414,7.79975841 25.0439045,4.4633897 25.0469244,0.350306634 C25.0408846,0.233739082 25.0408846,0.116567552 25.0469244,0 L0,0 L0,65 L65,65 L65,0 L39.9409961,0 Z" id="Fill-2"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

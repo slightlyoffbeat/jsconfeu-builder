@@ -4,11 +4,20 @@
 // This is Homepage content that is specific to that page, and is not a shared component
 // ----------------------------------------------------------------------------
 
+// Hero Section
 .hero {
   padding: space(12) 0;
 
   h1 {
-    font-size: 70px;
+    @include typesize(3);
+    line-height: $leading * 2;
+  }
+
+  @include bp(large) {
+    h1 {
+      font-size: 70px;
+      line-height: $leading * 2.4;
+    }
   }
 }
 
@@ -25,8 +34,96 @@
 .hero__text {
   text-align: center;
   @include bp(medium) {
-    grid-column: 2 / 11;
+    grid-column: 3 / 11;
     grid-row: 1;
     margin-top: 0;
   }
+}
+
+// Get Started Section
+
+.started {
+  text-align: center;
+  padding: space(6) 0;
+  h2 {
+    text-align: center;
+    margin-bottom: space(8);
+  }
+}
+.started__section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: space(6);
+
+  @include bp(medium) {
+    margin-bottom: space(6);
+  }
+}
+
+.started__row {
+  @include bp(medium) {
+    display: grid;
+    grid-column-gap: 5rem;
+    text-align: center;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.started__text {
+  margin-top: space(2);
+}
+
+.started__button {
+  margin-top: space(2);
+  display: block;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// What's Next Section
+
+.next {
+  padding: space(12) 0;
+  text-align: center;
+
+  h2 {
+    margin-bottom: space(8);
+  }
+}
+
+.next__grid {
+  text-align: left;
+  align-items: center;
+
+  @include bp(medium) {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-column-gap: 3rem;
+  }
+}
+
+.next__img {
+  margin-bottom: space(4);
+  @include bp(medium) {
+    grid-column: 1 / 9;
+    grid-row: 1;
+    margin-bottom: 0;
+  }
+}
+
+.next__info {
+  text-align: center;
+  @include bp(medium) {
+    text-align: left;
+    grid-column: 9 / 12;
+    grid-row: 1;
+  }
+}
+
+.next__imagetemp {
+  border: 1px solid red;
+  height: 300px;
+  width: 100%;
 }
