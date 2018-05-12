@@ -4,13 +4,18 @@
 
 .navbar {
   background-color: $white;
-  padding: 24px 0;
+  padding: 24px 1rem;
   font-family: "Fire Sans", $sans-serif;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
 
   @include bp(medium) {
     margin: 0;
+    padding: 24px 0;
+    position: static;
+    width: auto;
   }
 }
 
@@ -19,9 +24,16 @@
   justify-content: space-between;
 }
 
+.navbar__mobile {
+  @include bp(medium) {
+    display: none;
+  }
+}
+
 .navbar__logo {
   height: 40px;
   display: none;
+  margin-right: auto;
 
   @include bp(medium) {
     display: inline-block;
@@ -29,30 +41,59 @@
 }
 
 .navbar__logo--mobile {
-  @include bp(medium) {
-    display: none;
-  }
+  height: 40px;
+  margin-left: space(2);
 }
 
 .navbar__list {
-  display: flex;
   padding: 0;
   margin: 0;
+  position: fixed;
+  // opacity: 0;
+  height: 0;
+  top: 88px;
+  left: 0;
+  background-color: $white;
+  width: 100%;
+  transition: height 0.5s ease;
+  overflow-y: hidden;
+
+  &.is-active {
+    // opacity: 1;
+    height: 100vh;
+  }
+
+  @include bp(medium) {
+    display: flex;
+    position: static;
+    background-color: transparent;
+    height: auto;
+    width: auto;
+    opacity: 1;
+  }
 }
 
 .navbar__item {
   line-height: 0;
-  margin-left: 40px;
+  margin-left: 1rem;
 
-  &:hover {
-    .navbar__link::after {
-      content: "";
-      height: 2px;
-      background: linear-gradient(left, $purple 0%, $cyan 100%);
-      width: 100%;
-      display: block;
-      margin-top: -2px;
+  @include bp(medium) {
+    margin-left: 20px;
+
+    &:hover {
+      .navbar__link::after {
+        content: "";
+        height: 2px;
+        background: linear-gradient(left, $purple 0%, $cyan 100%);
+        width: 100%;
+        display: block;
+        margin-top: -2px;
+      }
     }
+  }
+
+  @include bp(large) {
+    margin-left: 40px;
   }
 }
 
@@ -83,14 +124,22 @@
   border-radius: 40px;
   box-sizing: border-box;
   color: $black;
-  display: block;
+  display: inline-block;
   height: 40px;
-  margin: 0 auto;
+  margin: 0;
   padding: 2px;
   position: relative;
   text-decoration: none;
   z-index: 2;
   width: 150px;
+
+  @include bp(medium) {
+    margin-left: 20px;
+  }
+
+  @include bp(large) {
+    margin-left: 40px;
+  }
 }
 
 .navbar__button:hover {

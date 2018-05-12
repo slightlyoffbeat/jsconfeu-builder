@@ -8,6 +8,10 @@
 body {
   background-color: $body-bg;
 
+  &.nav-active {
+    overflow-y: hidden;
+  }
+
   @include bp(medium) {
     border-left: space(2) solid $white;
     border-right: space(2) solid $white;
