@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink, Link } from "react-router-dom";
 
 // Components
 import Hamburger from "../components/Hamburger";
@@ -7,10 +8,22 @@ import Hamburger from "../components/Hamburger";
 import logo from "../img/logo.svg";
 import logoSquare from "../img/logo-square.svg";
 
+const NavbarLink = props => (
+  <li className="navbar__item">
+    <Link className="navbar__link" to={props.link}>
+      {props.title}
+    </Link>
+  </li>
+);
+
 const Navbar = props => {
   return (
     <div className="navbar">
       <div className="navbar__wrap">
+
+        <NavLink to="/">
+          <img className="navbar__logo" src={logo} alt="Mozilla" />
+        </NavLink>
         <div className="navbar__mobile">
           <Hamburger />
           <img
@@ -22,43 +35,34 @@ const Navbar = props => {
         <a className="navbar__logo" href="#">
           <img src={logo} alt="Mozilla" />
         </a>
-
         <ul className="navbar__list">
           <li className="navbar__item">
-            <a
-              className="navbar__link"
-              href="#"
-              onClick={() => props.navTo("code")}
-            >
+            <NavLink className="navbar__link" to="/code">
               Code a Module
-            </a>
+            </NavLink>
           </li>
           <li className="navbar__item">
-            <a
-              className="navbar__link"
-              href="#"
-              onClick={() => props.navTo("queue")}
-            >
+            <NavLink className="navbar__link" to="queue">
               What's Coming Next
-            </a>
+            </NavLink>
           </li>
           <li className="navbar__item">
-            <a
-              className="navbar__link"
-              href="#"
-              onClick={() => props.navTo("about")}
-            >
+            <NavLink className="navbar__link" to="about">
               About
-            </a>
+            </NavLink>
           </li>
           <li className="navbar__item">
+
+            <NavLink className="navbar__link" to="queue-editor">
+
             <a
               className="navbar__link"
               href="#"
               onClick={() => props.navTo("queue-editor")}
             >
+
               Queue Editor
-            </a>
+            </NavLink>
           </li>
         </ul>
         <a

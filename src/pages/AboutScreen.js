@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ArchwayPanel from "../components/ArchwayPanel.js";
 
 const AboutScreen = props => {
   return (
