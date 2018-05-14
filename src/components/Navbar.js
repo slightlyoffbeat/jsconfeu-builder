@@ -32,9 +32,8 @@ const Navbar = props => {
             alt="Mozilla"
           />
         </div>
-        <a className="navbar__logo" href="#">
-          <img src={logo} alt="Mozilla" />
-        </a>
+
+
         <ul className="navbar__list">
           <li className="navbar__item">
             <NavLink className="navbar__link" to="/code">
@@ -52,16 +51,8 @@ const Navbar = props => {
             </NavLink>
           </li>
           <li className="navbar__item">
-
             <NavLink className="navbar__link" to="queue-editor">
-
-            <a
-              className="navbar__link"
-              href="#"
-              onClick={() => props.navTo("queue-editor")}
-            >
-
-              Queue Editor
+                Queue Editor
             </NavLink>
           </li>
         </ul>
