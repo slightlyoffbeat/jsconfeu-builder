@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 const AboutScreen = props => {
   return (
-    <article>
+    <article className="content">
       <h1>about screen</h1>
     </article>
   );

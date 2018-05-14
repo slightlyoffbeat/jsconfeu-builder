@@ -4,7 +4,7 @@ import QueueModulePanel from "../components/QueueModulePanel";
 const QueueScreen = props => {
   const modules = ModuleStore.getQueueModules();
   return (
-    <article>
+    <article className="content">
       {modules.map((mod, i) => (
         <QueueModulePanel
           key={i}

@@ -4,12 +4,25 @@ import QueueModulePanel from "../components/QueueModulePanel";
 import Constants from "../Constants";
 
 function renderFrames(module) {
-  console.log("rendering frames for the module", module);
-  const frameset = RenderUtils.makeFrameset(Constants.ROWS, Constants.COlS, 10);
-  const ctx = RenderUtils.makeContext(frameset);
-  window.eval(module.javascript);
-  window.run(ctx);
-  return frameset;
+    console.log("module is",module)
+  const frameset = RenderUtils.makeFrameset(Constants.ROWS, Constants.COlS, 10)
+  const ctx = RenderUtils.makeContext(frameset)
+
+    if(module.type === 'wasm-studio/module-publish') {
+        console.log("executing a module publish")
+        const entry = module.manifest.entry
+        console.log(entry)
+        const file = module.manifest.files[entry]
+        console.log("the file is",file)
+        window.eval(file)
+        window.run(ctx)
+    }
+    if(module.type === 'javascript') {
+        console.log("executing the javascript")
+        window.eval(module.javascript)
+        window.run(ctx)
+    }
+  return frameset
 }
 
 class CodeScreen extends Component {
@@ -17,15 +30,16 @@ class CodeScreen extends Component {
     super(props);
     this.state = {
       module: null
-    };
+    }
   }
   componentDidMount() {
-    window.addEventListener("message", this.codeCallback);
+    window.addEventListener("message", this.codeCallback)
   }
   componentWillUnmount() {
-    window.removeEventListener("message", this.codeCallback);
+    window.removeEventListener("message", this.codeCallback)
   }
   codeCallback = msg => {
+      console.log("got the callback",msg)
     const module = msg.data;
     module.json = renderFrames(module);
     console.log("the final module is", module);
@@ -34,27 +48,17 @@ class CodeScreen extends Component {
     if (!module.description) module.description = "some description";
     if (!module.author) module.author = "your@email.tld";
     this.setState({ module: module });
-  };
+  }
   gotoPreview = () => {
     if (this.state.module) {
       this.props.navTo("code-preview", this.state.module);
     }
-  };
+  }
   render() {
     return (
-      <article>
-        <h1>Web Assembly Container</h1>
-        <iframe
-          title="wasm editor"
-          id="wasm-editor"
-          src={Constants.EDITOR_URL}
-        />
-        <button
-          disabled={this.state.module ? false : true}
-          onClick={this.gotoPreview}
-        >
-          Preview
-        </button>
+      <article className="content">
+        <iframe title="wasm editor" id="wasm-editor" src={Constants.EDITOR_URL}/>
+        <button disabled={this.state.module ? false : true} onClick={this.gotoPreview}>Preview</button>
       </article>
     );
   }
