@@ -8,11 +8,25 @@ import Hamburger from "../components/Hamburger";
 import logo from "../img/logo.svg";
 import logoSquare from "../img/logo-square.svg";
 
+const collapseMenu = () => {
+  const burger = document.querySelector(".burger");
+  const mobileNav = document.querySelector(".navbar__list");
+  const body = document.body;
+  console.log("bang");
+
+  if (mobileNav.classList.contains("is-active")) {
+    console.log("bang2");
+    burger.classList.toggle("is-active");
+    mobileNav.classList.toggle("is-active");
+    body.classList.toggle("nav-active");
+  }
+};
+
 const NavbarLink = props => (
   <li className="navbar__item">
-    <Link className="navbar__link" to={props.link}>
+    <NavLink className="navbar__link" to={props.link} onClick={collapseMenu}>
       {props.title}
-    </Link>
+    </NavLink>
   </li>
 );
 
@@ -25,7 +39,7 @@ const Navbar = props => {
         </NavLink>
         <div className="navbar__mobile">
           <Hamburger />
-          <NavLink to="/">
+          <NavLink to="/" onClick={collapseMenu}>
             <img
               className="navbar__logo--mobile"
               src={logoSquare}
@@ -35,26 +49,10 @@ const Navbar = props => {
         </div>
 
         <ul className="navbar__list">
-          <li className="navbar__item">
-            <NavLink className="navbar__link" to="/code">
-              Code a Module
-            </NavLink>
-          </li>
-          <li className="navbar__item">
-            <NavLink className="navbar__link" to="queue">
-              What's Coming Next
-            </NavLink>
-          </li>
-          <li className="navbar__item">
-            <NavLink className="navbar__link" to="about">
-              About
-            </NavLink>
-          </li>
-          <li className="navbar__item">
-            <NavLink className="navbar__link" to="queue-editor">
-              Queue Editor
-            </NavLink>
-          </li>
+          <NavbarLink link="/code" title="Code a Module" />
+          <NavbarLink link="/queue" title="What's Coming Next" />
+          <NavbarLink link="/about" title="About" />
+          <NavbarLink link="/queue-editor" title="Queue Editor" />
         </ul>
         <a
           className="navbar__button"

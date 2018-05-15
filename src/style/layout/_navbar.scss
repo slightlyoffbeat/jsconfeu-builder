@@ -63,6 +63,9 @@
   &.is-active {
     // opacity: 1;
     height: 100vh;
+    @include bp(medium) {
+      height: auto;
+    }
   }
 
   @include bp(medium) {

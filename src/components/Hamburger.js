@@ -12,9 +12,9 @@ class Hamburger extends React.Component {
 
   render() {
     return (
-      <button class="burger" onClick={this.handleClick} type="button">
-        <span class="burger__box">
-          <span class="burger__inner" />
+      <button className="burger" onClick={this.handleClick} type="button">
+        <span className="burger__box">
+          <span className="burger__inner" />
         </span>
       </button>
     );

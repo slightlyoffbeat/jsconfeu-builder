@@ -932,6 +932,9 @@ select {
   overflow-y: hidden; }
   .navbar__list.is-active {
     height: 100vh; }
+    @media all and (min-width: 53.125em) {
+      .navbar__list.is-active {
+        height: auto; } }
   @media all and (min-width: 53.125em) {
     .navbar__list {
       display: flex;
