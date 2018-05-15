@@ -25,6 +25,8 @@
 }
 
 .navbar__mobile {
+  margin-right: auto;
+
   @include bp(medium) {
     display: none;
   }

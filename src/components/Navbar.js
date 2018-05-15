@@ -20,19 +20,19 @@ const Navbar = props => {
   return (
     <div className="navbar">
       <div className="navbar__wrap">
-
-        <NavLink to="/">
-          <img className="navbar__logo" src={logo} alt="Mozilla" />
+        <NavLink className="navbar__logo" to="/">
+          <img src={logo} alt="Mozilla" />
         </NavLink>
         <div className="navbar__mobile">
           <Hamburger />
-          <img
-            className="navbar__logo--mobile"
-            src={logoSquare}
-            alt="Mozilla"
-          />
+          <NavLink to="/">
+            <img
+              className="navbar__logo--mobile"
+              src={logoSquare}
+              alt="Mozilla"
+            />
+          </NavLink>
         </div>
-
 
         <ul className="navbar__list">
           <li className="navbar__item">
@@ -52,7 +52,7 @@ const Navbar = props => {
           </li>
           <li className="navbar__item">
             <NavLink className="navbar__link" to="queue-editor">
-                Queue Editor
+              Queue Editor
             </NavLink>
           </li>
         </ul>

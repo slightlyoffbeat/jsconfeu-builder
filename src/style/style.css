@@ -901,9 +901,11 @@ select {
   display: flex;
   justify-content: space-between; }
 
-@media all and (min-width: 53.125em) {
-  .navbar__mobile {
-    display: none; } }
+.navbar__mobile {
+  margin-right: auto; }
+  @media all and (min-width: 53.125em) {
+    .navbar__mobile {
+      display: none; } }
 
 .navbar__logo {
   height: 40px;
