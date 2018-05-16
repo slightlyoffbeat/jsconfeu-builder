@@ -20,7 +20,7 @@ function hex2rgba(hexa){
 
 export default class QueueModulePanel extends Component {
     componentDidMount() {
-        if(this.canvas && this.props.module && this.props.module.manifest.animation) {
+        if(this.canvas && this.props.module && this.props.module.manifest.animation && !this.props.threedee) {
             this.drawFirstFrame(this.canvas,this.props.module.manifest.animation, this.props.scale)
         }
     }
