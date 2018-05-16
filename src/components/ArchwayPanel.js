@@ -68,10 +68,9 @@ export default class ArchwayPanel extends Component {
     if (!this.loaded) return;
     this.currentFrame++;
     if (!this.props.frames) return;
-    const frame = this.props.frames.frames[
-      this.currentFrame % this.props.frames.frames.length
-    ];
-    this.loadFrame(frame, this.props.frames.height, this.props.frames.width);
+    const data = this.props.frames.data
+    const frame = data[this.currentFrame % data.length];
+    this.loadFrame(frame, this.props.frames.rows, this.props.frames.cols);
   }
   componentWillUnmount() {
     this.mounted = false;
@@ -89,8 +88,8 @@ export default class ArchwayPanel extends Component {
     }
   }
   loadFrame(frame, rows = this.rows, columns = this.columns) {
-    if (frame.length !== rows * columns) {
-      console.error("Bad frame", rows, columns, rows * columns, frame.length);
+    if (frame.length !== rows) {
+      console.error("Bad frame", rows, frame.length);
       return;
     }
     for (let r = 0; r < rows; r++) {
@@ -100,8 +99,8 @@ export default class ArchwayPanel extends Component {
           // console.log('miss', `${r}x${c}`);
           continue;
         }
-        const fcolor = frame[r * columns + c];
-        const color = fcolor << 24 | fcolor << 16 | fcolor << 8 | 255
+        const px = frame[r][c]
+        const color = px[0] << 24 | px[1] << 16 | px[2] << 8 | 255
         material.color.setHex(color >> 8); // The shift drops the alpha bits
       }
     }
@@ -113,7 +112,7 @@ export default class ArchwayPanel extends Component {
     const repaint = time => {
       if (!this.mounted) return;
       requestAnimationFrame(repaint);
-      if (time - lastFrame > 200) {
+      if (time - lastFrame > 100) {
         lastFrame = time;
         this.cycleFrames();
       }

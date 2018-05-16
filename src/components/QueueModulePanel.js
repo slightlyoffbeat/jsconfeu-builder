@@ -20,29 +20,36 @@ function hex2rgba(hexa){
 
 export default class QueueModulePanel extends Component {
     componentDidMount() {
-        if(this.canvas && this.props.module && this.props.module.json) {
-            this.drawFrame(this.canvas,this.props.module.json, this.props.scale)
+        if(this.canvas && this.props.module && this.props.module.manifest.animation) {
+            this.drawFirstFrame(this.canvas,this.props.module.manifest.animation, this.props.scale)
         }
     }
     componentWillReceiveProps(newProps) {
         //force refresh if the module changes
         if(this.props.module._id !== newProps.module._id) {
-            this.drawFrame(this.canvas,newProps.module.json, newProps.scale)
+            this.drawFirstFrame(this.canvas,newProps.module.json, newProps.scale)
         }
     }
-    drawFrame(can, anim,sc) {
+
+    drawFirstFrame(can, anim, sc) {
+        function getPixelOnFrame(x,y,f,anim) {
+            return anim.data[f][y][x]
+        }
+        function pixelToRGB(px) {
+            return `rgb(${px[0]},${px[1]},${px[2]})`
+        }
         const ctx = can.getContext('2d')
-        const frame = anim.frames[0]
+        const frame = anim.data[0]
         if(!frame) return console.error("animation has no frames")
 
-        const w = anim.width
-        const h = anim.height
+        const w = anim.cols
+        const h = anim.rows
         ctx.fillStyle = 'white'
         ctx.fillRect(0,0,w*sc,h*sc)
         for(let x=0; x<w; x++) {
             for(let y=0; y<h; y++) {
-                const n = y * w + x
-                ctx.fillStyle = hex2rgba(intToHex(frame[n]))
+                const px = getPixelOnFrame(x,y,0,anim)
+                ctx.fillStyle = pixelToRGB(px)
                 ctx.fillRect(x*sc,y*sc,sc,sc)
             }
         }
@@ -61,10 +68,10 @@ export default class QueueModulePanel extends Component {
 
     renderCanvas() {
         if(this.props.threedee === true) {
-            return <ArchwayPanel frames={this.props.module.json}/>
+            return <ArchwayPanel frames={this.props.module.manifest.animation}/>
         } else {
-            const w = this.props.module.json.width || 0
-            const h = this.props.module.json.height || 0
+            const w = this.props.module.manifest.animation.cols || 0
+            const h = this.props.module.manifest.animation.rows || 0
             return <canvas ref={can=>this.canvas=can} width={w * this.props.scale} height={h * this.props.scale}>animation</canvas>
         }
     }

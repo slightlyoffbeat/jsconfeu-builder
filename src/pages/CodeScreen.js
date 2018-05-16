@@ -4,28 +4,6 @@ import QueueModulePanel from "../components/QueueModulePanel";
 import Constants from "../Constants";
 import {Link, Redirect, Route, withRouter} from "react-router-dom"
 
-function renderFrames(module) {
-    console.log("module is",module)
-  const frameset = RenderUtils.makeFrameset(Constants.ROWS, Constants.COlS, 10)
-  const ctx = RenderUtils.makeContext(frameset)
-
-    if(module.type === 'wasm-studio/module-publish') {
-        console.log("executing a module publish")
-        const entry = module.manifest.entry
-        console.log(entry.animation)
-        // const file = module.manifest.files[entry]
-        // console.log("the file is",file)
-        // window.eval(file)
-        // window.run(ctx)
-    }
-    if(module.type === 'javascript') {
-        console.log("executing the javascript")
-        window.eval(module.javascript)
-        window.run(ctx)
-    }
-  return frameset
-}
-
 class CodeScreen extends Component {
   constructor(props) {
     super(props);
@@ -44,8 +22,8 @@ class CodeScreen extends Component {
       console.log("got the callback",msg)
     const module = msg.data;
       if(module && module.type) {
-          module.json = renderFrames(module);
           console.log("the final module is", module);
+          console.log('animation at', module.manifest.animation)
           if (!module.tags) module.tags = [];
           if (!module.title) module.title = "some title";
           if (!module.description) module.description = "some description";
