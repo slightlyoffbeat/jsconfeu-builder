@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom"
 
 // Styles & Icons
 import "./style/style.css";
@@ -87,55 +87,60 @@ class App extends Component {
     }
   };
   render() {
-    return (
+      return (
       <div id="body">
         <Router>
           <div>
             <Navbar navTo={this.navTo} startAuth={() => AuthStore.start()} />
-            <Switch>
-              <Route exact path="/" render={() => <HomeScreen />} />
-              <Route
-                exact
-                path="/code"
-                render={() => <CodeScreen data={this.state.data} />}
-              />
-              <Route
-                exact
-                path="/code-preview"
-                render={() => <CodeScreen.Preview data={this.state.data} />}
-              />
-              <Route
-                exact
-                path="/code-submit"
-                render={() => <CodeScreen.Preview data={this.state.data} />}
-              />
-              <Route
-                exact
-                path="/code-submit-done"
-                render={() => (
-                  <CodeScreen.Submit
-                    data={this.state.data}
-                    onSubmit={this.onSubmit}
-                    editData={data => this.setState({ data: data })}
-                  />
-                )}
-              />
-              <Route exact path="/paint" render={() => <PaintScreen />} />
-              <Route exact path="/pipeline" render={() => <PipelineEditor />} />
-              <Route exact path="/queue" render={() => <QueueScreen />} />
-              <Route
-                exact
-                path="/queue-editor"
-                render={() => <QueueEditor />}
-              />
-              <Route exact path="/about" render={() => <AboutScreen />} />
-            </Switch>
+              {this.renderCurrentScreen()}
           </div>
         </Router>
         <Footer user={this.state.user} />
       </div>
     );
   }
+
+    renderCurrentScreen() {
+        return <Switch>
+            <Route exact path="/" render={() => <HomeScreen />} />
+            <Route
+                exact
+                path="/code"
+                render={() => <CodeScreen data={this.state.data}/>}
+            />
+            <Route
+                exact
+                path="/code-preview"
+                render={() => <CodeScreen.Preview/>}
+            />
+            <Route
+                exact
+                path="/code-submit"
+                render={() => <CodeScreen.Submit onSubmit={this.onSubmit}/>}
+            />
+            <Route
+                exact
+                path="/code-submit-done"
+                render={() => (
+                    <CodeScreen.SubmitDone
+                        // data={this.state.data}
+                        // onSubmit={this.onSubmit}
+                        // editData={data => this.setState({ data: data })}
+                    />
+                )}
+            />
+            <Route exact path="/paint" render={() => <PaintScreen />} />
+            <Route exact path="/pipeline" render={() => <PipelineEditor />} />
+            <Route exact path="/queue" render={() => <QueueScreen />} />
+            <Route
+                exact
+                path="/queue-editor"
+                render={() => <QueueEditor />}
+            />
+            <Route exact path="/about" render={() => <AboutScreen />} />
+        </Switch>
+
+    }
 }
 
 export default App;

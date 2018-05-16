@@ -1,4 +1,5 @@
-const BASE_URL = `https://vr.josh.earth/jsconfeu-builder/api`
+import Constants from '../Constants'
+
 
 class AuthStore {
     constructor(){
@@ -7,7 +8,7 @@ class AuthStore {
     }
 
     start() {
-        fetch(`${BASE_URL}/github/login`)
+        fetch(`${Constants.BASE_URL}/github/login`)
             .then((res)=>res.json())
             .then((res)=>{
                 this.win = window.open(res.url,'_blank')
@@ -47,7 +48,7 @@ class AuthStore {
             accesstoken = localStorage.getItem('access-token')
         }
         // console.log("fetching with the access token",accesstoken)
-        return fetch(`${BASE_URL}/userinfo?accesstoken=${accesstoken}`)
+        return fetch(`${Constants.BASE_URL}/userinfo?accesstoken=${accesstoken}`)
             .then((res)=>res.json())
             .then((res)=>{
                 this.currentUser = res.user

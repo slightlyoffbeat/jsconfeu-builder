@@ -100,7 +100,8 @@ export default class ArchwayPanel extends Component {
           // console.log('miss', `${r}x${c}`);
           continue;
         }
-        const color = frame[r * columns + c];
+        const fcolor = frame[r * columns + c];
+        const color = fcolor << 24 | fcolor << 16 | fcolor << 8 | 255
         material.color.setHex(color >> 8); // The shift drops the alpha bits
       }
     }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import RenderUtils from "../utils/RenderUtils";
 import QueueModulePanel from "../components/QueueModulePanel";
 import Constants from "../Constants";
+import {Link, Redirect, Route, withRouter} from "react-router-dom"
 
 function renderFrames(module) {
     console.log("module is",module)
@@ -11,11 +12,11 @@ function renderFrames(module) {
     if(module.type === 'wasm-studio/module-publish') {
         console.log("executing a module publish")
         const entry = module.manifest.entry
-        console.log(entry)
-        const file = module.manifest.files[entry]
-        console.log("the file is",file)
-        window.eval(file)
-        window.run(ctx)
+        console.log(entry.animation)
+        // const file = module.manifest.files[entry]
+        // console.log("the file is",file)
+        // window.eval(file)
+        // window.run(ctx)
     }
     if(module.type === 'javascript') {
         console.log("executing the javascript")
@@ -29,7 +30,8 @@ class CodeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      module: null
+          module: null,
+        redirectToPreview:false
     }
   }
   componentDidMount() {
@@ -41,39 +43,39 @@ class CodeScreen extends Component {
   codeCallback = msg => {
       console.log("got the callback",msg)
     const module = msg.data;
-    module.json = renderFrames(module);
-    console.log("the final module is", module);
-    if (!module.tags) module.tags = [];
-    if (!module.title) module.title = "some title";
-    if (!module.description) module.description = "some description";
-    if (!module.author) module.author = "your@email.tld";
-    this.setState({ module: module });
-  }
-  gotoPreview = () => {
-    if (this.state.module) {
-      this.props.navTo("code-preview", this.state.module);
-    }
+      if(module && module.type) {
+          module.json = renderFrames(module);
+          console.log("the final module is", module);
+          if (!module.tags) module.tags = [];
+          if (!module.title) module.title = "some title";
+          if (!module.description) module.description = "some description";
+          if (!module.author) module.author = "your@email.tld";
+          console.log("saving the module",module)
+          localStorage.setItem('current-module',JSON.stringify(module))
+          this.setState({redirectToPreview:true})
+      }
   }
   render() {
+      if(this.state.redirectToPreview) {
+          return <Redirect to={{pathname:'code-preview'}} />
+      }
     return (
       <article className="content">
         <iframe title="wasm editor" id="wasm-editor" src={Constants.EDITOR_URL}/>
-        <button disabled={this.state.module ? false : true} onClick={this.gotoPreview}>Preview</button>
       </article>
     );
   }
 }
 
 const Preview = props => {
+    const module = JSON.parse(localStorage.getItem('current-module'))
   return (
-    <article>
+    <article className="content">
       <h1>preview screen</h1>
-      <QueueModulePanel module={props.data} scale={50} threedee={true} />
+      <QueueModulePanel module={module} scale={50} threedee={true} />
       <div className="row">
-        <button onClick={() => props.navTo("code", props.data)}>back</button>
-        <button onClick={() => props.navTo("code-submit", props.data)}>
-          submit
-        </button>
+          <Link to="/code">Back</Link>
+          <Link to="/code-submit">Submit</Link>
       </div>
     </article>
   );
@@ -139,34 +141,35 @@ const Submit = props => {
     data[field] = value;
     props.editData(data);
   }
+    const module = JSON.parse(localStorage.getItem('current-module'))
   return (
-    <article>
+    <article className="content">
       <h1>Submit your art for review</h1>
       <form>
         <input
           type="text"
           placeholder="Title"
-          value={props.data.title}
+          value={module.title}
           onChange={e => edit("title", e.target.value)}
         />
         <textarea
           placeholder="Description"
-          value={props.data.description}
+          value={module.description}
           onChange={e => edit("description", e.target.value)}
         />
         <input
           type="text"
           placeholder="Author Name/Email"
-          value={props.data.author}
+          value={module.author}
           onChange={e => edit("author", e.target.value)}
         />
         <TagEditor
-          tags={props.data.tags}
+          tags={module.tags}
           onChange={tags => edit("tags", tags)}
         />
       </form>
-      <QueueModulePanel module={props.data} scale={20} />
-      <button onClick={() => props.onSubmit(props.data)}>submit</button>
+      <QueueModulePanel module={module} scale={50} threedee={true} />
+      <button onClick={() => props.onSubmit(module)}>submit</button>
     </article>
   );
 };
