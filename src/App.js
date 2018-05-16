@@ -48,7 +48,7 @@ class App extends Component {
     AuthStore.listenToLogin(() => {
       console.log("the user is logged in");
       AuthStore.checkAuth().then(user => {
-        console.log("the user object is", user);
+        // console.log("the user object is", user);
         this.setState({ user: user });
       });
     });
@@ -76,35 +76,15 @@ class App extends Component {
 
     renderCurrentScreen() {
         return <Switch>
-            <Route exact path="/" render={() => <HomeScreen />} />
-            <Route
-                exact
-                path="/code"
-                render={() => <CodeScreen data={this.state.data}/>}
-            />
-            <Route
-                exact
-                path="/code-preview"
-                component={CodeScreen.Preview}
-            />
-            <Route
-                exact
-                path="/code-submit"
-                component={CodeScreen.Submit}
-            />
-            <Route
-                exact
-                path="/code-submit-done"
-                render={() => (<CodeScreen.SubmitDone/>)}
-            />
+            <Route exact path="/" component={HomeScreen}/>
+            <Route exact path="/code" component={CodeScreen}/>
+            <Route exact path="/code-preview" component={CodeScreen.Preview}/>
+            <Route exact path="/code-submit" component={CodeScreen.Submit}/>
+            <Route exact path="/code-submit-done" component={CodeScreen.SubmitDone}/>
             <Route exact path="/paint" render={() => <PaintScreen />} />
             <Route exact path="/pipeline" render={() => <PipelineEditor />} />
-            <Route exact path="/queue" render={() => <QueueScreen />} />
-            <Route
-                exact
-                path="/queue-editor"
-                render={() => <QueueEditor />}
-            />
+            <Route exact path="/queue" component={QueueScreen}/>
+            <Route exact path="/queue-editor" component={QueueEditor}/>
             <Route exact path="/about" render={() => <AboutScreen />} />
         </Switch>
 

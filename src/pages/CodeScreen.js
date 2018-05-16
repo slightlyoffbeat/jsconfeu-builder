@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import RenderUtils from "../utils/RenderUtils";
 import QueueModulePanel from "../components/QueueModulePanel";
 import Constants from "../Constants";
 import {Link, Redirect, Route, withRouter} from "react-router-dom"
@@ -9,10 +8,9 @@ import AuthStore from '../utils/AuthStore'
 class CodeScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-          module: null,
-        redirectToPreview:false
-    }
+      this.state = {
+          module: null
+      }
   }
   componentDidMount() {
     window.addEventListener("message", this.codeCallback)
@@ -21,24 +19,18 @@ class CodeScreen extends Component {
     window.removeEventListener("message", this.codeCallback)
   }
   codeCallback = msg => {
-      console.log("got the callback",msg)
-    const module = msg.data;
+      const module = msg.data;
       if(module && module.type) {
           console.log("the final module is", module);
-          console.log('animation at', module.manifest.animation)
           if (!module.tags) module.tags = [];
           if (!module.title) module.title = "some title";
           if (!module.description) module.description = "some description";
           if (!module.author) module.author = "your@email.tld";
-          console.log("saving the module",module)
           localStorage.setItem('current-module',JSON.stringify(module))
-          this.setState({redirectToPreview:true})
+          this.props.history.push('/code-preview')
       }
   }
   render() {
-      if(this.state.redirectToPreview) {
-          return <Redirect to={{pathname:'code-preview'}} />
-      }
     return (
       <article className="content">
         <iframe title="wasm editor" id="wasm-editor" src={Constants.EDITOR_URL}/>
@@ -123,10 +115,18 @@ class Submit extends Component {
             user: AuthStore.getCurrentUser(),
         }
     }
+    componentDidMount() {
+        AuthStore.listenToLogin(this.loggedIn)
+    }
+    componentWillUnmount() {
+        AuthStore.unlistenToLogin(this.loggedIn)
+    }
+    loggedIn = () => {
+        this.setState({user:AuthStore.getCurrentUser()})
+    }
     onSubmit = () => {
         const module = this.state.module
         console.log("submitting the module", module);
-        console.log("checking for missing");
 
         function missing(str) {
             if (!str) return true;
@@ -145,10 +145,8 @@ class Submit extends Component {
             console.log("really submitting")
             ModuleStore.submitModule(module)
                 .then(() => {
-                    // this.setState({navTo:'/code-submit-done'})
-                    console.log("got the result. back to done")
+                    console.log("got the result. nav to the /code-submit-done")
                     this.props.history.push('/code-submit-done')
-                    // return this.navTo("code-submit-done");
                 })
                 .catch(e => {
                     console.log("error submitting", e);
@@ -157,11 +155,11 @@ class Submit extends Component {
 
     }
 
-  // function edit(field, value) {
-  //   const data = props.data;
-  //   data[field] = value;
-  //   props.editData(data);
-  // }
+    edit = (field, value) => {
+        this.state.module[field] = value
+        this.setState({module:this.state.module})
+    }
+
     render() {
         const module = this.state.module
         return (

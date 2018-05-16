@@ -19,6 +19,7 @@ class AuthStore {
 
     fireChange = () => setTimeout(()=>this.listeners.forEach((cb)=>cb()))
     listenToLogin = (cb) => this.listeners.push(cb)
+    unlistenToLogin = (cb) => this.listeners = this.listeners.filter(l => l !== cb)
     getCurrentUser = () => this.currentUser
     isLoggedIn = () => this.currentUser !== null
     logout = () => {
