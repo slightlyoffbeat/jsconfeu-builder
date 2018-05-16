@@ -56,6 +56,14 @@ class ModuleStore {
   };
 
   submitModule(module) {
+      const filemap = Object.keys(module.manifest.files).map(fname => {
+          return { path: fname, content: module.manifest.files[fname]}
+      })
+      module.manifest.filemap = filemap
+      delete module.manifest.files
+
+
+      console.log("POSTing module",module)
     return fetch(`${Constants.BASE_URL}/publish`, {
       method: "POST",
       body: JSON.stringify(module),
@@ -66,7 +74,7 @@ class ModuleStore {
       }
     })
       .then(res => res.json())
-      .then(res => console.log(res))
+      .then(res => console.log('result of submitting',res))
       .then(res => this.refreshQueue())
       .catch(e => {
         console.log("error submitting a module:", e);

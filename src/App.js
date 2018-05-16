@@ -60,32 +60,6 @@ class App extends Component {
     });
   }
   navTo = (screen, data) => this.setState({ screen: screen, data: data });
-  onSubmit = module => {
-    console.log("submitting the module", module);
-
-    function missing(str) {
-      if (!str) return true;
-      if (str.trim().length === 0) return true;
-      return false;
-    }
-    if (missing(module.title)) throw new Error("module is missing a title");
-    if (missing(module.description))
-      throw new Error("module is missing a description");
-    console.log("checking missing");
-
-    if (!this.state.user) {
-      console.log("not authenitcated. can't submit");
-      AuthStore.start();
-    } else {
-      ModuleStore.submitModule(module)
-        .then(() => {
-          return this.navTo("code-submit-done");
-        })
-        .catch(e => {
-          console.log("error submitting", e);
-        });
-    }
-  };
   render() {
       return (
       <div id="body">
@@ -111,23 +85,17 @@ class App extends Component {
             <Route
                 exact
                 path="/code-preview"
-                render={() => <CodeScreen.Preview/>}
+                component={CodeScreen.Preview}
             />
             <Route
                 exact
                 path="/code-submit"
-                render={() => <CodeScreen.Submit onSubmit={this.onSubmit}/>}
+                component={CodeScreen.Submit}
             />
             <Route
                 exact
                 path="/code-submit-done"
-                render={() => (
-                    <CodeScreen.SubmitDone
-                        // data={this.state.data}
-                        // onSubmit={this.onSubmit}
-                        // editData={data => this.setState({ data: data })}
-                    />
-                )}
+                render={() => (<CodeScreen.SubmitDone/>)}
             />
             <Route exact path="/paint" render={() => <PaintScreen />} />
             <Route exact path="/pipeline" render={() => <PipelineEditor />} />

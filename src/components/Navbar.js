@@ -12,10 +12,8 @@ const collapseMenu = () => {
   const burger = document.querySelector(".burger");
   const mobileNav = document.querySelector(".navbar__list");
   const body = document.body;
-  console.log("bang");
 
   if (mobileNav.classList.contains("is-active")) {
-    console.log("bang2");
     burger.classList.toggle("is-active");
     mobileNav.classList.toggle("is-active");
     body.classList.toggle("nav-active");

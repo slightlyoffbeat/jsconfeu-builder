@@ -144,12 +144,9 @@ export default class ArchwayPanel extends Component {
     if (e.buttons === 1) {
       const dx = e.clientX - this.startX;
       const dry = dx * Math.PI / 180;
-      console.log(dry);
       this.arch.rotation.y = this.startRY + dry;
-      // console.log(this.arch.rotation.y)
     }
-    // console.log("mouse",e.clientX, e.buttons, e.button)
-  };
+  }
   mouseUp = e => {};
 }
 

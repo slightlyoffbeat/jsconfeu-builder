@@ -3,6 +3,8 @@ import RenderUtils from "../utils/RenderUtils";
 import QueueModulePanel from "../components/QueueModulePanel";
 import Constants from "../Constants";
 import {Link, Redirect, Route, withRouter} from "react-router-dom"
+import ModuleStore from '../utils/ModuleStore'
+import AuthStore from '../utils/AuthStore'
 
 class CodeScreen extends Component {
   constructor(props) {
@@ -113,55 +115,99 @@ class TagEditor extends Component {
   }
 }
 
-const Submit = props => {
-  function edit(field, value) {
-    const data = props.data;
-    data[field] = value;
-    props.editData(data);
-  }
-    const module = JSON.parse(localStorage.getItem('current-module'))
-  return (
-    <article className="content">
-      <h1>Submit your art for review</h1>
-      <form>
-        <input
-          type="text"
-          placeholder="Title"
-          value={module.title}
-          onChange={e => edit("title", e.target.value)}
-        />
-        <textarea
-          placeholder="Description"
-          value={module.description}
-          onChange={e => edit("description", e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Author Name/Email"
-          value={module.author}
-          onChange={e => edit("author", e.target.value)}
-        />
-        <TagEditor
-          tags={module.tags}
-          onChange={tags => edit("tags", tags)}
-        />
-      </form>
-      <QueueModulePanel module={module} scale={50} threedee={true} />
-      <button onClick={() => props.onSubmit(module)}>submit</button>
-    </article>
-  );
-};
+class Submit extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            module : JSON.parse(localStorage.getItem('current-module')),
+            user: AuthStore.getCurrentUser(),
+        }
+    }
+    onSubmit = () => {
+        const module = this.state.module
+        console.log("submitting the module", module);
+        console.log("checking for missing");
+
+        function missing(str) {
+            if (!str) return true;
+            if (str.trim().length === 0) return true;
+            return false;
+        }
+        if (missing(module.title)) throw new Error("module is missing a title");
+        if (missing(module.description))
+            throw new Error("module is missing a description");
+        console.log('checking for user', this.state.user)
+
+        if (!this.state.user) {
+            console.log("not authenitcated. can't submit");
+            AuthStore.start();
+        } else {
+            console.log("really submitting")
+            ModuleStore.submitModule(module)
+                .then(() => {
+                    // this.setState({navTo:'/code-submit-done'})
+                    console.log("got the result. back to done")
+                    this.props.history.push('/code-submit-done')
+                    // return this.navTo("code-submit-done");
+                })
+                .catch(e => {
+                    console.log("error submitting", e);
+                });
+        }
+
+    }
+
+  // function edit(field, value) {
+  //   const data = props.data;
+  //   data[field] = value;
+  //   props.editData(data);
+  // }
+    render() {
+        const module = this.state.module
+        return (
+            <article className="content">
+                <h1>Submit your art for review</h1>
+                <form>
+                    <input
+                        type="text"
+                        placeholder="Title"
+                        value={module.title}
+                        onChange={e => this.edit("title", e.target.value)}
+                    />
+                    <textarea
+                        placeholder="Description"
+                        value={module.description}
+                        onChange={e => this.edit("description", e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Author Name/Email"
+                        value={module.author}
+                        onChange={e => this.edit("author", e.target.value)}
+                    />
+                    <TagEditor
+                        tags={module.tags}
+                        onChange={tags => this.edit("tags", tags)}
+                    />
+                </form>
+                <QueueModulePanel module={module} scale={50} threedee={true}/>
+                <button onClick={this.onSubmit}>submit</button>
+            </article>
+        )
+    }
+}
 CodeScreen.Submit = Submit;
 
 const SubmitDone = props => {
   return (
-    <article>
+    <article className="content">
       <h1>submit done screen</h1>
       <div>thank you </div>
-      <button onClick={() => props.navTo("queue")}>What's Coming Next</button>
-      <button onClick={() => props.navTo("pipeline")}>
-        Create an Animation
-      </button>
+        <Link to="/queue">What's Coming Next</Link>
+        {/*<button onClick={() => props.navTo("queue")}>What's Coming Next</button>*/}
+      {/*<button onClick={() => props.navTo("pipeline")}>*/}
+        {/*Create an Animation*/}
+      {/*</button>*/}
     </article>
   );
 };

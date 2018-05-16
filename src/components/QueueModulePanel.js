@@ -67,8 +67,18 @@ export default class QueueModulePanel extends Component {
     }
 
     renderCanvas() {
+        if(!this.props.module) {
+            return <div>error. can't render module</div>
+        }
+        if(!this.props.module.manifest) {
+            return <div>error. can't render module</div>
+        }
         if(this.props.threedee === true) {
-            return <ArchwayPanel frames={this.props.module.manifest.animation}/>
+            if(this.props.module && this.props.module.manifest) {
+                return <ArchwayPanel frames={this.props.module.manifest.animation}/>
+            } {
+                return <div>error!!!</div>
+            }
         } else {
             const w = this.props.module.manifest.animation.cols || 0
             const h = this.props.module.manifest.animation.rows || 0
