@@ -197,17 +197,13 @@ class Submit extends Component {
 CodeScreen.Submit = Submit;
 
 const SubmitDone = props => {
-  return (
-    <article className="content">
-      <h1>submit done screen</h1>
-      <div>thank you </div>
-        <Link to="/queue">What's Coming Next</Link>
-        {/*<button onClick={() => props.navTo("queue")}>What's Coming Next</button>*/}
-      {/*<button onClick={() => props.navTo("pipeline")}>*/}
-        {/*Create an Animation*/}
-      {/*</button>*/}
-    </article>
-  );
+    return (
+        <article className="content">
+            <h1>submit done screen</h1>
+            <div>thank you </div>
+            <Link to="/queue" className="button">What's Coming Next</Link>
+        </article>
+    );
 };
 CodeScreen.SubmitDone = SubmitDone;
 
