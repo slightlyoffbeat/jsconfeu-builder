@@ -32,6 +32,9 @@ export default class QueueModulePanel extends Component {
     }
 
     drawFirstFrame(can, anim, sc) {
+        if(!anim) return
+        if(!anim.data) return
+        if(anim.data.length <= 0) return
         function getPixelOnFrame(x,y,f,anim) {
             return anim.data[f][y][x]
         }

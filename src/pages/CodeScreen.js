@@ -27,6 +27,7 @@ class CodeScreen extends Component {
           if (!module.title) module.title = "some title";
           if (!module.description) module.description = "some description";
           if (!module.author) module.author = "your@email.tld";
+          if (!module.origin) module.origin = 'wasmstudio'
           localStorage.setItem('current-module',JSON.stringify(module))
           this.setState({showPreview:true})
       }
