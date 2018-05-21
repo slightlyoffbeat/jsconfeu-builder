@@ -7,6 +7,7 @@ import Hamburger from "../components/Hamburger";
 // Images
 import logo from "../img/logo.svg";
 import logoSquare from "../img/logo-square.svg";
+import AuthStore from '../utils/AuthStore'
 
 const collapseMenu = () => {
   const burger = document.querySelector(".burger");
@@ -27,6 +28,20 @@ const NavbarLink = props => (
     </NavLink>
   </li>
 );
+
+const GithubButton = props => {
+    let text = "Connect with Github"
+    let callback = ()=>AuthStore.start()
+    console.log("checking logged in", AuthStore.isLoggedIn())
+    if (AuthStore.isLoggedIn()) {
+        text = "Log Out"
+        callback = () => AuthStore.logout()
+    }
+
+    return <a className="navbar__button" href="#" onClick={callback}>
+        <span>{text}</span>
+    </a>
+}
 
 const Navbar = props => {
   return (
@@ -52,13 +67,7 @@ const Navbar = props => {
           <NavbarLink link="/about" title="About" />
           <NavbarLink link="/queue-editor" title="Queue Editor" />
         </ul>
-        <a
-          className="navbar__button"
-          href="#"
-          onClick={() => props.startAuth("github")}
-        >
-          <span>Connect with Github</span>
-        </a>
+        <GithubButton/>
       </div>
     </div>
   );

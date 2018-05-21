@@ -42,10 +42,15 @@ class CodeScreen extends Component {
   backClicked = () => {
       this.setState({showPreview:false})
   }
+  navSubmit = () => {
+      this.props.history.push('/code-submit')
+  }
   renderOverlay() {
       if(!this.state.showPreview) return ""
       return <div className="overlay-scrim">
-          <Preview backClicked={this.backClicked}/>
+          <Preview backClicked={this.backClicked}
+                   navSubmit={this.navSubmit}
+          />
       </div>
   }
 }
@@ -57,8 +62,8 @@ const Preview = props => {
             <h1>preview screen</h1>
             <QueueModulePanel module={module} scale={50} threedee={true} />
             <div className="row">
-                <button onClick={props.backClicked}>back</button>
-                <Link to="/code-submit">Submit</Link>
+                <button onClick={props.backClicked}>Back</button>
+                <button onClick={props.navSubmit}>Submit</button>
             </div>
         </article>
     );
