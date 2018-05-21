@@ -9,7 +9,8 @@ class CodeScreen extends Component {
   constructor(props) {
     super(props);
       this.state = {
-          module: null
+          module: null,
+          showPreview: false,
       }
   }
   componentDidMount() {
@@ -27,30 +28,40 @@ class CodeScreen extends Component {
           if (!module.description) module.description = "some description";
           if (!module.author) module.author = "your@email.tld";
           localStorage.setItem('current-module',JSON.stringify(module))
-          this.props.history.push('/code-preview')
+          this.setState({showPreview:true})
       }
   }
   render() {
     return (
       <article className="content">
         <iframe title="wasm editor" id="wasm-editor" src={Constants.EDITOR_URL}/>
+          {this.renderOverlay()}
       </article>
     );
+  }
+  backClicked = () => {
+      this.setState({showPreview:false})
+  }
+  renderOverlay() {
+      if(!this.state.showPreview) return ""
+      return <div className="overlay-scrim">
+          <Preview backClicked={this.backClicked}/>
+      </div>
   }
 }
 
 const Preview = props => {
     const module = JSON.parse(localStorage.getItem('current-module'))
-  return (
-    <article className="content">
-      <h1>preview screen</h1>
-      <QueueModulePanel module={module} scale={50} threedee={true} />
-      <div className="row">
-          <Link to="/code">Back</Link>
-          <Link to="/code-submit">Submit</Link>
-      </div>
-    </article>
-  );
+    return (
+        <article className="overlay-content">
+            <h1>preview screen</h1>
+            <QueueModulePanel module={module} scale={50} threedee={true} />
+            <div className="row">
+                <button onClick={props.backClicked}>back</button>
+                <Link to="/code-submit">Submit</Link>
+            </div>
+        </article>
+    );
 };
 CodeScreen.Preview = Preview;
 
