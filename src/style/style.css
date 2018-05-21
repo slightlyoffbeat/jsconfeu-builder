@@ -1434,6 +1434,7 @@ input[type="button"].button--block {
 .overlay-content {
   display: flex;
   border: 1px solid white;
+  padding: 1em;
   /*width: 500px;*/
   /*height: 400px;*/
   background-color: black;
@@ -1602,7 +1603,7 @@ article {
 /* ======= WASM Editor ============ */
 iframe#wasm-editor {
   width: 100%;
-  min-height: 800px; }
+  min-height: 600px; }
 
 /* ========Queue Viewer ========== */
 .queue-module {

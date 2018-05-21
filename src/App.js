@@ -78,9 +78,6 @@ class App extends Component {
         return <Switch>
             <Route exact path="/" component={HomeScreen}/>
             <Route exact path="/code" component={CodeScreen}/>
-            <Route exact path="/code-preview" component={CodeScreen.Preview}/>
-            <Route exact path="/code-submit" component={CodeScreen.Submit}/>
-            <Route exact path="/code-submit-done" component={CodeScreen.SubmitDone}/>
             <Route exact path="/paint" render={() => <PaintScreen />} />
             <Route exact path="/pipeline" render={() => <PipelineEditor />} />
             <Route exact path="/queue" component={QueueScreen}/>

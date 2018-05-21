@@ -28,8 +28,10 @@ body {
 .overlay-content {
   display: flex;
   border: 1px solid white;
+  padding: 1em;
   /*width: 500px;*/
   /*height: 400px;*/
   background-color: black;
   flex-direction: column;
 }
+

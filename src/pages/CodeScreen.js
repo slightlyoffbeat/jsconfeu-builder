@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 import QueueModulePanel from "../components/QueueModulePanel";
 import Constants from "../Constants";
-import {Link, Redirect, Route, withRouter} from "react-router-dom"
+import {Link} from "react-router-dom"
 import ModuleStore from '../utils/ModuleStore'
 import AuthStore from '../utils/AuthStore'
 
 class CodeScreen extends Component {
   constructor(props) {
-    super(props);
+      super(props);
       this.state = {
           module: null,
-          showPreview: false,
+          showPreviewSubmit: false,
+          showInfo:true,
+          showProgress:false,
+          progressText:'nothing',
+          showDone:false,
       }
   }
   componentDidMount() {
@@ -29,7 +33,7 @@ class CodeScreen extends Component {
           if (!module.author) module.author = "your@email.tld";
           if (!module.origin) module.origin = 'wasmstudio'
           localStorage.setItem('current-module',JSON.stringify(module))
-          this.setState({showPreview:true})
+          this.setState({showPreviewSubmit:true})
       }
   }
   render() {
@@ -40,36 +44,46 @@ class CodeScreen extends Component {
       </article>
     );
   }
-  backClicked = () => {
-      this.setState({showPreview:false})
-  }
-  navSubmit = () => {
-      this.props.history.push('/code-submit')
-  }
-  renderOverlay() {
-      if(!this.state.showPreview) return ""
-      return <div className="overlay-scrim">
-          <Preview backClicked={this.backClicked}
-                   navSubmit={this.navSubmit}
-          />
-      </div>
-  }
+    backClicked = () => this.setState({showPreviewSubmit:false})
+    dismissInfo = () => this.setState({showInfo:false})
+    doSubmit = (module) => {
+      this.setState({showPreviewSubmit:false, showProgress:true, progressText:"submitting for review"})
+        console.log("really submitting")
+        ModuleStore.submitModule(module)
+            .then((res) => {
+                console.log("got the result",res)
+                this.setState({showProgress:false, showDone:true})
+            })
+            .catch(e => {
+                console.log("error submitting", e);
+            });
+
+    }
+    renderOverlay() {
+        if(this.state.showInfo) return <div className="overlay-scrim"><InfoScreen dismissInfo={this.dismissInfo}/></div>
+        if(this.state.showProgress) return <div className="overlay-scrim"><Progress text={this.state.progressText}/></div>
+        if(this.state.showDone) return <div className="overlay-scrim"><SubmitDone/></div>
+        if(this.state.showPreviewSubmit)
+            return  <div className="overlay-scrim"><PreviewSubmit backClicked={this.backClicked} doSubmit={this.doSubmit}/></div>
+        return ""
+    }
 }
 
-const Preview = props => {
-    const module = JSON.parse(localStorage.getItem('current-module'))
-    return (
-        <article className="overlay-content">
-            <h1>preview screen</h1>
-            <QueueModulePanel module={module} scale={50} threedee={true} />
-            <div className="row">
-                <button onClick={props.backClicked}>Back</button>
-                <button onClick={props.navSubmit}>Submit</button>
-            </div>
-        </article>
-    );
-};
-CodeScreen.Preview = Preview;
+const InfoScreen = props => {
+    return <article className="overlay-content">
+        <h2>Code a Module</h2>
+        <p>Here are some instructions to code a module</p>
+        <div className="row">
+            <button onClick={props.dismissInfo}>Dismiss</button>
+        </div>
+    </article>
+}
+
+const Progress = props => {
+    return <article className="overlay-content">
+        <p>progress screen: <b>{props.text}</b></p>
+    </article>
+}
 
 const TagButton = props => {
   return (
@@ -105,7 +119,6 @@ class TagEditor extends Component {
   render() {
     return (
       <div>
-        <h3>Choose Tags</h3>
         <input
           type="text"
           placeholder="Filter name"
@@ -124,7 +137,26 @@ class TagEditor extends Component {
   }
 }
 
-class Submit extends Component {
+const VBox = props => {
+    const style = props.style || {}
+    style.display = 'flex'
+    style.flexDirection = 'column'
+    return <div style={style}>{props.children}</div>
+}
+const HBox = props => {
+    const style = props.style || {}
+    style.display = 'flex'
+    style.flexDirection = 'row'
+    return <div style={style}>{props.children}</div>
+}
+const Label = props => {
+    return <label style={{flex:1}}>{props.children}</label>
+}
+const Spacer = props => {
+    return <span style={{flex:1}}/>
+}
+
+class PreviewSubmit extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -143,7 +175,6 @@ class Submit extends Component {
     }
     onSubmit = () => {
         const module = this.state.module
-        console.log("submitting the module", module);
 
         function missing(str) {
             if (!str) return true;
@@ -159,17 +190,8 @@ class Submit extends Component {
             console.log("not authenitcated. can't submit");
             AuthStore.start();
         } else {
-            console.log("really submitting")
-            ModuleStore.submitModule(module)
-                .then(() => {
-                    console.log("got the result. nav to the /code-submit-done")
-                    this.props.history.push('/code-submit-done')
-                })
-                .catch(e => {
-                    console.log("error submitting", e);
-                });
+            this.props.doSubmit(module)
         }
-
     }
 
     edit = (field, value) => {
@@ -181,37 +203,56 @@ class Submit extends Component {
         const module = this.state.module
         return (
             <article className="content">
-                <h1>Submit your art for review</h1>
-                <form>
-                    <input
-                        type="text"
-                        placeholder="Title"
-                        value={module.title}
-                        onChange={e => this.edit("title", e.target.value)}
-                    />
-                    <textarea
-                        placeholder="Description"
-                        value={module.description}
-                        onChange={e => this.edit("description", e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Author Name/Email"
-                        value={module.author}
-                        onChange={e => this.edit("author", e.target.value)}
-                    />
-                    <TagEditor
-                        tags={module.tags}
-                        onChange={tags => this.edit("tags", tags)}
-                    />
-                </form>
-                <QueueModulePanel module={module} scale={50} threedee={true}/>
-                <button onClick={this.onSubmit}>submit</button>
+                <h2>Submit your art for review</h2>
+                <HBox>
+                    <VBox style={{flex:1, margin:'0 1em'}}>
+                        <form id="submit-form">
+                            <HBox>
+                                <Label>Title</Label>
+                                <input
+                                    type="text"
+                                    placeholder="Title"
+                                    value={module.title}
+                                    onChange={e => this.edit("title", e.target.value)}
+                                />
+                            </HBox>
+                            <VBox>
+                                <Label>Description</Label>
+                                <textarea
+                                    placeholder="Description"
+                                    value={module.description}
+                                    onChange={e => this.edit("description", e.target.value)}
+                                />
+                            </VBox>
+                            <HBox>
+                                <Label>Your Name or Email</Label>
+                                <input
+                                    type="text"
+                                    placeholder="Author Name/Email"
+                                    value={module.author}
+                                    onChange={e => this.edit("author", e.target.value)}
+                                />
+                            </HBox>
+                            <HBox>
+                                <Label>Tags</Label>
+                                <TagEditor
+                                    tags={module.tags}
+                                    onChange={tags => this.edit("tags", tags)}
+                                />
+                            </HBox>
+                        </form>
+                    </VBox>
+                    <QueueModulePanel module={module} scale={40} threedee={true} hideInfo={true} />
+                </HBox>
+                <HBox>
+                    <button onClick={this.props.backClicked}>Back</button>
+                    <Spacer/>
+                    <button onClick={this.onSubmit}>submit</button>
+                </HBox>
             </article>
         )
     }
 }
-CodeScreen.Submit = Submit;
 
 const SubmitDone = props => {
     return (
@@ -222,6 +263,5 @@ const SubmitDone = props => {
         </article>
     );
 };
-CodeScreen.SubmitDone = SubmitDone;
 
 export default CodeScreen;

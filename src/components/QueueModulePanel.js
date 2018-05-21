@@ -59,13 +59,18 @@ export default class QueueModulePanel extends Component {
     }
     render() {
         return <div className="queue-module">
-            <div style={{display:'flex',flexDirection:'column', padding:'1em'}}>
-                <h3>{this.props.module.title}</h3>
-                <p>{this.props.module.description}</p>
-                <cite>{this.props.module.author}</cite>
-                <i>{this.props.module.tags.join(", ")}</i>
-            </div>
+            {this.renderInfoPanel()}
             {this.renderCanvas()}
+        </div>
+    }
+
+    renderInfoPanel() {
+        if(this.props.hideInfo) return ""
+        return <div style={{display:'flex',flexDirection:'column', padding:'1em'}}>
+            <h3>{this.props.module.title}</h3>
+            <p>{this.props.module.description}</p>
+            <cite>{this.props.module.author}</cite>
+            <i>{this.props.module.tags.join(", ")}</i>
         </div>
     }
 
