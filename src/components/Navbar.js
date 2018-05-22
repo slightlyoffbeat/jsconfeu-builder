@@ -35,6 +35,7 @@ const GithubButton = props => {
     console.log("checking logged in", AuthStore.isLoggedIn())
     if (AuthStore.isLoggedIn()) {
         text = "Log Out"
+        if(AuthStore.getCurrentUser()) text = AuthStore.getCurrentUser().displayName
         callback = () => AuthStore.logout()
     }
 
