@@ -5,8 +5,12 @@ import wasm from "../img/icon-wasm.svg";
 import vr from "../img/icon-vr.svg";
 import create from "../img/icon-create.svg";
 import queue from "../img/icon-queue.svg";
+import ModuleStore from '../utils/ModuleStore'
+import QueueModulePanel from '../components/QueueModulePanel'
 
 const HomeScreen = props => {
+  const modules = ModuleStore.getQueueModules()
+    const module = modules[0]
   return (
     <div className="content">
       <section className="hero">
@@ -26,8 +30,8 @@ const HomeScreen = props => {
 
       <section className="started">
         <div className="container">
-          <h2>Ways to get started</h2>
-          <div className="started__row">
+          {/*<h2>Ways to get started</h2>*/}
+          {/*<div className="started__row">*/}
             <div className="started__section">
               <img
                 className="started__img"
@@ -42,28 +46,28 @@ const HomeScreen = props => {
                 Code a Module
               </a>
             </div>
-            <div className="started__section">
-              <img className="started__icon" src={vr} alt="webassembly" />
-              <span className="started__text">
-                Use a VR headset or AR setup to paint
-              </span>
-              <a
-                className="started__button started__button button button--primary"
-                href="#"
-              >
-                Start Painting
-              </a>
-            </div>
-            <div className="started__section">
-              <img className="started__icon" src={create} alt="webassembly" />
-              <span className="started__text">
-                Create an animation lorem ipsum dolar
-              </span>
-              <a className="started__button button button--primary" href="#">
-                Start Something
-              </a>
-            </div>
-          </div>
+            {/*<div className="started__section">*/}
+              {/*<img className="started__icon" src={vr} alt="webassembly" />*/}
+              {/*<span className="started__text">*/}
+                {/*Use a VR headset or AR setup to paint*/}
+              {/*</span>*/}
+              {/*<a*/}
+                {/*className="started__button started__button button button--primary"*/}
+                {/*href="#"*/}
+              {/*>*/}
+                {/*Start Painting*/}
+              {/*</a>*/}
+            {/*</div>*/}
+            {/*<div className="started__section">*/}
+              {/*<img className="started__icon" src={create} alt="webassembly" />*/}
+              {/*<span className="started__text">*/}
+                {/*Create an animation lorem ipsum dolar*/}
+              {/*</span>*/}
+              {/*<a className="started__button button button--primary" href="#">*/}
+                {/*Start Something*/}
+              {/*</a>*/}
+            {/*</div>*/}
+          {/*</div>*/}
         </div>
       </section>
 
@@ -72,7 +76,7 @@ const HomeScreen = props => {
           <h2>See what's up next</h2>
           <div className="next__grid">
             <div className="next__img">
-              <div className="next__imagetemp" />
+                <QueueModulePanel module={module} scale={40} threedee={true} hideInfo={true} />
             </div>
             <div className="next__info">
               <img className="mb3" src={queue} alt="queue icon" />

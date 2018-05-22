@@ -26,7 +26,7 @@ export default class QueueModulePanel extends Component {
     }
     componentWillReceiveProps(newProps) {
         //force refresh if the module changes
-        if(this.props.module._id !== newProps.module._id) {
+        if(this.props.module && this.props.module._id !== newProps.module._id) {
             this.drawFirstFrame(this.canvas,newProps.module.json, newProps.scale)
         }
     }

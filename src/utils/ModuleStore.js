@@ -24,15 +24,15 @@ class ModuleStore {
   }
   findAllModules = () =>
     fetch(`${Constants.BASE_URL}/modules`)
-      .then(res => res.json())
-      .then(res => {
-        console.log("got the modules", res);
-        return res;
-      })
-      .catch(e => {
-        console.log("error fetching all the modules:", e);
-        return [];
-      });
+          .then(res => res.json())
+          .then(res => {
+              console.log("got the modules", res);
+              return res;
+          })
+          .catch(e => {
+              console.log("error fetching all the modules:", e);
+              return [];
+          });
 
   refreshQueue() {
     return fetch(`${Constants.BASE_URL}/queue`)
