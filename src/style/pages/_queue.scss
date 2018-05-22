@@ -1,0 +1,25 @@
+#queue-grid {
+  border: 0px solid red;
+  padding: 2em 2em;
+}
+
+#queue-grid .first .queue-module {
+  border-width: 0;
+}
+
+#queue-grid .rest {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  padding: 1em;
+  margin: 0;
+  grid-gap: 1em;
+}
+
+#queue-grid .rest .queue-module {
+  font-size: 0.7rem;
+  border-width: 0;
+}
+
+#queue-grid .rest .queue-module h3 {
+  font-size: 1rem;
+}

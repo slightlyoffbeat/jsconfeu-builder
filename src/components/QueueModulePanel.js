@@ -66,6 +66,7 @@ export default class QueueModulePanel extends Component {
 
     renderInfoPanel() {
         if(this.props.hideInfo) return ""
+        if(!this.props.module) return <div>loading...</div>
         return <div style={{display:'flex',flexDirection:'column', padding:'1em'}}>
             <h3>{this.props.module.title}</h3>
             <p>{this.props.module.description}</p>
