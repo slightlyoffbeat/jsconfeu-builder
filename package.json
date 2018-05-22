@@ -28,6 +28,10 @@
     "dev": "BROWSER=Firefox npm-run-all -p watch-css start-js",
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "stage": "now && now alias"
+  },
+  "now": {
+    "alias": "thearch-staged"
   }
 }
