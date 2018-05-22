@@ -74,7 +74,7 @@ const InfoScreen = props => {
         <h2>Code a Module</h2>
         <p>Here are some instructions to code a module</p>
         <div className="row">
-            <button onClick={props.dismissInfo}>Dismiss</button>
+            <button className="button button--primary" onClick={props.dismissInfo}>Dismiss</button>
         </div>
     </article>
 }
@@ -244,10 +244,10 @@ class PreviewSubmit extends Component {
                     </VBox>
                     <QueueModulePanel module={module} scale={40} threedee={true} hideInfo={true} />
                 </HBox>
-                <HBox>
-                    <button onClick={this.props.backClicked}>Back</button>
+                <HBox style={{padding: '0.5em'}}>
+                    <button className="button button--primary" onClick={this.props.backClicked}>Back</button>
                     <Spacer/>
-                    <button onClick={this.onSubmit}>submit</button>
+                    <button className="button button--primary" onClick={this.onSubmit}>submit</button>
                 </HBox>
             </article>
         )
@@ -259,7 +259,7 @@ const SubmitDone = props => {
         <article className="content">
             <h1>submit done screen</h1>
             <div>thank you </div>
-            <Link to="/queue" className="button">What's Coming Next</Link>
+            <Link to="/queue" className="button button--primary">What's Coming Next</Link>
         </article>
     );
 };

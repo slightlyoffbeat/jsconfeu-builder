@@ -7,6 +7,7 @@ import create from "../img/icon-create.svg";
 import queue from "../img/icon-queue.svg";
 import ModuleStore from '../utils/ModuleStore'
 import QueueModulePanel from '../components/QueueModulePanel'
+import {Link} from 'react-router-dom'
 
 const HomeScreen = props => {
   const modules = ModuleStore.getQueueModules()
@@ -84,9 +85,7 @@ const HomeScreen = props => {
                 Check out what is in the queue and find out when yours will be
                 up.
               </p>
-              <a href="#" className="button button--primary">
-                View the Queue
-              </a>
+                <Link to="/queue" className="button button--primary">View the Queue</Link>
             </div>
           </div>
         </div>
