@@ -28,12 +28,11 @@ class CodeScreen extends Component {
       if(module && module.type) {
           console.log("the final module is", module);
           if (!module.tags) module.tags = [];
-          if (!module.title) module.title = "some title";
-          if (!module.description) module.description = "some description";
-          if (!module.author) module.author = "your@email.tld";
+          if (!module.title) module.title = "";
+          if (!module.description) module.description = "";
+          if (!module.author) module.author = "";
           if (!module.origin) module.origin = 'wasmstudio'
-          localStorage.setItem('current-module',JSON.stringify(module))
-          this.setState({showPreviewSubmit:true})
+          this.setState({showPreviewSubmit:true, module:module})
       }
   }
   render() {
@@ -64,7 +63,7 @@ class CodeScreen extends Component {
         if(this.state.showProgress) return <div className="overlay-scrim"><Progress text={this.state.progressText}/></div>
         if(this.state.showDone) return <div className="overlay-scrim"><SubmitDone/></div>
         if(this.state.showPreviewSubmit)
-            return  <div className="overlay-scrim"><PreviewSubmit backClicked={this.backClicked} doSubmit={this.doSubmit}/></div>
+            return  <div className="overlay-scrim"><PreviewSubmit backClicked={this.backClicked} doSubmit={this.doSubmit} module={this.state.module}/></div>
         return ""
     }
 }
@@ -88,7 +87,7 @@ const Progress = props => {
 const TagButton = props => {
   return (
     <li>
-      <button onClick={() => props.deleteTag(props.tag)}>x</button>
+      <button className="tag-button fa fa-close" onClick={() => props.deleteTag(props.tag)}></button>
       {props.tag}
     </li>
   );
@@ -119,14 +118,16 @@ class TagEditor extends Component {
   render() {
     return (
       <div>
-        <input
-          type="text"
-          placeholder="Filter name"
-          value={this.state.query}
-          onChange={this.editQuery}
-          onKeyDown={this.keyPress}
-        />
-        <button onClick={this.addTag}>Add a Tag</button>
+          <HBox>
+              <input
+                  type="text"
+                  placeholder="Filter name"
+                  value={this.state.query}
+                  onChange={this.editQuery}
+                  onKeyDown={this.keyPress}
+              />
+              <button className="add-tag-button" onClick={this.addTag}>Add a Tag</button>
+          </HBox>
         <ul>
           {this.props.tags.map(t => (
             <TagButton key={t} tag={t} deleteTag={this.deleteTag} />
@@ -160,7 +161,7 @@ class PreviewSubmit extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            module : JSON.parse(localStorage.getItem('current-module')),
+            module : props.module,
             user: AuthStore.getCurrentUser(),
         }
     }
@@ -199,44 +200,62 @@ class PreviewSubmit extends Component {
         this.setState({module:this.state.module})
     }
 
+    getCurrentTitle = () => {
+        if(!this.state.module) return ""
+        return this.state.module.title
+    }
+    getCurrentDescription = () => {
+        if(!this.state.module) return ""
+        return this.state.module.description
+    }
+    getCurrentAuthor = () => {
+        if(!this.state.module) return ""
+        return this.state.module.author
+    }
+    getCurrentTags = () => {
+        if(!this.state.module) return []
+        return this.state.module.tags
+    }
+
+
     render() {
         const module = this.state.module
         return (
             <article className="content">
-                <h2>Submit your art for review</h2>
-                <HBox>
-                    <VBox style={{flex:1, margin:'0 1em'}}>
-                        <form id="submit-form">
+                <HBox style={{padding:'1em'}}>
+                    <VBox style={{flex:0.3, margin:'0 1em'}}>
+                        <h3>Submit your art for review</h3>
+                        <form id="submit-form" onSubmit={(e)=>e.preventDefault()}>
                             <HBox>
-                                <Label>Title</Label>
                                 <input
                                     type="text"
                                     placeholder="Title"
-                                    value={module.title}
+                                    value={this.getCurrentTitle()}
                                     onChange={e => this.edit("title", e.target.value)}
                                 />
                             </HBox>
                             <VBox>
-                                <Label>Description</Label>
                                 <textarea
                                     placeholder="Description"
-                                    value={module.description}
+                                    value={this.getCurrentDescription()}
+                                    rows={2}
                                     onChange={e => this.edit("description", e.target.value)}
                                 />
                             </VBox>
                             <HBox>
-                                <Label>Your Name or Email</Label>
                                 <input
                                     type="text"
                                     placeholder="Author Name/Email"
-                                    value={module.author}
+                                    value={this.getCurrentAuthor()}
                                     onChange={e => this.edit("author", e.target.value)}
                                 />
                             </HBox>
                             <HBox>
-                                <Label>Tags</Label>
+                                <Label>Choose Tags</Label>
+                            </HBox>
+                            <HBox>
                                 <TagEditor
-                                    tags={module.tags}
+                                    tags={this.getCurrentTags()}
                                     onChange={tags => this.edit("tags", tags)}
                                 />
                             </HBox>

@@ -1173,6 +1173,29 @@ select {
   height: 300px;
   width: 100%; }
 
+#submit-form input, #submit-form textarea {
+  background-color: #333;
+  color: #ddd;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  font-size: 0.7rem;
+  font-family: inherit;
+  border-radius: 0.25rem; }
+
+#submit-form .tag-button {
+  margin: 0.25em;
+  background: white;
+  color: black;
+  border-radius: 1rem;
+  padding: 0.25em; }
+
+#submit-form li {
+  font-size: 0.6rem; }
+
+#submit-form .add-tag-button {
+  font-size: 0.5rem;
+  padding: 0.5em 1.0em; }
+
 /**
 This is a system for easiliy creating buttons, and spinning up new button
 styles.
