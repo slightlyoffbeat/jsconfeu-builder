@@ -47,6 +47,12 @@ class ModuleStore {
       });
   }
 
+  fetchFirstItem() {
+      if(this.queue.modules.length <= 0) return Promise.resolve(null)
+      const id = this.queue.modules[0]
+      return fetch(`${Constants.BASE_URL}/modules/${id}`).then(res => res.json())
+  }
+
   getQueueModules = () => this.queue.expanded;
 
   setQueueModules = nq => {
