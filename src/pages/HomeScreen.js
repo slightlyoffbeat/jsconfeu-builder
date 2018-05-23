@@ -43,9 +43,7 @@ const HomeScreen = props => {
               <span className="started__text">
                 Code a module in WebAssembly studio
               </span>
-              <a className="started__button button button--primary" href="#">
-                Code a Module
-              </a>
+                <Link to="/code" className="started__button button button--primary">Code a Module</Link>
             </div>
             {/*<div className="started__section">*/}
               {/*<img className="started__icon" src={vr} alt="webassembly" />*/}

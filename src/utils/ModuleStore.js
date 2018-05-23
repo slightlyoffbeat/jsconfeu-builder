@@ -9,6 +9,7 @@ class ModuleStore {
     };
     this.listeners = {};
     this.running = false;
+    this.images = {}
     this.refreshQueue();
   }
   on(type, cb) {
@@ -112,6 +113,16 @@ class ModuleStore {
     console.log("the new queue is", this.queue.modules.length);
     return this.updateQueue();
   };
+
+
+    getThumbnailForModule(m) {
+        if(this.images[m._id]) return this.images[m._id]
+        const img = new Image()
+        img.src = m.thumbnail
+        console.log("generating image for thumbnail",img,m)
+        this.images[m._id] = img
+        return this.images[m._id]
+    }
 }
 
 export default new ModuleStore();

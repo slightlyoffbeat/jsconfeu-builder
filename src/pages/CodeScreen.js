@@ -4,6 +4,7 @@ import Constants from "../Constants";
 import {Link} from "react-router-dom"
 import ModuleStore from '../utils/ModuleStore'
 import AuthStore from '../utils/AuthStore'
+import {makePNG} from "../utils/RenderUtils"
 
 class CodeScreen extends Component {
   constructor(props) {
@@ -32,17 +33,18 @@ class CodeScreen extends Component {
           if (!module.description) module.description = "";
           if (!module.author) module.author = "";
           if (!module.origin) module.origin = 'wasmstudio'
+          module.thumbnail = makePNG(module.manifest.animation)
           this.setState({showPreviewSubmit:true, module:module})
       }
   }
-  render() {
-    return (
-      <article className="content">
-        <iframe title="wasm editor" id="wasm-editor" src={Constants.EDITOR_URL}/>
-          {this.renderOverlay()}
-      </article>
-    );
-  }
+    render() {
+        return (
+            <article className="content">
+                <iframe title="wasm editor" id="wasm-editor" src={Constants.EDITOR_URL}/>
+                {this.renderOverlay()}
+            </article>
+        );
+    }
     backClicked = () => this.setState({showPreviewSubmit:false})
     dismissInfo = () => this.setState({showInfo:false})
     doSubmit = (module) => {

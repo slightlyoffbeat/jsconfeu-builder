@@ -48,3 +48,22 @@ module.exports.makeFrameset = function (w,h,frameCount) {
         frames:frames
     }
 }
+
+module.exports.makePNG = function(anim) {
+    const frame = anim.data[0]
+    console.log("rendering the frame",anim,frame)
+    const canvas = document.createElement('canvas')
+    canvas.width = anim.cols
+    canvas.height = anim.rows
+    const ctx = canvas.getContext('2d')
+    ctx.fillStyle = 'red'
+    ctx.fillRect(0,0,canvas.width,canvas.height)
+    for(let i=0; i<anim.cols; i++) {
+        for(let j=0; j<anim.rows; j++) {
+            const c = frame[j][i]
+            ctx.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`
+            ctx.fillRect(i,j,1,1)
+        }
+    }
+    return canvas.toDataURL('image/png')
+}

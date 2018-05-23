@@ -21,7 +21,8 @@ export default class QueueScreen extends Component {
     }
     queueUpdated = queue => this.setState({ queue: queue });
     render() {
-        const modules = ModuleStore.getQueueModules();
+        let modules = this.state.queue.expanded
+        if(!modules) modules = []
         let rest = []
         if(modules.length > 1) rest = modules.slice(1)
         return (

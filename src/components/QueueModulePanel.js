@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ArchwayPanel from './ArchwayPanel'
+import ModuleStore from "../utils/ModuleStore"
 
 
 function intToHex(int) {
@@ -20,9 +21,14 @@ function hex2rgba(hexa){
 
 export default class QueueModulePanel extends Component {
     componentDidMount() {
-        if(this.canvas && this.props.module && this.props.module.manifest.animation && !this.props.threedee) {
+        if(this.canvas && this.props.module && this.props.module.thumbnail && !this.props.threedee) {
+            this.drawThumbnail(this.canvas,this.props.module,this.props.scale)
+        }
+
+        if(this.canvas && this.props.module && this.props.module.manifest && this.props.module.manifest.animation && !this.props.threedee) {
             this.drawFirstFrame(this.canvas,this.props.module.manifest.animation, this.props.scale)
         }
+
     }
     componentWillReceiveProps(newProps) {
         //force refresh if the module changes
@@ -57,6 +63,15 @@ export default class QueueModulePanel extends Component {
             }
         }
     }
+
+    drawThumbnail(canvas, module, scale){
+        if(!module || !module.thumbnail) return
+        const img = ModuleStore.getThumbnailForModule(this.props.module)
+        const ctx = canvas.getContext('2d')
+        ctx.fillStyle = 'blue'
+        ctx.fillRect(0,0,canvas.width,canvas.height)
+        ctx.drawImage(img,0,0,img.width*this.props.scale,img.height*this.props.scale)
+    }
     render() {
         return <div className="queue-module">
             {this.renderInfoPanel()}
@@ -78,6 +93,12 @@ export default class QueueModulePanel extends Component {
     renderCanvas() {
         if(!this.props.module) {
             return <div>error. can't render module</div>
+        }
+        if(this.props.module.thumbnail && !this.props.threedee) {
+            const thumb = ModuleStore.getThumbnailForModule(this.props.module)
+            const w = thumb.width;
+            const h = thumb.height;
+            return <canvas ref={can=>this.canvas=can} width={w * this.props.scale} height={h * this.props.scale}>animation</canvas>
         }
         if(!this.props.module.manifest) {
             return <div>error. can't render module</div>
