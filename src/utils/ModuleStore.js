@@ -81,11 +81,11 @@ class ModuleStore {
       }
     })
       .then(res => res.json())
-      .then(res => console.log('result of submitting',res))
-      .then(res => this.refreshQueue())
-      .catch(e => {
-        console.log("error submitting a module:", e);
-      });
+      .then(res => {
+          console.log('result of submitting',res)
+          this.refreshQueue()
+          return res
+      })
   }
   addModuleToQueue = m => {
     this.queue.expanded.push(m);

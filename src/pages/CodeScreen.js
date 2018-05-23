@@ -7,41 +7,68 @@ import AuthStore from '../utils/AuthStore'
 import {makePNG} from "../utils/RenderUtils"
 
 class CodeScreen extends Component {
-  constructor(props) {
-      super(props);
-      this.state = {
-          module: null,
-          showPreviewSubmit: false,
-          showInfo:true,
-          showProgress:false,
-          progressText:'nothing',
-          showDone:false,
-      }
-  }
-  componentDidMount() {
-    window.addEventListener("message", this.codeCallback)
-  }
-  componentWillUnmount() {
-    window.removeEventListener("message", this.codeCallback)
-  }
-  codeCallback = msg => {
-      const module = msg.data;
-      if(module && module.type) {
-          console.log("the final module is", module);
-          if (!module.tags) module.tags = [];
-          if (!module.title) module.title = "";
-          if (!module.description) module.description = "";
-          if (!module.author) module.author = "";
-          if (!module.origin) module.origin = 'wasmstudio'
-          module.thumbnail = makePNG(module.manifest.animation)
-          this.setState({showPreviewSubmit:true, module:module})
-      }
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            module: null,
+            showPreviewSubmit: false,
+            showInfo:true,
+            showProgress:false,
+            progressText:'nothing',
+            showDone:false,
+            showError:false,
+            error:{message:'nothing',actions:[]}
+        }
+    }
+    componentDidMount() {
+        window.addEventListener("message", this.codeCallback)
+    }
+    componentWillUnmount() {
+        window.removeEventListener("message", this.codeCallback)
+    }
+    codeCallback = msg => {
+        if(msg.origin !== 'https://webassembly.studio') return
+        let module = msg.data;
+        if(module && module.type) {
+            if (!module.tags) module.tags = [];
+            if (!module.title) module.title = "";
+            if (!module.description) module.description = "";
+            if (!module.author) module.author = "";
+            if (!module.origin) module.origin = 'wasmstudio'
+            module.thumbnail = makePNG(module.manifest.animation)
+            this.setState({showPreviewSubmit:true, module:module})
+        } else {
+            this.showError("Could not get the message from the editor. Please try again", [
+                { caption:'Dismiss', action:()=>this.hideError()}
+            ])
+        }
+    }
+    showError = (msg, actions) =>{
+        if(!actions) {
+            actions = [
+                {
+                    caption: 'Dismiss',
+                    action: () => this.hideError(),
+                }
+            ]
+        }
+        this.setState({
+            showError:true,
+            error:{
+                message: msg,
+                actions: actions
+            }
+        })
+    }
+    hideError() {
+        this.setState({showError:false})
+    }
     render() {
         return (
             <article className="content">
                 <iframe title="wasm editor" id="wasm-editor" src={Constants.EDITOR_URL}/>
                 {this.renderOverlay()}
+                {this.renderError()}
             </article>
         );
     }
@@ -53,10 +80,13 @@ class CodeScreen extends Component {
         ModuleStore.submitModule(module)
             .then((res) => {
                 console.log("got the result",res)
+                if(!res.success) return this.showError(res.message)
                 this.setState({showProgress:false, showDone:true})
             })
             .catch(e => {
-                console.log("error submitting", e);
+                console.log("error submitting. should show an error", e);
+                this.showError("error submitting to the server. Please try again.")
+                this.setState({showProgress:false})
             });
 
     }
@@ -65,11 +95,28 @@ class CodeScreen extends Component {
         if(this.state.showProgress) return <div className="overlay-scrim"><Progress text={this.state.progressText}/></div>
         if(this.state.showDone) return <div className="overlay-scrim"><SubmitDone/></div>
         if(this.state.showPreviewSubmit)
-            return  <div className="overlay-scrim"><PreviewSubmit backClicked={this.backClicked} doSubmit={this.doSubmit} module={this.state.module}/></div>
+            return  <div className="overlay-scrim"><PreviewSubmit backClicked={this.backClicked} doSubmit={this.doSubmit} module={this.state.module} onError={this.showError}/></div>
         return ""
+    }
+    renderError() {
+        if(this.state.showError) return <div className="overlay-scrim"><ErrorScreen error={this.state.error}/></div>
+        return " "
     }
 }
 
+const ErrorScreen = props => {
+    return <article className="overlay-content">
+        <h2>Error</h2>
+        <p>{props.error.message}</p>
+        <HBox>
+        {
+            props.error.actions.map((act,i) => {
+                return <button key={i} onClick={act.action}>{act.caption}</button>
+            })
+        }
+        </HBox>
+    </article>
+}
 const InfoScreen = props => {
     return <article className="overlay-content">
         <h2>Code a Module</h2>
@@ -82,7 +129,7 @@ const InfoScreen = props => {
 
 const Progress = props => {
     return <article className="overlay-content">
-        <p>progress screen: <b>{props.text}</b></p>
+        <p>progress screen: <b>{props.text}</b> <i className="fa fa-pulse fa-spinner"></i></p>
     </article>
 }
 
@@ -184,9 +231,8 @@ class PreviewSubmit extends Component {
             if (str.trim().length === 0) return true;
             return false;
         }
-        if (missing(module.title)) throw new Error("module is missing a title");
-        if (missing(module.description))
-            throw new Error("module is missing a description");
+        if (missing(module.title)) return this.props.onError("Your module needs a title")
+        if (missing(module.description)) return this.props.onError("Your module needs a description")
         console.log('checking for user', this.state.user)
 
         if (!this.state.user) {
