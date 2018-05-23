@@ -64,12 +64,12 @@ class App extends Component {
       return (
       <div id="body">
         <Router>
-          <div>
-            <Navbar navTo={this.navTo} startAuth={() => AuthStore.start()} />
-              {this.renderCurrentScreen()}
-          </div>
+            <div>
+                <Navbar navTo={this.navTo} startAuth={() => AuthStore.start()} />
+                {this.renderCurrentScreen()}
+                <Footer user={this.state.user} />
+            </div>
         </Router>
-        <Footer user={this.state.user} />
       </div>
     );
   }

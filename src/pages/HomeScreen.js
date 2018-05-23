@@ -9,6 +9,7 @@ import ModuleStore from '../utils/ModuleStore'
 import QueueModulePanel from '../components/QueueModulePanel'
 import {Link} from 'react-router-dom'
 
+
 const HomeScreen = props => {
   const modules = ModuleStore.getQueueModules()
     const module = modules[0]

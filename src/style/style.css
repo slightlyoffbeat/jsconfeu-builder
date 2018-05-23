@@ -1647,7 +1647,7 @@ article {
 /* ======= WASM Editor ============ */
 iframe#wasm-editor {
   width: 100%;
-  min-height: 600px; }
+  min-height: 550px; }
 
 /* ========Queue Viewer ========== */
 .queue-module {
