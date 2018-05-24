@@ -38,10 +38,15 @@ class ModuleStore {
   refreshQueue() {
     return fetch(`${Constants.BASE_URL}/queue`)
       .then(res => res.json())
-      .then(queue => {
-        this.queue = queue;
-        this.queue.expanded.forEach((m, i) => (m.index = i));
-        this.fire("queue", queue);
+      .then(res => {
+          console.log("got back the queue",res)
+          if(res.success === true) {
+              this.queue = res.queue;
+              this.queue.expanded.forEach((m, i) => (m.index = i));
+              this.fire("queue", this.queue);
+          } else {
+              console.log('there was an error fetching the queue',res)
+          }
       })
       .catch(e => {
         console.log("error fetching the queue:", e);
@@ -51,7 +56,13 @@ class ModuleStore {
   fetchFirstItem() {
       if(this.queue.modules.length <= 0) return Promise.resolve(null)
       const id = this.queue.modules[0]
-      return fetch(`${Constants.BASE_URL}/modules/${id}`).then(res => res.json())
+      return fetch(`${Constants.BASE_URL}/modules/${id}`)
+          .then(res => res.json())
+          .then(res => {
+              if(res.success) return res.doc
+              console.log("loading the first item of the queue failed",res)
+              return null
+          })
   }
 
   getQueueModules = () => this.queue.expanded;
@@ -71,21 +82,23 @@ class ModuleStore {
 
 
       console.log("POSTing module",module)
-    return fetch(`${Constants.BASE_URL}/publish`, {
-      method: "POST",
-      body: JSON.stringify(module),
-      mode: "cors",
-      headers: {
-        "content-type": "application/json",
-        "access-key": AuthStore.getAccessToken()
-      }
-    })
-      .then(res => res.json())
-      .then(res => {
-          console.log('result of submitting',res)
-          this.refreshQueue()
-          return res
+      const body = JSON.stringify(module)
+      console.log("body length is", (body.length/1024)+' KB')
+      return fetch(`${Constants.BASE_URL}/publish`, {
+          method: "POST",
+          body: body,
+          mode: "cors",
+          headers: {
+              "Content-Type": "application/json",
+              "Content-Length": body.length.toString(),
+              "access-key": AuthStore.getAccessToken()
+          }
       })
+          .then(res => res.json())
+          .then(res => {
+              console.log('result of submitting',res)
+              return res
+          })
   }
   addModuleToQueue = m => {
     this.queue.expanded.push(m);
