@@ -35,7 +35,9 @@ class CodeScreen extends Component {
             if (!module.description) module.description = "";
             if (!module.author) module.author = "";
             if (!module.origin) module.origin = 'wasmstudio'
-            module.thumbnail = makePNG(module.manifest.animation)
+            const anim = module.manifest.animation
+            const frame = anim.data[0]
+            module.thumbnail = makePNG(anim,frame)
             this.setState({showPreviewSubmit:true, module:module})
         } else {
             this.showError("Could not get the message from the editor. Please try again", [
@@ -76,7 +78,6 @@ class CodeScreen extends Component {
     dismissInfo = () => this.setState({showInfo:false})
     doSubmit = (module) => {
       this.setState({showPreviewSubmit:false, showProgress:true, progressText:"submitting for review"})
-        console.log("really submitting")
         ModuleStore.submitModule(module)
             .then((res) => {
                 console.log("got the result",res)

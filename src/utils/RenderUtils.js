@@ -49,9 +49,8 @@ module.exports.makeFrameset = function (w,h,frameCount) {
     }
 }
 
-module.exports.makePNG = function(anim) {
-    const frame = anim.data[0]
-    console.log("rendering the frame",anim,frame)
+module.exports.makePNG = function(anim,frame) {
+    // console.log("rendering the frame",anim,frame)
     const canvas = document.createElement('canvas')
     canvas.width = anim.cols
     canvas.height = anim.rows
@@ -66,4 +65,32 @@ module.exports.makePNG = function(anim) {
         }
     }
     return canvas.toDataURL('image/png')
+}
+
+module.exports.png2data = function(anim, pngs) {
+    console.log("expanding data from pngs",pngs.length)
+
+    const canvas = document.createElement('canvas')
+    canvas.width = anim.cols
+    canvas.height = anim.rows
+    function ld(png,i) {
+        return new Promise((res,rej) =>{
+            const img = new Image()
+            img.onload = () => {
+                const context = canvas.getContext('2d');
+                context.fillStyle = (i%2==0)?'red':'blue'
+                context.fillRect(0,0,canvas.width,canvas.height)
+                context.drawImage(img,0,0)
+                res(context.getImageData(0, 0, canvas.width, canvas.height))
+            }
+            img.src = png
+        })
+    }
+    return Promise.all(pngs.map((png,i) => ld(png,i))).then((datas)=>{
+        console.log("fully done loading them")
+        return datas
+    }).catch(e => {
+        console.log('errors!',e)
+    })
+
 }

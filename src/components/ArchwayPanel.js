@@ -88,19 +88,12 @@ export default class ArchwayPanel extends Component {
     }
   }
   loadFrame(frame, rows = this.rows, columns = this.columns) {
-    if (frame.length !== rows) {
-      console.error("Bad frame", rows, frame.length);
-      return;
-    }
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < columns; c++) {
+    for (let r = 0; r < frame.height; r++) {
+      for (let c = 0; c < frame.width; c++) {
         let material = this.materials.get(`${r}x${c}`);
-        if (!material) {
-          // console.log('miss', `${r}x${c}`);
-          continue;
-        }
-        const px = frame[r][c]
-        const color = px[0] << 24 | px[1] << 16 | px[2] << 8 | 255
+        if (!material) continue
+          const n = (r*frame.width+c)*4
+          const color = frame.data[n] << 24 | frame.data[n+1] << 16 | frame.data[n+2] << 8 | frame.data[n+3]
         material.color.setHex(color >> 8); // The shift drops the alpha bits
       }
     }
@@ -108,14 +101,10 @@ export default class ArchwayPanel extends Component {
   }
 
   startRepaint() {
-    let lastFrame = performance.now();
     const repaint = time => {
       if (!this.mounted) return;
       requestAnimationFrame(repaint);
-      if (time - lastFrame > 100) {
-        lastFrame = time;
-        this.cycleFrames();
-      }
+      this.cycleFrames();
       this.renderer.render(this.scene, this.camera);
     };
     repaint();

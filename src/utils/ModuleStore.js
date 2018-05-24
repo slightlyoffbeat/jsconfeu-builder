@@ -1,5 +1,6 @@
 import Constants from "../Constants";
 import AuthStore from "./AuthStore";
+import {makePNG, png2data} from './RenderUtils'
 
 class ModuleStore {
   constructor() {
@@ -59,7 +60,13 @@ class ModuleStore {
       return fetch(`${Constants.BASE_URL}/modules/${id}`)
           .then(res => res.json())
           .then(res => {
-              if(res.success) return res.doc
+              if(res.success) {
+                  const anim = res.doc.manifest.animation
+                  return png2data(anim,anim.data).then((decoded) => {
+                      anim.data = decoded
+                      return res.doc
+                  })
+              }
               console.log("loading the first item of the queue failed",res)
               return null
           })
@@ -81,9 +88,15 @@ class ModuleStore {
       delete module.manifest.files
 
 
+      const anim = module.manifest.animation
+      const pngs = []
+      for(let i=0; i<anim.frameCount; i++) {
+          pngs[i] = makePNG(anim,anim.data[i])
+      }
+      anim.data = pngs
       console.log("POSTing module",module)
       const body = JSON.stringify(module)
-      console.log("body length is", (body.length/1024)+' KB')
+      console.log("size is", Math.floor(body.length/1024) + "kb")
       return fetch(`${Constants.BASE_URL}/publish`, {
           method: "POST",
           body: body,
