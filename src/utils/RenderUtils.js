@@ -67,6 +67,26 @@ module.exports.makePNG = function(anim,frame) {
     return canvas.toDataURL('image/png')
 }
 
+module.exports.data2png = function(anim, datas) {
+    const canvas = document.createElement('canvas')
+    canvas.width = anim.cols
+    canvas.height = anim.rows
+    function id2png(data,i) {
+        return new Promise((res,rej) => {
+            const context = canvas.getContext('2d')
+            context.putImageData(data, 0, 0)
+            res(canvas.toDataURL('image/png'))
+        })
+    }
+    return Promise.all(datas.map((data,i) => id2png(data,i))).then((pngs)=>{
+        console.log("fully done converting ImageData to PNGs")
+        return pngs
+    }).catch(e => {
+        console.log('errors!',e)
+    })
+
+}
+
 module.exports.png2data = function(anim, pngs) {
     console.log("expanding data from pngs",pngs.length)
 
@@ -92,5 +112,33 @@ module.exports.png2data = function(anim, pngs) {
     }).catch(e => {
         console.log('errors!',e)
     })
+}
 
+module.exports.json2data = function(anim, json) {
+    const canvas = document.createElement('canvas')
+    canvas.width = anim.cols
+    canvas.height = anim.rows
+    function json2id(frame, i) {
+        return new Promise((res,rej)=>{
+            const context = canvas.getContext('2d');
+            const id = context.getImageData(0,0,canvas.width,canvas.height)
+            for(let i=0; i<id.width; i++) {
+                for(let j=0; j<id.height; j++) {
+                    const n = (j*id.width + i)*4
+                    id.data[n+0] = frame[j][i][0]
+                    id.data[n+1] = frame[j][i][1]
+                    id.data[n+2] = frame[j][i][2]
+                    id.data[n+3] = 255 // force the alpha to 100% opaque
+                }
+            }
+            res(id)
+        })
+    }
+
+    return Promise.all(json.map((frame,i) => json2id(frame,i))).then((datas)=>{
+        console.log("fully done converting json to ImageData")
+        return datas
+    }).catch(e => {
+        console.log('errors!',e)
+    })
 }

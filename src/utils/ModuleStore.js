@@ -1,6 +1,6 @@
 import Constants from "../Constants";
 import AuthStore from "./AuthStore";
-import {makePNG, png2data} from './RenderUtils'
+import {data2png, makePNG, png2data} from './RenderUtils'
 
 class ModuleStore {
   constructor() {
@@ -89,23 +89,23 @@ class ModuleStore {
 
 
       const anim = module.manifest.animation
-      const pngs = []
-      for(let i=0; i<anim.frameCount; i++) {
-          pngs[i] = makePNG(anim,anim.data[i])
-      }
-      anim.data = pngs
-      console.log("POSTing module",module)
-      const body = JSON.stringify(module)
-      console.log("size is", Math.floor(body.length/1024) + "kb")
-      return fetch(`${Constants.BASE_URL}/publish`, {
-          method: "POST",
-          body: body,
-          mode: "cors",
-          headers: {
-              "Content-Type": "application/json",
-              "Content-Length": body.length.toString(),
-              "access-key": AuthStore.getAccessToken()
-          }
+      return data2png(anim,anim.data).then(pngs=>{
+          anim.data = pngs
+          return module
+      }).then((module)=>{
+          console.log("POSTing module",module)
+          const body = JSON.stringify(module)
+          console.log("size is", Math.floor(body.length/1024) + "kb")
+          return fetch(`${Constants.BASE_URL}/publish`, {
+              method: "POST",
+              body: body,
+              mode: "cors",
+              headers: {
+                  "Content-Type": "application/json",
+                  "Content-Length": body.length.toString(),
+                  "access-key": AuthStore.getAccessToken()
+              }
+          })
       })
           .then(res => res.json())
           .then(res => {

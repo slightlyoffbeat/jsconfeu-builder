@@ -103,9 +103,9 @@ export default class ArchwayPanel extends Component {
   startRepaint() {
     const repaint = time => {
       if (!this.mounted) return;
-      requestAnimationFrame(repaint);
       this.cycleFrames();
       this.renderer.render(this.scene, this.camera);
+      requestAnimationFrame(repaint);
     };
     repaint();
   }

@@ -4,7 +4,7 @@ import Constants from "../Constants";
 import {Link} from "react-router-dom"
 import ModuleStore from '../utils/ModuleStore'
 import AuthStore from '../utils/AuthStore'
-import {makePNG} from "../utils/RenderUtils"
+import {json2data, makePNG} from "../utils/RenderUtils"
 
 class CodeScreen extends Component {
     constructor(props) {
@@ -38,7 +38,11 @@ class CodeScreen extends Component {
             const anim = module.manifest.animation
             const frame = anim.data[0]
             module.thumbnail = makePNG(anim,frame)
-            this.setState({showPreviewSubmit:true, module:module})
+            json2data(anim,anim.data).then(data =>{
+                anim.data = data
+                console.log("final module to preview is",module)
+                this.setState({showPreviewSubmit:true, module:module})
+            })
         } else {
             this.showError("Could not get the message from the editor. Please try again", [
                 { caption:'Dismiss', action:()=>this.hideError()}
