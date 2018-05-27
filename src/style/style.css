@@ -1217,6 +1217,69 @@ select {
 #queue-grid .rest .queue-module h3 {
   font-size: 1rem; }
 
+.about {
+  text-align: center;
+  padding-top: 4rem;
+  padding-bottom: 4rem; }
+
+.about__title {
+  font-size: 70px;
+  margin-bottom: 2rem;
+  font-weight: bold; }
+
+.about-grid {
+  align-items: center; }
+  @media all and (min-width: 53.125em) {
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-column-gap: 1rem; } }
+  @media all and (min-width: 62.5em) {
+    .about-grid {
+      grid-column-gap: 2rem; } }
+
+.about__text {
+  grid-column: 2 / 12; }
+
+.about-box {
+  background-color: #202020;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  grid-column: span 6;
+  grid-row: 2;
+  text-align: left;
+  margin-bottom: 3rem; }
+  @media all and (min-width: 53.125em) {
+    .about-box {
+      margin-bottom: 0;
+      height: 550px; } }
+  @media all and (min-width: 62.5em) {
+    .about-box {
+      height: 500px; } }
+
+.about-box__button {
+  margin-top: 1rem; }
+  @media all and (min-width: 53.125em) {
+    .about-box__button {
+      margin-top: auto;
+      padding-left: 0 !important;
+      padding-right: 0 !important; } }
+
+.about-ian__img {
+  grid-column: span 6;
+  margin-bottom: span(4); }
+  @media all and (min-width: 53.125em) {
+    .about-ian__img {
+      margin-bottom: 0; } }
+
+.about-ian__text {
+  grid-column: span 6;
+  text-align: middle; }
+  @media all and (min-width: 53.125em) {
+    .about-ian__text {
+      text-align: left; } }
+
 /**
 This is a system for easiliy creating buttons, and spinning up new button
 styles.

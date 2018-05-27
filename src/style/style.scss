@@ -32,11 +32,12 @@
 @import "layout/navbar";
 @import "layout/footer";
 
-// Layout
+// pages
 // -------------------------
-@import "pages/_home.scss";
-@import "pages/_code.scss";
-@import "pages/_queue.scss";
+@import "pages/home.scss";
+@import "pages/code.scss";
+@import "pages/queue.scss";
+@import "pages/about.scss";
 
 // Components
 // -------------------------
