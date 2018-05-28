@@ -1249,26 +1249,34 @@ select {
   grid-column: span 6;
   grid-row: 2;
   text-align: left;
-  margin-bottom: 3rem; }
+  margin-bottom: 3rem;
+  align-items: flex-start; }
   @media all and (min-width: 53.125em) {
     .about-box {
       margin-bottom: 0;
-      height: 550px; } }
+      height: 600px; } }
   @media all and (min-width: 62.5em) {
     .about-box {
-      height: 500px; } }
+      height: 540px; } }
+
+.about-box__icon {
+  margin-bottom: 1.5rem;
+  height: 55px; }
 
 .about-box__button {
   margin-top: 1rem; }
   @media all and (min-width: 53.125em) {
     .about-box__button {
       margin-top: auto;
-      padding-left: 0 !important;
-      padding-right: 0 !important; } }
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important; } }
+
+.about-ian {
+  align-items: start; }
 
 .about-ian__img {
   grid-column: span 6;
-  margin-bottom: span(4); }
+  margin-bottom: 2rem; }
   @media all and (min-width: 53.125em) {
     .about-ian__img {
       margin-bottom: 0; } }

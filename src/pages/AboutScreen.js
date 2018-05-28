@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 
 // images
+import rust from "../img/icon-rust.svg";
+import wasm from "../img/icon-wasm.svg";
+import ian from "../img/ian.png";
 
 const AboutScreen = props => {
   return (
@@ -35,7 +38,7 @@ const AboutScreen = props => {
               WebAssembly.
             </p>
             <div className="about-box">
-              <img src="#" alt="rust logo" />
+              <img className="about-box__icon" src={rust} alt="rust logo" />
               <p>
                 Rust is an open-source systems programming language that focuses
                 on speed, memory safety, and parallelism. It offers excellent
@@ -53,7 +56,7 @@ const AboutScreen = props => {
               </a>
             </div>
             <div className="about-box">
-              <img src="#" alt="WASM logo" />
+              <img className="about-box__icon" src={wasm} alt="WASM logo" />
               <p>
                 WebAssembly is the most significant new technology to come to
                 the web platform in a decade. The low-level language is a
@@ -92,7 +95,7 @@ const AboutScreen = props => {
           <br />
           <h2 className="mt12 mb6">About the Artist</h2>
           <div className="about-grid about-ian">
-            <img className="about-ian__img" src="#" alt="Ian Brill" />
+            <img className="about-ian__img" src={ian} alt="Ian Brill" />
             <div className="about-ian__text">
               <p>
                 Ian Brill is an installation artist whose work focuses on

@@ -44,15 +44,21 @@
   grid-row: 2;
   text-align: left;
   margin-bottom: space(6);
+  align-items: flex-start;
 
   @include bp(medium) {
     margin-bottom: 0;
-    height: 550px;
+    height: 600px;
   }
 
   @include bp(large) {
-    height: 500px;
+    height: 540px;
   }
+}
+
+.about-box__icon {
+  margin-bottom: space(3);
+  height: 55px;
 }
 
 .about-box__button {
@@ -60,15 +66,19 @@
 
   @include bp(medium) {
     margin-top: auto;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    padding-left: space(3) !important;
+    padding-right: space(3) !important;
     // width: 100%;
   }
 }
 
+.about-ian {
+  align-items: start;
+}
+
 .about-ian__img {
   grid-column: span 6;
-  margin-bottom: span(4);
+  margin-bottom: space(4);
 
   @include bp(medium) {
     margin-bottom: 0;
