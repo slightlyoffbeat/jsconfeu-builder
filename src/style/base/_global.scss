@@ -7,12 +7,14 @@
 
 body {
   background-color: $body-bg;
+  padding-top: 88px;
 
   &.nav-active {
     overflow-y: hidden;
   }
 
   @include bp(medium) {
+    padding-top: 0;
     border-left: space(2) solid $white;
     border-right: space(2) solid $white;
   }

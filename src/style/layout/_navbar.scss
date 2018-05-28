@@ -10,6 +10,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  z-index: z-index(header);
 
   @include bp(medium) {
     margin: 0;
@@ -52,6 +53,7 @@
   margin: 0;
   position: fixed;
   // opacity: 0;
+  z-index: z-index(header);
   height: 0;
   top: 88px;
   left: 0;

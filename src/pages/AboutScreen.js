@@ -4,22 +4,32 @@ import React, { Component } from "react";
 import rust from "../img/icon-rust.svg";
 import wasm from "../img/icon-wasm.svg";
 import ian from "../img/ian.png";
+import gradient from "../img/pattern-top.svg";
+
+// components
+import Pattern from "../components/Pattern";
+
+// styles
+const divStyle = {
+  backgroundImage: `url(${gradient})`
+};
 
 const AboutScreen = props => {
   return (
     <div className="content">
+      <Pattern background={gradient} />
       <div className="container">
         <div className="about">
-          <h1 className="about__title">Arch</h1>
+          <h1 className="p-text about__title">Arch</h1>
           <div className="about-grid">
-            <p className="about__text">
+            <p className="p-text about__text">
               Artist Ian Brill is bringing his latest installation, Arch, to
               JSConf Berlin in collaboration with Mozilla. This interactive,
               multi-sensorial environment lets conference attendees experience
               the intersection of art and technology in a physical, pulsating,
               immersive way.
             </p>
-            <p className="about__text">
+            <p className="p-text about__text">
               Visitors can walk through the larger-than-life Arch and experience
               an ever-changing light show of 30,000 colored LEDs. To support the
               exhibit, Mozilla engineers built a platform based on open web
@@ -29,9 +39,9 @@ const AboutScreen = props => {
               technologies.
             </p>
           </div>
-          <h2 className="mt12">Under the Hood</h2>
+          <h2 className="p-text mt12">Under the Hood</h2>
           <div className="about-grid">
-            <p className="about__text mb6">
+            <p className="p-text about__text mb6">
               Since the birth of the web, developers have been finding new and
               better ways to write code. It started with HTML, CSS, and
               JavaScript. Now the web has two new languages: Rust and
@@ -97,7 +107,7 @@ const AboutScreen = props => {
           <div className="about-grid about-ian">
             <img className="about-ian__img" src={ian} alt="Ian Brill" />
             <div className="about-ian__text">
-              <p>
+              <p className="p-text">
                 Ian Brill is an installation artist whose work focuses on
                 finding form through process and the audience’s immersive
                 relationship with technology. His installations, performances,
@@ -106,7 +116,9 @@ const AboutScreen = props => {
                 Pittsburg, Brill teaches art at Penn State University's World
                 Campus and the Community College of Beaver County.{" "}
               </p>
-              <p>Find out more about Ian Brill by visiting his website</p>
+              <p className="p-text">
+                Find out more about Ian Brill by visiting his website
+              </p>
               <a
                 className="button button--primary"
                 rel="noopener noreferrer"
@@ -118,6 +130,7 @@ const AboutScreen = props => {
           </div>
         </div>
       </div>
+      <Pattern position="bottom" />
     </div>
   );
 };

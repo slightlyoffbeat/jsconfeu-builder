@@ -8,6 +8,8 @@
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
+  position: relative;
+  z-index: z-index(content);
 
   @include bp(small) {
     width: (map-get($breakpoints, small));
