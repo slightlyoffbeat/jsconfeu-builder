@@ -2,7 +2,7 @@
   "name": "jsconfeu-builder",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://vr.josh.earth/jsconfeu-builder/build/",
+  "homepage": "",
   "devDependencies": {
     "react-scripts": "1.1.1"
   },
