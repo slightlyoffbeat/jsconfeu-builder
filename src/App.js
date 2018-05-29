@@ -22,6 +22,11 @@ import AboutScreen from "./pages/AboutScreen";
 import ModuleStore from "./utils/ModuleStore";
 import AuthStore from "./utils/AuthStore";
 
+// Google Analytics
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-000000-01');
+ReactGA.pageview(window.location.pathname + window.location.search);
+
 const UserLoginButton = props => {
   if (AuthStore.isLoggedIn()) {
     return (
