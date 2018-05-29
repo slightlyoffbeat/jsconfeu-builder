@@ -10,6 +10,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  z-index: z-index(header);
 
   @include bp(medium) {
     margin: 0;
@@ -52,6 +53,7 @@
   margin: 0;
   position: fixed;
   // opacity: 0;
+  z-index: z-index(header);
   height: 0;
   top: 88px;
   left: 0;
@@ -164,6 +166,23 @@
   font-weight: bold;
 }
 
+.navbar__button--loggedin {
+  background: transparent;
+  font-size: 14px;
+
+  &:hover,
+  &:active {
+    color: #1a1a1a;
+  }
+}
+
 .navbar__button:hover span {
   background: transparent;
+}
+
+.navbar__user {
+  height: 40px;
+  border: 1px solid $black;
+  border-radius: 40px;
+  margin-right: space(1);
 }

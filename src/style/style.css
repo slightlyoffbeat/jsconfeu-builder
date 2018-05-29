@@ -840,11 +840,13 @@ h5 {
   text-decoration: underline; }
 
 body {
-  background-color: #fff; }
+  background-color: #fff;
+  padding-top: 88px; }
   body.nav-active {
     overflow-y: hidden; }
   @media all and (min-width: 53.125em) {
     body {
+      padding-top: 0;
       border-left: 1rem solid #ffffff;
       border-right: 1rem solid #ffffff; } }
 
@@ -871,7 +873,9 @@ select {
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
-  padding-right: 1rem; }
+  padding-right: 1rem;
+  position: relative;
+  z-index: 10; }
   @media all and (min-width: 46.875em) {
     .container {
       width: 750px; } }
@@ -889,7 +893,8 @@ select {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%; }
+  width: 100%;
+  z-index: 20; }
   @media all and (min-width: 53.125em) {
     .navbar {
       margin: 0;
@@ -923,6 +928,7 @@ select {
   padding: 0;
   margin: 0;
   position: fixed;
+  z-index: 20;
   height: 0;
   top: 88px;
   left: 0;
@@ -1013,8 +1019,20 @@ select {
   font-size: 12px;
   font-weight: bold; }
 
+.navbar__button--loggedin {
+  background: transparent;
+  font-size: 14px; }
+  .navbar__button--loggedin:hover, .navbar__button--loggedin:active {
+    color: #1a1a1a; }
+
 .navbar__button:hover span {
   background: transparent; }
+
+.navbar__user {
+  height: 40px;
+  border: 1px solid #000000;
+  border-radius: 40px;
+  margin-right: 0.5rem; }
 
 .footer {
   padding: 4rem 1rem;
@@ -1119,6 +1137,9 @@ select {
     .started__section {
       margin-bottom: 3rem; } }
 
+.started__icon {
+  height: 65px; }
+
 @media all and (min-width: 53.125em) {
   .started__row {
     display: grid;
@@ -1216,6 +1237,77 @@ select {
 
 #queue-grid .rest .queue-module h3 {
   font-size: 1rem; }
+
+.about {
+  text-align: center;
+  padding-top: 4rem;
+  padding-bottom: 4rem; }
+
+.about__title {
+  font-size: 70px;
+  margin-bottom: 2rem;
+  font-weight: bold; }
+
+.about-grid {
+  align-items: center; }
+  @media all and (min-width: 53.125em) {
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-column-gap: 1rem; } }
+  @media all and (min-width: 62.5em) {
+    .about-grid {
+      grid-column-gap: 2rem; } }
+
+.about__text {
+  grid-column: 2 / 12; }
+
+.about-box {
+  background-color: #202020;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  grid-column: span 6;
+  grid-row: 2;
+  text-align: left;
+  margin-bottom: 3rem;
+  align-items: flex-start; }
+  @media all and (min-width: 53.125em) {
+    .about-box {
+      margin-bottom: 0;
+      height: 600px; } }
+  @media all and (min-width: 62.5em) {
+    .about-box {
+      height: 540px; } }
+
+.about-box__icon {
+  margin-bottom: 1.5rem;
+  height: 55px; }
+
+.about-box__button {
+  margin-top: 1rem; }
+  @media all and (min-width: 53.125em) {
+    .about-box__button {
+      margin-top: auto;
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important; } }
+
+.about-ian {
+  align-items: start; }
+
+.about-ian__img {
+  grid-column: span 6;
+  margin-bottom: 2rem; }
+  @media all and (min-width: 53.125em) {
+    .about-ian__img {
+      margin-bottom: 0; } }
+
+.about-ian__text {
+  grid-column: span 6;
+  text-align: middle; }
+  @media all and (min-width: 53.125em) {
+    .about-ian__text {
+      text-align: left; } }
 
 /**
 This is a system for easiliy creating buttons, and spinning up new button
@@ -1459,6 +1551,45 @@ input[type="button"].button--block {
     transform: rotate(-90deg);
     transition: bottom 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1); }
 
+.pattern {
+  position: absolute;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  width: 100%;
+  z-index: 5; }
+
+.pattern--top {
+  min-height: 100vh;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+  background-size: 160%;
+  box-shadow: inset 0px 50px 100px 0px #000000; }
+  @media all and (min-width: 53.125em) {
+    .pattern--top {
+      background-size: 150%; } }
+  @media all and (min-width: 62.5em) {
+    .pattern--top {
+      background-size: 100%; } }
+
+.pattern--bottom {
+  background-position: bottom;
+  bottom: 0;
+  left: 0;
+  opacity: 0.3;
+  background-size: 160%;
+  z-index: 5;
+  box-shadow: inset 0px -50px 100px 0px #000000; }
+  @media all and (min-width: 53.125em) {
+    .pattern--bottom {
+      background-size: 150%; } }
+  @media all and (min-width: 62.5em) {
+    .pattern--bottom {
+      background-size: 100%; } }
+
+.p-text {
+  text-shadow: 10px 10px 10px black, -10px -10px 10px black; }
+
 .content {
   background-color: #000000;
   min-height: 80vh;
@@ -1647,7 +1778,8 @@ article {
 /* ======= WASM Editor ============ */
 iframe#wasm-editor {
   width: 100%;
-  min-height: 550px; }
+  height: 100%;
+  position: absolute; }
 
 /* ========Queue Viewer ========== */
 .queue-module {

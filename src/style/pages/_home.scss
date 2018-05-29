@@ -50,6 +50,7 @@
     margin-bottom: space(8);
   }
 }
+
 .started__section {
   display: flex;
   flex-direction: column;
@@ -58,6 +59,10 @@
   @include bp(medium) {
     margin-bottom: space(6);
   }
+}
+
+.started__icon {
+  height: 65px;
 }
 
 .started__row {

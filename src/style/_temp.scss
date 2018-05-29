@@ -187,7 +187,8 @@ article {
 
 iframe#wasm-editor {
   width: 100%;
-  min-height: 550px;
+  height: 100%;
+  position: absolute;
 }
 
 /* ========Queue Viewer ========== */

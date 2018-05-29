@@ -1,0 +1,52 @@
+// ----------------------------------------------------------------------------
+// Background Pattern
+
+// Background pattern used on various pages at the top and bottom
+// ----------------------------------------------------------------------------
+
+.pattern {
+  position: absolute;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  width: 100%;
+  z-index: z-index(pattern);
+}
+
+.pattern--top {
+  min-height: 100vh;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+  background-size: 160%;
+  box-shadow: inset 0px 50px 100px 0px #000000;
+
+  @include bp(medium) {
+    background-size: 150%;
+  }
+
+  @include bp(large) {
+    background-size: 100%;
+  }
+}
+
+.pattern--bottom {
+  background-position: bottom;
+  bottom: 0;
+  left: 0;
+  opacity: 0.3;
+  background-size: 160%;
+  z-index: z-index(pattern);
+  box-shadow: inset 0px -50px 100px 0px #000000;
+
+  @include bp(medium) {
+    background-size: 150%;
+  }
+
+  @include bp(large) {
+    background-size: 100%;
+  }
+}
+// include this on any white text that needs a shadow for legibility (must be white on black)
+.p-text {
+  text-shadow: 10px 10px 10px black, -10px -10px 10px black;
+}
