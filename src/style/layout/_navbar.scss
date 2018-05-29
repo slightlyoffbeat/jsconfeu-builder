@@ -166,6 +166,23 @@
   font-weight: bold;
 }
 
+.navbar__button--loggedin {
+  background: transparent;
+  font-size: 14px;
+
+  &:hover,
+  &:active {
+    color: #1a1a1a;
+  }
+}
+
 .navbar__button:hover span {
   background: transparent;
+}
+
+.navbar__user {
+  height: 40px;
+  border: 1px solid $black;
+  border-radius: 40px;
+  margin-right: space(1);
 }

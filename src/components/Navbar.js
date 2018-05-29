@@ -7,7 +7,7 @@ import Hamburger from "../components/Hamburger";
 // Images
 import logo from "../img/logo.svg";
 import logoSquare from "../img/logo-square.svg";
-import AuthStore from '../utils/AuthStore'
+import AuthStore from "../utils/AuthStore";
 
 const collapseMenu = () => {
   const burger = document.querySelector(".burger");
@@ -30,19 +30,48 @@ const NavbarLink = props => (
 );
 
 const GithubButton = props => {
-    let text = "Connect with Github"
-    let callback = ()=>AuthStore.start()
-    console.log("checking logged in", AuthStore.isLoggedIn())
-    if (AuthStore.isLoggedIn()) {
-        text = "Log Out"
-        if(AuthStore.getCurrentUser()) text = AuthStore.getCurrentUser().displayName
-        callback = () => AuthStore.logout()
+  let text = "Connect with Github";
+  let callback = () => AuthStore.start();
+  let userImg;
+  if (AuthStore.isLoggedIn()) {
+    text = "Log Out";
+    if (AuthStore.getCurrentUser()) {
+      text = AuthStore.getCurrentUser().displayName;
+      userImg = AuthStore.getCurrentUser()._json.avatar_url;
+      text = AuthStore.getCurrentUser().displayName;
+      console.log("yoyoyo", userImg);
+      callback = () => AuthStore.logout();
     }
+  }
 
-    return <a className="navbar__button" href="#" onClick={callback}>
-        <span>{text}</span>
-    </a>
-}
+  if (AuthStore.isLoggedIn()) {
+    return (
+      <a
+        className="navbar__button navbar__button--loggedin"
+        href="#"
+        onClick={callback}
+      >
+        <img className="navbar__user" alt="profile photo" src={userImg} />
+        Log Out
+      </a>
+    );
+  } else {
+    return (
+      <a className="navbar__button" href="#" onClick={callback}>
+        <span>Connect with Github</span>
+      </a>
+    );
+  }
+
+  // return (
+  //   <a className="navbar__button" href="#" onClick={callback}>
+  //     <span>
+  //       <img className="navbar__user" alt="profile photo" src={userImg} />
+  //       {text}
+  //     </span>
+  //   </a>
+  // );
+};
 
 const Navbar = props => {
   return (
@@ -68,7 +97,7 @@ const Navbar = props => {
           <NavbarLink link="/about" title="About" />
           <NavbarLink link="/queue-editor" title="Queue Editor" />
         </ul>
-        <GithubButton/>
+        <GithubButton />
       </div>
     </div>
   );
