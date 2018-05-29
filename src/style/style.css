@@ -841,7 +841,8 @@ h5 {
 
 body {
   background-color: #fff;
-  padding-top: 88px; }
+  padding-top: 88px;
+  color: #ffffff; }
   body.nav-active {
     overflow-y: hidden; }
   @media all and (min-width: 53.125em) {
@@ -1081,7 +1082,7 @@ select {
   font-size: 12px;
   margin-top: 3rem; }
   .legal a {
-    color: #ffffff;
+    color: #000000;
     text-decoration: underline; }
 
 .legal__list {
@@ -1217,26 +1218,79 @@ select {
   font-size: 0.5rem;
   padding: 0.5em 1.0em; }
 
-#queue-grid {
-  border: 0px solid red;
-  padding: 2em 2em; }
+.queue {
+  padding-top: 4rem;
+  padding-bottom: 4rem; }
 
-#queue-grid .first .queue-module {
-  border-width: 0; }
+.queue-module {
+  position: relative; }
 
-#queue-grid .rest {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  padding: 1em;
-  margin: 0;
-  grid-gap: 1em; }
+.queue-first .queue-module__info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2rem;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%); }
+  .queue-first .queue-module__info h3 {
+    font-size: 30.42px;
+    font-size: 1.69rem;
+    margin-bottom: 1rem; }
+  .queue-first .queue-module__info p {
+    margin-bottom: 1rem; }
+  .queue-first .queue-module__info cite {
+    font-size: 14px; }
 
-#queue-grid .rest .queue-module {
-  font-size: 0.7rem;
-  border-width: 0; }
+.queue-rest {
+  margin-top: 1rem; }
+  @media all and (min-width: 53.125em) {
+    .queue-rest {
+      background-color: #202020;
+      padding: 2rem;
+      display: grid;
+      grid-gap: 2rem;
+      grid-template-rows: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-flow: column; } }
 
-#queue-grid .rest .queue-module h3 {
-  font-size: 1rem; }
+.queue-rest .queue-module {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: flex-start;
+  background-color: #202020;
+  padding: 0.5rem;
+  margin-bottom: 1rem; }
+  @media all and (min-width: 53.125em) {
+    .queue-rest .queue-module {
+      padding: 0;
+      background-color: none;
+      margin-bottom: 0;
+      justify-content: space-between; } }
+
+.queue-rest .queue-module__info {
+  margin-left: 1rem; }
+  @media all and (min-width: 53.125em) {
+    .queue-rest .queue-module__info {
+      margin-left: 0;
+      width: 50%; } }
+  @media all and (min-width: 62.5em) {
+    .queue-rest .queue-module__info {
+      width: 60%; } }
+  .queue-rest .queue-module__info h3 {
+    font-size: 18px;
+    font-size: 1rem;
+    display: inline-block;
+    margin-bottom: 1rem; }
+  .queue-rest .queue-module__info p {
+    font-size: 14px; }
+  .queue-rest .queue-module__info cite {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.7); }
+
+.queue-module__preview {
+  width: 100% !important;
+  height: auto !important; }
 
 .about {
   text-align: center;
@@ -1615,63 +1669,7 @@ input[type="button"].button--block {
   background-color: black;
   flex-direction: column; }
 
-body {
-  background-color: var(--bg);
-  color: white; }
-
 /* ============= */
-section {
-  padding: 2em;
-  /*border: 1px solid blue;*/ }
-
-section h1 {
-  font-size: 200%; }
-
-section.narrow-left {
-  width: 40%;
-  /*border: 1px solid red;*/ }
-
-.round-button {
-  border: 1px solid aqua;
-  border-radius: 2em;
-  padding: 1em;
-  margin: 1em;
-  color: white;
-  text-decoration: none; }
-
-section.wells {
-  /*border: 1px solid red;*/ }
-
-section.wells > div {
-  display: flex;
-  flex-direction: row; }
-
-section.wells .panel {
-  /*border: 1px solid green;*/ }
-
-section.wells .panel img {
-  float: left; }
-
-section.wells .icon {
-  color: aqua;
-  padding: 0.25em; }
-
-section.queue {
-  display: flex;
-  flex-direction: row; }
-
-section.queue h3 {
-  font-size: 200%; }
-
-section.queue .panel {
-  display: flex;
-  flex-direction: column; }
-
-section.queue div.img {
-  border: 1px solid red;
-  height: 200px;
-  width: 400px; }
-
 .main {
   display: grid;
   grid-template-columns: [left] 1fr [middle] 2fr [right];
@@ -1724,14 +1722,6 @@ section.queue div.img {
   display: flex;
   flex-direction: row; }
 
-#pipeline-preview {
-  grid-column: middle/right;
-  grid-row: body/list;
-  background: green;
-  margin: 1em;
-  width: 600px;
-  height: 400px; }
-
 #active-list {
   margin: 1em;
   grid-row: list/bottom;
@@ -1782,13 +1772,3 @@ iframe#wasm-editor {
   position: absolute; }
 
 /* ========Queue Viewer ========== */
-.queue-module {
-  border: 1px solid white;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex: 1; }
-
-.queue-module canvas {
-  border: 1px solid black; }
