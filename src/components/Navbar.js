@@ -51,7 +51,9 @@ const GithubButton = props => {
         href="#"
         onClick={callback}
       >
-        <img className="navbar__user" alt="profile photo" src={userImg} />
+        <div className="navbar__user-border">
+          <img className="navbar__user" alt="profile photo" src={userImg} />
+        </div>
         Log Out
       </a>
     );

@@ -1022,18 +1022,27 @@ select {
 
 .navbar__button--loggedin {
   background: transparent;
-  font-size: 14px; }
+  font-size: 14px;
+  width: auto; }
   .navbar__button--loggedin:hover, .navbar__button--loggedin:active {
     color: #1a1a1a; }
 
 .navbar__button:hover span {
   background: transparent; }
 
-.navbar__user {
+.navbar__user-border {
+  background: linear-gradient(45deg, #8551cd, #72e5ed);
   height: 40px;
-  border: 1px solid #000000;
+  width: 40px;
   border-radius: 40px;
-  margin-right: 0.5rem; }
+  display: inline-block;
+  margin-right: 10px; }
+
+.navbar__user {
+  height: 36px;
+  border-radius: 40px;
+  margin-left: 2px;
+  margin-top: 2px; }
 
 .footer {
   padding: 4rem 1rem;
