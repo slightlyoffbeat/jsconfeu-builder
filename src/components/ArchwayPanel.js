@@ -68,7 +68,7 @@ export default class ArchwayPanel extends Component {
     if (!this.loaded) return;
     this.currentFrame++;
     if (!this.props.frames) return;
-    const data = this.props.frames.data
+    const data = this.props.frames.data;
     const frame = data[this.currentFrame % data.length];
     this.loadFrame(frame, this.props.frames.rows, this.props.frames.cols);
   }
@@ -91,9 +91,13 @@ export default class ArchwayPanel extends Component {
     for (let r = 0; r < frame.height; r++) {
       for (let c = 0; c < frame.width; c++) {
         let material = this.materials.get(`${r}x${c}`);
-        if (!material) continue
-          const n = (r*frame.width+c)*4
-          const color = frame.data[n] << 24 | frame.data[n+1] << 16 | frame.data[n+2] << 8 | frame.data[n+3]
+        if (!material) continue;
+        const n = (r * frame.width + c) * 4;
+        const color =
+          (frame.data[n] << 24) |
+          (frame.data[n + 1] << 16) |
+          (frame.data[n + 2] << 8) |
+          frame.data[n + 3];
         material.color.setHex(color >> 8); // The shift drops the alpha bits
       }
     }
@@ -110,13 +114,9 @@ export default class ArchwayPanel extends Component {
     repaint();
   }
   render() {
-    const w = 600;
-    const h = 400;
     return (
       <canvas
-        id="pipeline-preview"
-        width={w}
-        height={h}
+        className="queue-module__preview"
         ref={canvas => (this.canvas = canvas)}
         onMouseMove={this.mouseMove}
         onMouseDown={this.mouseDown}
@@ -135,7 +135,7 @@ export default class ArchwayPanel extends Component {
       const dry = dx * Math.PI / 180;
       this.arch.rotation.y = this.startRY + dry;
     }
-  }
+  };
   mouseUp = e => {};
 }
 
